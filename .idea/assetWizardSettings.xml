@@ -79,8 +79,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="D:\Ranjan_Digiline\Android Project\ApplicationX\Display Token\DisplayToken Photo\left-arrow.png" />
-                                                <entry key="scalingPercent" value="55" />
+                                                <entry key="imagePath" value="D:\Ranjan_Digiline\Final_21\Android Project\SCP PHOTO\sst_logo.png" />
+                                                <entry key="scalingPercent" value="65" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -112,8 +112,8 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="foregroundLayerName" value="ic_left_arrow_back" />
-                                      <entry key="outputName" value="ic_left_arrow" />
+                                      <entry key="foregroundLayerName" value="ic_sst_logo_layer" />
+                                      <entry key="outputName" value="ic_sst_logo" />
                                     </map>
                                   </option>
                                 </PersistentState>

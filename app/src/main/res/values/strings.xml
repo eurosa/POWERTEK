@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name"> ""</string>
+    <string name="app_name">Infant Warmer</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -7,7 +7,7 @@
     <string name="title_activity_about">About Us</string>
 
     <string name="action_about">About</string>
-    <string name="app_author">Author : Donato Rimenti</string>
+    <string name="app_author">Author : Digiline Systems Pvt. Ltd</string>
     <string name="app_version">Version: 1.0.2</string>
     <string name="app_info">This project is open-source. The code is distributed under MIT license and available on Github following this link: https://github.com/aurasphere/blue-pair</string>
     <string name="app_descrip">Simple app for handling Bluetooth discovery and pairing.</string>
@@ -38,7 +38,7 @@
     <string name="oxygen">O<sub>2</sub></string>
     <string name="air_4_bar">Air 4</string>
     <string name="air_7_bar">Air 7</string>
-    <string name="vacuum">Vacuum</string>
+
     <string name="time_date_title">Time &amp; Date</string>
     <string name="normal">Normal</string>
     <string name="light_control_title">Light Control</string>
@@ -61,6 +61,23 @@
     <string name="healthy">Healthy</string>
     <string name="percent_sign">%</string>
     <string name="humidity_control">Humidity Control</string>
-
-
+    <string name="skin_temperature">Skin <br/> Temperature</string>
+    <string name="air_temperature">Air Temperature</string>
+    <string name="set_temperature">Set Temperature</string>
+    <string name="xb0_c">°C</string>
+    <string name="xb0_f">°F</string>
+    <string name="vacuum">Vacuum</string>
+    <string name="air_4">Air 4</string>
+    <string name="co2">CO2</string>
+    <string name="n2o">N2O</string>
+    <string name="o2">O2</string>
+    <string name="air_7">Air 7</string>
+    <string name="heater_output">Heater <br/> Output</string>
+    <string name="infant_warmer">Infant Warmer</string>
+    <string name="probe_fail">Probe Fail</string>
+    <string name="temp_high">Temp High</string>
+    <string name="temp_low">Temp Low</string>
+    <string name="heater_fail">Heater Fail</string>
+    <string name="power_fail">Power Fail</string>
+    <string name="system_fail">System Fail</string>
 </resources>

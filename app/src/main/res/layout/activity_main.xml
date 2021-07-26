@@ -31,7 +31,7 @@ SOFTWARE.
     android:fitsSystemWindows="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     app:layout_scrollFlags="exitUntilCollapsed"
-    tools:context="com.surg.scp.ScanActivity">
+    tools:context="com.warmer.scp.ScanActivity">
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -97,7 +97,7 @@ SOFTWARE.
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_bluetooth_white_24dp" />
 
-    <com.surg.scp.view.RecyclerViewProgressEmptySupport
+    <com.warmer.scp.view.RecyclerViewProgressEmptySupport
         android:id="@+id/list"
         android:name=".DeviceFragment"
         android:layout_width="match_parent"
