@@ -750,8 +750,12 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         String[] arrayHex = new String[20];
         for (int i=0; i<string.length(); i++)
         {
-            arrayHex[i] = String.format("%x", (byte)(string.charAt(i)));
-            newString.append(String.format("%x", (byte)(string.charAt(i))));
+            try {
+                arrayHex[i] = String.format("%x", (byte) (string.charAt(i)));
+                newString.append(String.format("%x", (byte) (string.charAt(i))));
+            }catch (Exception e){
+
+            }
         }
 
 

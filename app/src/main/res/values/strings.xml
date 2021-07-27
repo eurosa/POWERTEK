@@ -56,7 +56,7 @@
     <string name="light_1">Light 1</string>
     <string name="pa">Pa</string>
     <string name="_000">000</string>
-    <string name="set_point">SET POINT</string>
+    <string name="set_point">SET</string>
     <string name="percent">%</string>
     <string name="healthy">Healthy</string>
     <string name="percent_sign">%</string>
@@ -80,4 +80,7 @@
     <string name="heater_fail">Heater Fail</string>
     <string name="power_fail">Power Fail</string>
     <string name="system_fail">System Fail</string>
+    <string name="skin">SKIN</string>
+    <string name="air">AIR</string>
+    <string name="heater">HEATER</string>
 </resources>

@@ -75,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/skin_temperature"
+                android:text="@string/skin"
                 android:id="@+id/skinTempTitle">
 
             </TextView>
@@ -250,9 +250,9 @@
                             android:layout_height="wrap_content"
 
                             android:gravity="center"
-                            android:text="@string/skin_temperature"
+                            android:text="@string/air"
                             android:textColor="@color/colorBlack"
-                            android:textSize="24sp"></TextView>
+                            android:textSize="24sp" />
                     </LinearLayout>
 
 
@@ -305,80 +305,161 @@
         android:orientation="horizontal"
         android:weightSum="2">
 
-        <LinearLayout
-            android:id="@+id/leftPart3"
-            android:layout_width="match_parent"
-            android:layout_height="84dp"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
             <LinearLayout
                 android:id="@+id/pressLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:weightSum="2"
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="center"
-                    android:layout_weight="1"
                     android:orientation="horizontal">
                 <ImageView
                     android:id="@+id/diffPress"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_marginStart="10dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="3dp"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_temp_thermometer" />
+                    android:src="@drawable/ic_heater" />
 
-                <TextView
-                    android:id="@+id/diffControl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:text="@string/heater_output"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="24sp">
-                </TextView>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="center"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/pressureShow"
-                    android:layout_width="70dp"
-                    android:layout_height="60dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="100"
-                    android:textColor="@color/limeGreen"
-                    android:textSize="29sp" />
-
-                    <TextView
-                        android:id="@+id/percentUnit"
-                        android:layout_width="70dp"
-                        android:layout_height="60dp"
-                        android:layout_weight="1"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="%"
-                        android:textColor="@color/limeGreen"
-                        android:textSize="29sp" />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/diffControl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/heater"
+                            android:textColor="@color/colorBlack"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/pressureShow"
+                            android:layout_width="70dp"
+                            android:layout_height="60dp"
+
+                            android:gravity="center"
+                            android:text="100"
+                            android:textColor="@color/limeGreen"
+                            android:textSize="29sp" />
+
+                        <TextView
+                            android:id="@+id/percentUnit"
+                            android:layout_width="70dp"
+                            android:layout_height="60dp"
+
+                            android:gravity="center"
+                            android:text="%"
+                            android:textColor="@color/limeGreen"
+                            android:textSize="29sp" />
+
+                    </LinearLayout>
+
+
 
                 </LinearLayout>
 
             </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/colorBlack"
+                    android:gravity="center|top"
+                    android:text="MODE" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="SERVO" />
+            </LinearLayout>
+
+
         </LinearLayout>
 
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/servoManualLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_below="@id/LinearLayout3"
+        android:weightSum="2"
+        android:background="@color/whiteColor"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/servo"
+            android:text="Servo"
+            android:layout_width="42dp"
+            android:textSize="12sp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_height="wrap_content">
+
+        </Button>
+
+        <Button
+            android:id="@+id/manual"
+            android:layout_width="42dp"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+
+            android:layout_weight="1"
+
+            android:gravity="center"
+            android:text="Manual" />
 
     </LinearLayout>
 
@@ -387,7 +468,7 @@
         android:id="@+id/alarmTitleLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/LinearLayout3"
+        android:layout_below="@+id/servoManualLayout"
         android:orientation="horizontal">
 
 
@@ -425,28 +506,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="horizontal">
-            <Button
-                android:id="@+id/servo"
-                android:text="Servo"
-                android:layout_width="100dp"
-                android:textSize="12sp"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
                 android:gravity="center"
-                android:layout_height="100dp">
+                android:orientation="horizontal">
 
-            </Button>
 
                 <Button
                     android:id="@+id/changeUnit"
                     android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
                     android:layout_marginRight="6dp"
                     android:gravity="center"
                     android:text="°C/°F"
-                    android:textSize="12sp"></Button>
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -454,31 +526,52 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:orientation="horizontal">
 
 
                 <Button
-                    android:id="@+id/manual"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:textSize="12sp"
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginRight="6dp"
-                    android:gravity="center"
-                    android:text="Manual" />
-
-                <Button
                     android:id="@+id/mute"
                     android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
                     android:layout_marginRight="6dp"
                     android:gravity="center"
                     android:text="Mute"
-                    android:textSize="12sp"></Button>
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:gravity="center"
+                    android:text="TIMER"/>
+
+                <TextView
+                    android:id="@+id/timerShow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorWhite"
+                    android:text="00"
+                    android:textSize="24sp" />
+
+                <Button
+                    android:id="@+id/timerBtn"
+                    android:layout_width="100dp"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:text="Timer On" />
+            </LinearLayout>
 
 
 
@@ -671,33 +764,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="33dp"
+        android:layout_marginTop="3dp"
         android:gravity="bottom"
         android:layout_below="@+id/lio"
         android:weightSum="2"
         android:orientation="horizontal">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:gravity="top"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/timerShow"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/colorWhite"
-                android:text="00"
-                android:textSize="24sp" />
-
-            <Button
-                android:id="@+id/timerBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Timer On" />
-        </LinearLayout>
 
 
         <ImageButton

@@ -303,8 +303,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_reset_great" />
-                            <entry key="sourceFile" value="D:\Ranjan_Digiline\Final_21\Android Project\SCP PHOTO\reset_great.svg" />
+                            <entry key="outputName" value="ic_heater" />
+                            <entry key="sourceFile" value="D:\Ranjan_Digiline\Workink21\SCP PHOTO\heater.svg" />
                           </map>
                         </option>
                       </PersistentState>
