@@ -246,6 +246,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     private String[] arrayHex;
     private String[] rawArrayData;
     private boolean checkSendReceive =  true;
+    private Button muteBtn;
 
 
     /***************************************************************************************
@@ -535,6 +536,8 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         timerShow = findViewById(R.id.timerShow);
         setSkinTemp = findViewById(R.id.setSkinTemp);
         heatModeTextView = findViewById(R.id.heatMode);
+        muteBtn = findViewById(R.id.mute);
+        muteBtn.setOnClickListener(this);
         timerONBtn = findViewById(R.id.timerBtn);
         timerONBtn.setOnClickListener(this);
         changeUnit = findViewById(R.id.changeUnit);
@@ -1463,42 +1466,30 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                 }catch (Exception e){}
 
                 break;
+            case R.id.timerBtn:
+                try {
+                    timerOn();
+                }catch (Exception e){}
+
+                break;
+            case R.id.mute:
+                try {
+                    muteOn();
+                }catch (Exception e){}
+
+                break;
             default:
                 break;
         }
     }
 
     public void servoOn(){
-        checkSendReceive = false;
-/*
-            // Run whatever background code you want here.
-           //skinTemp2,skinTemp1,airTemp6,airTemp7,timer8,heater9,
-           // setTemp12,setTemp13,heatMode14,timerON,setSkinTempValue
-          if(timerON==0){
-              timerON = 1;
-          }else if(timerON == 1){
-              timerON = 0;
-          }
-
-            if(unitValue16==0){
-                unitValue16 = 1;
-            }else if(unitValue16 == 1){
-                unitValue16 = 0;
-            }
-
-            if(mute15==0){
-                mute15 = 1;
-            }else if(mute15 == 1){
-                mute15 = 0;
-            }*/
-
+            checkSendReceive = false;
             heatMode14 = 0;
 
-
-           //String data="$I0W"+setTemp12+setTemp13+heatMode14+mute15+unitValue16+timerON+";";
            String data="$I0W"+rawArrayData[12]+rawArrayData[13]+"\u0000"+rawArrayData[15]+rawArrayData[16]+rawArrayData[17]+";";
 
-            //String data1="$I0W"+convertToHex(setSkinTempValue)+" "+convertToHex(heatMode14)+" "+convertToHex(mute15)+" "+convertToHex(unitValue16)+" "+convertToHex(timerON)+";";
+
            Log.d("data_asd 1",""+" "+data);
             try {
                 if(btSocket!=null) {
@@ -1519,38 +1510,66 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         return Integer.valueOf(String.valueOf(n), 16);
     }
 
+
+    public void muteOn(){
+        checkSendReceive = false;
+        String muteValue ;
+        if(mute15 == 1){
+            muteValue ="\u0000";
+        }else {
+            muteValue ="\u0001";
+        }
+
+        String data="$I0W"+rawArrayData[12]+rawArrayData[13]+rawArrayData[14]+muteValue+rawArrayData[16]+rawArrayData[17]+";";
+
+        Log.d("data_asd mute",""+" "+data);
+        //  Integer.toBinaryString(int  r)
+        try {
+            if(btSocket!=null) {
+                // receiveData();
+                btSocket.getOutputStream().write(data.getBytes());
+
+            }
+        } catch (IOException  e) {
+            e.printStackTrace();
+            Log.d("logging","Error "+e.getMessage());
+        }
+        checkSendReceive = true;
+    }
+
+
+    public void timerOn(){
+        checkSendReceive = false;
+        String timerOnValue ;
+        if(timerON == 1){
+            timerOnValue ="\u0000";
+        }else {
+            timerOnValue ="\u0001";
+        }
+
+        String data="$I0W"+rawArrayData[12]+rawArrayData[13]+rawArrayData[14]+rawArrayData[15]+rawArrayData[16]+timerOnValue+";";
+
+        Log.d("data_asd 2",""+" "+data);
+        //  Integer.toBinaryString(int  r)
+        try {
+            if(btSocket!=null) {
+                // receiveData();
+                btSocket.getOutputStream().write(data.getBytes());
+
+            }
+        } catch (IOException  e) {
+            e.printStackTrace();
+            Log.d("logging","Error "+e.getMessage());
+        }
+        checkSendReceive = true;
+    }
+
     public void manualOn(){
         checkSendReceive = false;
+        heatMode14 = 1;
 
-            // Run whatever background code you want here.
-            //skinTemp2,skinTemp1,airTemp6,airTemp7,timer8,heater9,
-            // setTemp12,setTemp13,heatMode14,timerON,setSkinTempValue
-          //  if(timerON==0){
-         //       timerON = 1;
-          // }else if(timerON == 1){
-             //   timerON = 0;
-           // }
-
-           // if(unitValue16==0){
-           //     unitValue16 = 1;
-         //   }else if(unitValue16 == 1){
-             //   unitValue16 = 0;
-           // }
-
-            //if(mute15==0){
-            //    mute15 = 1;
-           // }else if(mute15 == 1){
-            //    mute15 = 0;
-          //  }
-
-
-            heatMode14 = 1;
-
-
-       // String data="$I0W"+setSkinTempValue+heatMode14+mute15+unitValue16+timerON+";";
-      //String data="$I0W"+setTemp12+setTemp13+heatMode14+mute15+unitValue16+timerON+";";
        String data="$I0W"+rawArrayData[12]+rawArrayData[13]+"\u0001"+rawArrayData[15]+rawArrayData[16]+rawArrayData[17]+";";
-       // String data1="$I0W "+convertHexToString(Integer.toString(setSkinTempValue, 16))+" "+convertHexToString(arrayHex[14])+" "+convertHexToString(arrayHex[15])+" "+convertHexToString(arrayHex[16])+" "+convertHexToString(arrayHex[17])+";";
+
             Log.d("data_asd 2",""+" "+data);
             //  Integer.toBinaryString(int  r)
             try {
