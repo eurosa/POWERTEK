@@ -70,7 +70,7 @@
             android:indeterminate="true"
             android:visibility="gone" />
 
-        <com.warmer.scp.view.RecyclerViewProgressEmptySupport
+        <com.infant.warmer.view.RecyclerViewProgressEmptySupport
             android:id="@+id/list"
             android:name=".DeviceFragment"
             android:layout_width="match_parent"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.warmer.scp">
+    package="com.infant.warmer">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -24,11 +24,11 @@
         android:theme="@style/MyMaterialTheme.Base">
 
         <activity
-            android:name="com.warmer.scp.ScanActivity"
+            android:name="com.infant.warmer.ScanActivity"
 
             android:theme="@style/MyMaterialTheme.Base" />
         <activity
-            android:name="com.warmer.scp.SplashScreen"
+            android:name="com.infant.warmer.SplashScreen"
             android:label="@string/app_name"
             android:theme="@style/MyMaterialTheme.Base">
             <intent-filter>
@@ -38,14 +38,14 @@
         </activity>
         <activity
             android:screenOrientation="fullSensor"
-            android:name="com.warmer.scp.DeviceList"
+            android:name="com.infant.warmer.DeviceList"
             android:theme="@style/MyMaterialTheme" />
         <activity
-            android:name="com.warmer.scp.DataControl"
+            android:name="com.infant.warmer.DataControl"
             android:label="Data Control"
             android:theme="@style/MyMaterialTheme.Base" />
         <activity
-            android:name="com.warmer.scp.AboutActivity"
+            android:name="com.infant.warmer.AboutActivity"
             android:label="@string/title_activity_about"
             android:theme="@style/MyMaterialTheme.Base" />
     </application>
