@@ -623,7 +623,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
          *********************************************************************************************/
        // runDataSendThread();
        // receiveData();
-        //receiveData();
+       // receiveData();
        // receiveData4();
     }
 
@@ -823,7 +823,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
              timerON = (Integer.parseInt(arrayHex[17], 16));
              unitValue16 = (Integer.parseInt(arrayHex[16], 16));
 
-            mute15 = (Integer.parseInt(arrayHex[15], 16));
+             mute15 = (Integer.parseInt(arrayHex[15], 16));
 
             tempValue = (skinTemp1 << 8) | (skinTemp2);
             float tempValueFloat = (float) tempValue / 10;
