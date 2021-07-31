@@ -623,7 +623,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
          *********************************************************************************************/
        // runDataSendThread();
        // receiveData();
-       // receiveData();
+        //receiveData();
        // receiveData4();
     }
 
@@ -823,7 +823,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
              timerON = (Integer.parseInt(arrayHex[17], 16));
              unitValue16 = (Integer.parseInt(arrayHex[16], 16));
 
-             mute15 = (Integer.parseInt(arrayHex[15], 16));
+            mute15 = (Integer.parseInt(arrayHex[15], 16));
 
             tempValue = (skinTemp1 << 8) | (skinTemp2);
             float tempValueFloat = (float) tempValue / 10;
@@ -1453,6 +1453,9 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                 humBtnMinusPressed();
                 break;
             case R.id.changeUnit:
+                try {
+                    unitValueChange();
+                }catch (Exception e){}
                 changeUnit();
                 break;
             case R.id.servo:
@@ -1481,6 +1484,33 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
             default:
                 break;
         }
+    }
+
+    public void unitValueChange(){
+        checkSendReceive = false;
+        String unitValue ;
+        if(unitValue16 == 1){
+            unitValue ="\u0000";
+        }else {
+            unitValue ="\u0001";
+        }
+
+        String data="$I0W"+rawArrayData[12]+rawArrayData[13]+rawArrayData[14]+rawArrayData[15]+unitValue+rawArrayData[17]+";";
+
+        Log.d("data_asd mute",""+" "+data);
+        //  Integer.toBinaryString(int  r)
+        try {
+            if(btSocket!=null) {
+                // receiveData();
+                btSocket.getOutputStream().write(data.getBytes());
+
+            }
+        } catch (IOException  e) {
+            e.printStackTrace();
+            Log.d("logging","Error "+e.getMessage());
+        }
+        checkSendReceive = true;
+
     }
 
     public void servoOn(){
