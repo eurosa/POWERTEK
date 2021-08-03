@@ -83,4 +83,5 @@
     <string name="skin">SKIN</string>
     <string name="air">AIR</string>
     <string name="heater">HEATER</string>
+    <string name="device_connected">Device connected</string>
 </resources>

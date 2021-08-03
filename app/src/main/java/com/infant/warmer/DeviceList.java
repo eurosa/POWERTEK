@@ -752,7 +752,6 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                             btSocket.getOutputStream().write(data.getBytes());
                             receiveData();
                         }
-
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -1674,22 +1673,24 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                 Byte.parseByte(arrayHex[15]),Byte.parseByte(arrayHex[16]),Byte.parseByte(arrayHex[17]),
                 ';' }; // use whatever you need to get your payload into bytes*/
 
-    //byte[] payload = new byte[] { '$', 'I',
-     //           '0','W', Byte.parseByte(String.valueOf(tempFirst)),
-       //         Byte.parseByte(String.valueOf(tempSecond)), Byte.parseByte(rawArrayData[16]), Byte.parseByte(rawArrayData[17]),
-         //       ';' }; // use whatever you need to get your payload into bytes*/
+  /*  byte[] payload = new byte[] { '$', 'I',
+                '0','W', Byte.parseByte(String.valueOf(tempFirst)),
+                Byte.parseByte(String.valueOf(tempSecond.charAt(0))),Byte.parseByte(rawArrayData[14]),
+            Byte.parseByte(rawArrayData[15]),
+            Byte.parseByte(rawArrayData[16]), Byte.parseByte(rawArrayData[17]),
+                ';' }; */// use whatever you need to get your payload into bytes*/
 
-     String[] payloade = new String[] {String.valueOf('$'), String.valueOf('I'),
+    /* String[] payloade = new String[] {String.valueOf('$'), String.valueOf('I'),
                   String.valueOf('0'), String.valueOf('W'), String.valueOf(tempFirst),
-             String.valueOf(tempSecond),rawArrayData[14],rawArrayData[15], rawArrayData[16], rawArrayData[17],
-               String.valueOf(';')}; // use whatever you need to get your payload into bytes*/
+             String.valueOf(tempSecond.charAt(0)),rawArrayData[14],rawArrayData[15], rawArrayData[16], rawArrayData[17],
+               String.valueOf(';')}; */// use whatever you need to get your payload into bytes*/
 
     //    System.out.printf("Unicode: u%0X\n", first);
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         final ObjectOutputStream objectOutputStream;
         try {
             objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-            objectOutputStream.writeObject(payloade);
+          //  objectOutputStream.writeObject(payloade);
             objectOutputStream.flush();
             objectOutputStream.close();
         } catch (IOException e) {
@@ -2025,7 +2026,7 @@ if(unitChange){
                 name = infoBLE.replace(address, "");
                 msg("Device connected.");
                 // getSupportActionBar().setTitle(name);
-                connectionStatus.setText("Device connected");
+                connectionStatus.setText(R.string.device_connected);
                 connectionStatus.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.limeGreen));
                 runDataSendThread();
 
