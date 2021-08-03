@@ -61,10 +61,18 @@ import com.google.android.gms.instantapps.InstantApps;
 import com.google.android.material.navigation.NavigationView;
 import com.kyleduo.switchbutton.SwitchButton;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.math.BigInteger;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.CharacterCodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,12 +80,14 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import hearsilent.discreteslider.Dash;
 import hearsilent.discreteslider.DiscreteSlider;
 import hearsilent.discreteslider.Dot;
 import hearsilent.discreteslider.libs.Utils;
 
+import org.apache.commons.codec.binary.Hex;
 
 public class DeviceList extends AppCompatActivity implements  View.OnClickListener  , NavigationView.OnNavigationItemSelectedListener
 {
@@ -128,7 +138,9 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     //-----------------------------------Camera-----------------------------------------------
     // ------------------------ Auto Repeat increment and decrement --------------------------
     Integer currentDisplayValue = 0;
-    Integer currentHumValue = 0;
+    float currentTempValue = 320;
+    Integer maxValue = 380;
+    Integer minValue = 320;
 
     final int DisplayValueMin = 0;
     final int DisplayValueMax1 = 99;
@@ -247,6 +259,9 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     private String[] rawArrayData;
     private boolean checkSendReceive =  true;
     private Button muteBtn;
+    private boolean initSetTempCheck = true;
+    private float floatCurrentSetTempValue;
+    private char[] TxData;
 
 
     /***************************************************************************************
@@ -585,15 +600,21 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
 
                                             // which button was pressed?
                                             case R.id.humBtnPlus: {
-                                                if (currentHumValue <99) {
-                                                    currentHumValue = currentHumValue + 1;
+                                                initSetTempCheck = false;
+                                                if (currentTempValue <maxValue) {
+                                                    currentTempValue = currentTempValue + 1;
+                                                    floatCurrentSetTempValue = (float)(currentTempValue/10);
+                                                    decimalToHex((int) (currentTempValue));
                                                 }
                                                 break;
                                             }
 
                                             case R.id.humBtnMinus: {
-                                                if (currentHumValue > 0) {
-                                                    currentHumValue = currentHumValue - 1;
+                                                initSetTempCheck = false;
+                                                if (currentTempValue > minValue) {
+                                                    currentTempValue = currentTempValue - 1;
+                                                    floatCurrentSetTempValue = (float)(currentTempValue/10);
+                                                    decimalToHex((int) (currentTempValue));
                                                 }
                                                     break;
 
@@ -625,6 +646,97 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
        // receiveData();
         //receiveData();
        // receiveData4();
+    }
+
+
+    public void decimalToHex(int value){
+        String hex = Integer.toString(value, 16);
+        int parsedResult = (int) Long.parseLong(hex, 16);
+        int firstPart = (byte)(parsedResult >> 8) ;
+        int secondPart = (byte)( parsedResult & 0xFF);
+
+        char c[]=Character.toChars(firstPart);
+        //for(char ch : Integer.toHexString(secondPart).toCharArray())
+      //  System.out.format("\\u%04x", (int) ch);
+        String hex1 =hexToAscii(Integer.toHexString(firstPart));
+        String hex2 = hexToAscii(Integer.toHexString(secondPart));
+       // String hex1 =stringToUnicode((String.format("0x%02X",   firstPart)));
+       // String hex2 = stringToUnicode((String.format("0x%02X",   secondPart)));
+
+      //  asciiToHex(Integer.toHexString(firstPart));
+     //   asciiToHex(Integer.toHexString(secondPart));
+        int   joindd = (firstPart <<8 ) | (secondPart);
+
+
+        setTemp(hex1,hex2);
+
+
+        Log.d("decimal_to_hex","hex:"+hex1+""+" secondPart: "+hex2.charAt(0)+" "+c+" "+joindd);
+
+
+    }
+
+    // String conversion unicode
+    public static String stringToUnicode(String string) {
+        StringBuffer unicode = new StringBuffer();
+        for (int i = 0; i < string.length(); i++) {
+            char c = string.charAt(i); // Take out each character
+            unicode.append("\\u" + Integer.toHexString(c));// Convert to unicode
+        }
+        return unicode.toString();
+    }
+
+    private static String hexToAscii(String hexStr) {
+        StringBuilder output = new StringBuilder("");
+
+        for (int i = 0; i < hexStr.length(); i += 1) {
+            String str = hexStr.substring(i);
+            output.append((char) Integer.parseInt(str, 16));
+        }
+
+        return output.toString();
+    }
+
+
+    private static String asciiToHex(String asciiValue){
+        char[] chars = asciiValue.toCharArray();
+        StringBuffer hex = new StringBuffer();
+        for (int i = 0; i < chars.length; i++){
+            hex.append(Integer.toHexString((int) chars[i]));
+        }
+        Log.d("unicode_print",""+  hex.toString());
+        return hex.toString();
+    }
+
+    public void hexunicode(int st){
+
+      //  int cp=Integer.parseInt(st,16);// it convert st into hex number.
+        String s = String.valueOf(st);
+
+
+// we now have str with the desired character as the first item
+// confirm that we indeed have character with code point 128149
+
+        Log.d("unicode_print",""+  s);
+    }
+
+
+    public  String hexToUnicode(String hex){
+
+        int len = hex.length();
+        byte[] cStr = new byte[len/2];
+        for( int i = 0; i < len; i+=1 ) {
+            cStr[i/2] = (byte)Integer.parseInt( hex.substring( i, i ), 16 );
+        }
+        CharsetDecoder decoder = Charset.forName( "UTF-8" ).newDecoder();
+        CharBuffer cb = null;
+        try {
+            cb = decoder.decode( ByteBuffer.wrap( cStr ));
+        } catch (CharacterCodingException e) {
+            e.printStackTrace();
+        }
+        System.out.println( cb.toString());
+        return cb.toString();
     }
 
 
@@ -735,7 +847,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                                 skinTemp2Show.setText(""+skinTemp2String);
                                 heaterOutput.setText(""+heaterOutputString);
                                 timerShow.setText(""+timerShowString);
-                                setSkinTemp.setText(""+setSkinTempString);
+                                setSkinTemp.setText(""+floatCurrentSetTempValue);
                                 heatModeTextView.setText(""+heatModeString);
                             }
                         });
@@ -806,8 +918,6 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
             }
         }
 
-
-
         if(arrayHex[4]!=null) {
              // Long num1,num2,num3;
              skinTemp1 = (Integer.parseInt(arrayHex[4], 16));
@@ -840,11 +950,13 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
             float timerFloat = (float) timer8;
             timerShowString = String.valueOf(timer8);
 
-
-            setSkinTempValue = (setTemp12 << 8) | (setTemp13);
-           // float setSkinTempFloat = (float) setSkinTemp ;
-            float setSkinTempFloat = (float) setSkinTempValue / 10;
-            setSkinTempString = String.valueOf(setSkinTempFloat);
+            if(initSetTempCheck) {
+                currentTempValue = (setTemp12 << 8) | (setTemp13);
+                floatCurrentSetTempValue = ((float) currentTempValue / 10);
+                // float setSkinTempFloat = (float) setSkinTemp ;
+                // currentTempValue = ((float) currentTempValue / 10);
+                // setSkinTempString = String.valueOf(setSkinTempFloat);
+            }
 
             if(heatMode14==0){
                 heatModeString = String.valueOf("SERVO");
@@ -884,18 +996,24 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     // ON-CLICKS (referred to from XML)
 
     public void humBtnMinusPressed() {
-        if(currentHumValue>0)
+        initSetTempCheck = false;
+        if(currentTempValue>minValue)
         {
-            currentHumValue--;
+            currentTempValue--;
+            floatCurrentSetTempValue = (float)(currentTempValue/10);
+            decimalToHex((int) (currentTempValue));
         }
 
         updateHumDisplay();
     }
 
     public void humBtnPlusPressed() {
-        if (currentHumValue < 99)
+        initSetTempCheck = false;
+        if (currentTempValue < maxValue)
         {
-            currentHumValue++;
+            currentTempValue++;
+            floatCurrentSetTempValue = (float)(currentTempValue/10);
+            decimalToHex((int) (currentTempValue));
         }
         updateHumDisplay();
     }
@@ -904,7 +1022,8 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
 
 
     private void updateHumDisplay() {
-        setSkinTemp.setText(currentHumValue.toString());
+        setSkinTemp.setText(""+floatCurrentSetTempValue);
+       // initSetTempCheck = true;
     }
     /*************************************************************************************************
     *                              End Increment and Decrement
@@ -1486,6 +1605,158 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         }
     }
 
+
+    public String hextounicode(String hex)
+    {
+        /*
+        ByteBuffer buff = ByteBuffer.allocate(hex.length());
+        for(int i = 0; i < hex.length(); i+=1) {
+            buff.put((byte)Integer.parseInt(hex.substring(i), 16));
+        }
+        buff.rewind();
+        Charset cs = Charset.forName("UTF-8");
+        CharBuffer cb = cs.decode(buff);
+        System.out.println(cb.toString());
+       */
+       //System.out.println("set_tmp "+Arrays
+       //         .stream(hex.split(""))
+       //        .map(s -> Character.toString((char)Integer.parseInt(s, 16)))
+       //       .collect(Collectors.joining()));
+       // return Arrays.stream(hex.split(""))
+       //            .map(s -> Character.toString((char)Integer.parseInt(s, 16)))
+       //                .collect(Collectors.joining());
+        return "";
+    }
+
+
+    public void setTemp(String tempFirst, String tempSecond){
+         char[] TxData  = new char[19];;
+        checkSendReceive = false;
+       // String first = hextounicode(tempFirst);
+    //    String second = hextounicode(tempSecond);
+
+
+      //  Log.d("set_tmp"," "+first+" "+second);
+
+     //   String data="$I0W"+first+second+rawArrayData[14]+rawArrayData[15]+rawArrayData[16]+rawArrayData[17]+";";
+    /*    TxData[0] = '$';TxData[4] = first.charAt(0);TxData[8] = rawArrayData[16].charAt(0);
+        TxData[1] = 'I';TxData[5] = second.charAt(0);TxData[9] = rawArrayData[17].charAt(0);
+        TxData[2] = '0';TxData[6] = rawArrayData[14].charAt(0);TxData[10] = ';';
+        TxData[3] = 'W';TxData[7] = rawArrayData[15].charAt(0);
+        Log.d("data_asd 2",""+" "+TxData);*/
+        //traversing over array using for loop
+        /* ByteBuffer bb = ByteBuffer.allocate(12);
+        bb.put((byte)'$');bb.put( Byte.parseByte(first));
+        bb.put((byte)'I');bb.put(Byte.parseByte(second));
+        bb.put((byte)'0');bb.put(Byte.parseByte(arrayHex[14]));
+        bb.put((byte)'W');bb.put(Byte.parseByte(arrayHex[15]));
+        bb.put(Byte.parseByte(arrayHex[16]));
+        bb.put(Byte.parseByte(arrayHex[17]));
+        bb.put((byte)';');
+        Buffer bb1 = (Buffer)bb;
+        // getting array that backs this buffer
+        // using array() method
+        byte[] arr = (byte[])bb1.array();
+        */
+        String data="$"+"I"+
+                "0"+"W"+(tempFirst+tempSecond.charAt(0))+
+                rawArrayData[14]+rawArrayData[15]+
+                rawArrayData[16]+rawArrayData[17]+";";
+
+        // String data="$"+"I"+
+        //       "0"+"W"+(rawArrayData[12]+rawArrayData[13])+
+        //       rawArrayData[14]+rawArrayData[15]+
+        //       rawArrayData[16]+rawArrayData[17]+";";
+        //       decode(data);
+
+      /*  byte[] payload = new byte[] { Byte.parseByte(arrayHex[0]), Byte.parseByte(arrayHex[1]),
+                Byte.parseByte(arrayHex[2]),Byte.parseByte(arrayHex[3]),Byte.parseByte(arrayHex[14]),
+                Byte.parseByte(arrayHex[15]),Byte.parseByte(arrayHex[16]),Byte.parseByte(arrayHex[17]),
+                ';' }; // use whatever you need to get your payload into bytes*/
+
+    //byte[] payload = new byte[] { '$', 'I',
+     //           '0','W', Byte.parseByte(String.valueOf(tempFirst)),
+       //         Byte.parseByte(String.valueOf(tempSecond)), Byte.parseByte(rawArrayData[16]), Byte.parseByte(rawArrayData[17]),
+         //       ';' }; // use whatever you need to get your payload into bytes*/
+
+     String[] payloade = new String[] {String.valueOf('$'), String.valueOf('I'),
+                  String.valueOf('0'), String.valueOf('W'), String.valueOf(tempFirst),
+             String.valueOf(tempSecond),rawArrayData[14],rawArrayData[15], rawArrayData[16], rawArrayData[17],
+               String.valueOf(';')}; // use whatever you need to get your payload into bytes*/
+
+    //    System.out.printf("Unicode: u%0X\n", first);
+        final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        final ObjectOutputStream objectOutputStream;
+        try {
+            objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+            objectOutputStream.writeObject(payloade);
+            objectOutputStream.flush();
+            objectOutputStream.close();
+        } catch (IOException e) {
+            Log.d("Error_lis",""+e.getMessage());
+            e.printStackTrace();
+        }
+
+
+        final byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+       // Log.d("",""+payload.toString());
+    //    byte[] buf = new byte[payload.length];
+// new arrays are automatically initialized with 0, so you don't need to set bytes 0-2 to 0x00
+   //     buf[3] = 0x0A; // group
+    //    buf[4] = 4; // type
+
+/*
+        ByteBuffer bb = ByteBuffer.allocate(12);
+        bb.put(Byte.parseByte(hextounicode(arrayHex[1])));bb.put(decode(tempFirst));
+        bb.put(decode(arrayHex[2]));bb.put(decode(tempSecond));
+        bb.put(decode(arrayHex[3]));bb.put(decode(arrayHex[14]));
+        bb.put(decode(arrayHex[15]));
+        bb.put(decode(arrayHex[16]));
+        bb.put(decode(arrayHex[17]));
+        bb.put(decode(arrayHex[18]));
+        Buffer bb1 = (Buffer)bb;
+        // getting array that backs this buffer
+        // using array() method
+        byte[] arr = (byte[])bb1.array();
+*/
+        Log.d("Data_print",""+data);
+
+        try {
+            if(btSocket!=null) {
+                // receiveData();
+              // byte[] arr1 = data.getBytes("UTF-8");data
+                btSocket.getOutputStream().write(data.getBytes());
+
+            }
+        } catch (IOException  e) {
+            e.printStackTrace();
+            Log.d("logging","Error "+e.getMessage());
+        }
+        checkSendReceive = true;
+    }
+
+   /* public static byte convertStringToHexf(String str) {
+
+        // display in uppercase
+        // char[] chars = Hex.encodeHex(str.getBytes(StandardCharsets.UTF_8), false);
+        // display in lowercase, default
+           char[] chars = Hex.encodeHex(str.getBytes(StandardCharsets.UTF_8));
+           return Byte.parseByte(String.valueOf(chars));
+    }*/
+
+    public static byte[] decode(String hex){
+
+        String[] list=hex.split("");
+        ByteBuffer buffer= ByteBuffer.allocate(list.length);
+        System.out.println(list.length);
+        for(String str: list)
+            buffer.put(Byte.parseByte(str,16));
+
+        return buffer.array();
+
+    }
+
     public void unitValueChange(){
         checkSendReceive = false;
         String unitValue ;
@@ -1613,30 +1884,6 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                 Log.d("logging","Error "+e.getMessage());
             }
         checkSendReceive = true;
-    }
-    public String convertHexToString(String hex){
-
-        String ascii="";
-        String str;
-
-        // Convert hex string to "even" length
-        int rmd,length;
-        length=hex.length();
-        rmd =length % 2;
-        if(rmd==1)
-            hex = "0"+hex;
-
-        // split into two characters
-        for( int i=0; i<hex.length()-1; i+=2 ){
-
-            //split the hex into pairs
-            String pair = hex.substring(i, (i + 2));
-            //convert hex to decimal
-            int dec = Integer.parseInt(pair, 16);
-            str=CheckCode(dec);
-            ascii=ascii+" "+str;
-        }
-        return ascii;
     }
 
     public String CheckCode(int dec){
