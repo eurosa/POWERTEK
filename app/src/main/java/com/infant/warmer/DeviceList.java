@@ -757,7 +757,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                     e.printStackTrace();
                 }
             }
-        },500,500);
+        },100,1000);
     }
 
     public void timerOnThread(){
@@ -769,7 +769,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                 try {
                     if(btSocket!=null) {
                         btSocket.getOutputStream().write(data.getBytes());
-                        receiveData();
+                      //  receiveData();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -807,7 +807,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
 
     public void receiveData() throws IOException{
 
-//       final Handler handler = new Handler();
+        // final Handler handler = new Handler();
 
         // Get a handler that can be used to post to the main thread
         Handler mainHandler = new Handler(Looper.getMainLooper());
@@ -818,7 +818,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
             {
                 InputStream socketInputStream =  btSocket.getInputStream();
 
-                byte[] buffer = new byte[1024];
+                byte[] buffer = new byte[19];
                 int bytes;
 
                 // Keep looping to listen for received messages
@@ -917,37 +917,39 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
             }
         }
 
-        if(arrayHex[4]!=null) {
+
              // Long num1,num2,num3;
-             skinTemp1 = (Integer.parseInt(arrayHex[4], 16));
-             skinTemp2 = (Integer.parseInt(arrayHex[5], 16));
-             airTemp6 = (Integer.parseInt(arrayHex[6], 16));
-             airTemp7 = (Integer.parseInt(arrayHex[7], 16));
-             timer8 = (Integer.parseInt(arrayHex[8], 16));
-             heater9 = (Integer.parseInt(arrayHex[9], 16));
-
-             setTemp12 = (Integer.parseInt(arrayHex[12], 16));
-             setTemp13 = (Integer.parseInt(arrayHex[13], 16));
-             heatMode14 = (Integer.parseInt(arrayHex[14], 16));
-             timerON = (Integer.parseInt(arrayHex[17], 16));
-             unitValue16 = (Integer.parseInt(arrayHex[16], 16));
-
-            mute15 = (Integer.parseInt(arrayHex[15], 16));
-
+        if(arrayHex[4]!=null && arrayHex[5]!=null) {
+            skinTemp1 = (Integer.parseInt(arrayHex[4], 16));
+            skinTemp2 = (Integer.parseInt(arrayHex[5], 16));
             tempValue = (skinTemp1 << 8) | (skinTemp2);
             float tempValueFloat = (float) tempValue / 10;
             tempValueString = String.valueOf(tempValueFloat);
 
+        }
 
+        if(arrayHex[6]!=null && arrayHex[7]!=null) {
+            airTemp6 = (Integer.parseInt(arrayHex[6], 16));
+            airTemp7 = (Integer.parseInt(arrayHex[7], 16));
             airTemp = (airTemp6 << 8) | (airTemp7);
             float skinTemp2Float = (float) airTemp / 10;
             skinTemp2String = String.valueOf(skinTemp2Float);
+        }
 
-            float heaterOutputFloat = (float) heater9;
-            heaterOutputString  = String.valueOf(heater9);
-
+        if(arrayHex[8]!=null) {
+            timer8 = (Integer.parseInt(arrayHex[8], 16));
             float timerFloat = (float) timer8;
             timerShowString = String.valueOf(timer8);
+        }
+
+        if(arrayHex[9]!=null) {
+            heater9 = (Integer.parseInt(arrayHex[9], 16));
+            float heaterOutputFloat = (float) heater9;
+            heaterOutputString  = String.valueOf(heater9);
+        }
+        if(arrayHex[12]!=null && arrayHex[13]!=null) {
+            setTemp12 = (Integer.parseInt(arrayHex[12], 16));
+            setTemp13 = (Integer.parseInt(arrayHex[13], 16));
 
             if(initSetTempCheck) {
                 currentTempValue = (setTemp12 << 8) | (setTemp13);
@@ -956,6 +958,25 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                 // currentTempValue = ((float) currentTempValue / 10);
                 // setSkinTempString = String.valueOf(setSkinTempFloat);
             }
+
+        }
+
+            if(arrayHex[14]!=null){
+                heatMode14 = (Integer.parseInt(arrayHex[14], 16));
+
+            }
+        if(arrayHex[15]!=null){
+            mute15 = (Integer.parseInt(arrayHex[15], 16));
+
+        }
+        if(arrayHex[16]!=null){
+            unitValue16 = (Integer.parseInt(arrayHex[16], 16));
+        }
+        if(arrayHex[17]!=null){
+            timerON = (Integer.parseInt(arrayHex[17], 16));
+        }
+
+
 
             if(heatMode14==0){
                 heatModeString = String.valueOf("SERVO");
@@ -969,7 +990,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
 
 
             Log.i("logging", Arrays.toString(arrayHex)+"  "+Arrays.toString(rawArrayData));
-        }
+
 
         //hexStringToByteArray(newString.toString());
         return newString.toString();
@@ -1574,7 +1595,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                 try {
                     unitValueChange();
                 }catch (Exception e){}
-                changeUnit();
+               // changeUnit();
                 break;
             case R.id.servo:
                 try {
@@ -1763,18 +1784,21 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         String unitValue ;
         if(unitValue16 == 1){
             unitValue ="\u0000";
+            unitCelCius();
         }else {
             unitValue ="\u0001";
+            unitFarhenheit();
         }
 
         String data="$I0W"+rawArrayData[12]+rawArrayData[13]+rawArrayData[14]+rawArrayData[15]+unitValue+rawArrayData[17]+";";
 
-        Log.d("data_asd mute",""+" "+data);
+        Log.d("data_asd unit",""+" "+data);
         //  Integer.toBinaryString(int  r)
         try {
             if(btSocket!=null) {
                 // receiveData();
                 btSocket.getOutputStream().write(data.getBytes());
+
 
             }
         } catch (IOException  e) {
@@ -1900,22 +1924,19 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         return str;
     }
 
-public void changeUnit(){
+    public void unitCelCius(){
+        celUnit.setText(R.string.xb0_c);
+        airTempUnit.setText(R.string.xb0_c);
+        setTempUnit.setText(R.string.xb0_c);
+    }
 
-if(unitChange){
-    celUnit.setText(R.string.xb0_c);
-    airTempUnit.setText(R.string.xb0_c);
-    setTempUnit.setText(R.string.xb0_c);
-    unitChange = false;
-}else{
-    celUnit.setText(R.string.xb0_f);
-    airTempUnit.setText(R.string.xb0_f);
-    setTempUnit.setText(R.string.xb0_f);
-    unitChange = true;
+    public void unitFarhenheit(){
+        celUnit.setText(R.string.xb0_f);
+        airTempUnit.setText(R.string.xb0_f);
+        setTempUnit.setText(R.string.xb0_f);
+    }
 
-}
 
-}
     public void switch1(View v){
         if(v.getStateDescription().toString().contains("checked")) {
             switch1.setThumbColorRes(R.color.red);
