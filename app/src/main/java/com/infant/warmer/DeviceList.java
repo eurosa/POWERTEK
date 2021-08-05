@@ -243,7 +243,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     private TextView setTempUnit;
     private boolean unitChange =  false;
     private AlertDialog dialog;
-    private TextView tempShow,skinTemp2Show,heaterOutput,timerShow,setSkinTemp,heatModeTextView;
+    private TextView tempShow,airTempShow,heaterOutput,timerShow,setSkinTemp,heatModeTextView;
     private int tempValue;
     private String tempValueString;
     private int skinTemp2,skinTemp1,airTemp6,airTemp7,timer8,heater9,setTemp12,
@@ -262,6 +262,9 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     private boolean initSetTempCheck = true;
     private float floatCurrentSetTempValue;
     private char[] TxData;
+    private Timer repeatTimer;
+    private TimerTask timerTask;
+    private String airTempString;
 
 
     /***************************************************************************************
@@ -276,7 +279,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         setContentView(R.layout.activity_scp);
 //----------------------------Grant storage permission--------------------------------------------------
         setAnimation();
-
+        repeatTimer = new Timer();
         /***************************************************************************************
          *   Play and pause in only one button - Android
          ****************************************************************************************/
@@ -546,7 +549,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
 
 
         tempShow = findViewById(R.id.tempShow);
-        skinTemp2Show  = findViewById(R.id.airTempShow);
+        airTempShow  = findViewById(R.id.airTempShow);
         heaterOutput = findViewById(R.id.pressureShow);
         timerShow = findViewById(R.id.timerShow);
         setSkinTemp = findViewById(R.id.setSkinTemp);
@@ -597,15 +600,26 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                                         // long-click timer "goes off."
                                         switch (v.getId()) {
 
-
                                             // which button was pressed?
                                             case R.id.humBtnPlus: {
+                                               // repeatTimer.purge();
+                                              //  repeatTimer.schedule(timerTask, 100, 500);//wait 0 ms before doing the action and do it evry 1000ms (1second)
+
+                                                Log.d("checkSendReceive",""+checkSendReceive);
                                                 initSetTempCheck = false;
                                                 checkSendReceive = false;
                                                 if (currentTempValue <maxValue) {
                                                     currentTempValue = currentTempValue + 1;
                                                     floatCurrentSetTempValue = (float)(currentTempValue/10);
-                                                    decimalToHex((int) (currentTempValue));
+
+                                                    final Thread t = new Thread(new Runnable() {
+
+                                                        @Override
+                                                        public void run() {
+                                                            decimalToHex((int) (currentTempValue));
+                                                        }
+                                                    });
+                                                    t.start();
                                                 }
                                                 break;
                                             }
@@ -616,7 +630,14 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                                                 if (currentTempValue > minValue) {
                                                     currentTempValue = currentTempValue - 1;
                                                     floatCurrentSetTempValue = (float)(currentTempValue/10);
-                                                    decimalToHex((int) (currentTempValue));
+                                                    final Thread t = new Thread(new Runnable() {
+
+                                                        @Override
+                                                        public void run() {
+                                                            decimalToHex((int) (currentTempValue));
+                                                        }
+                                                    });
+                                                    t.start();
                                                 }
                                                     break;
 
@@ -745,23 +766,9 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
 
     public void runDataSendThread(){
 
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                String data="$I0R;";
-                try {
-                    if(btSocket!=null) {
-                        Log.d("checkSendReceive",""+checkSendReceive);
-                        if(checkSendReceive) {
-                            btSocket.getOutputStream().write(data.getBytes());
-                            receiveData();
-                        }
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        },100,1000);
+
+        repeatTimer.schedule(timerTask, 100, 500);//wait 0 ms before doing the action and do it evry 1000ms (1second)
+
     }
 
     public void timerOnThread(){
@@ -809,12 +816,8 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
 
     }
 
-    public void receiveData() throws IOException{
+    public void receiveData() {
 
-        // final Handler handler = new Handler();
-
-        // Get a handler that can be used to post to the main thread
-        Handler mainHandler = new Handler(Looper.getMainLooper());
 
         if (btSocket!=null)
         {
@@ -826,51 +829,38 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                 int bytes;
 
                 // Keep looping to listen for received messages
-              //  while (true) {
+
                     try {
                             bytes = socketInputStream.read(buffer);            //read bytes from input buffer
                             final String readMessage = new String(buffer, 0, bytes);
                             // Send the obtained bytes to the UI Activity via handler
-                            Log.i("logging", readMessage + " Bytes: "+bytes);
+                            Log.i("data_asd readMessage", readMessage + " Bytes: "+bytes);
 
                         StringBuilder sb = new StringBuilder(bytes * 2);
                         for(byte b: buffer)
                             sb.append(String.format("%02x ", b));
-                        Log.e("Received Message: ", sb.toString());
-
-                            convertStringToHex(readMessage);
-
+                        Log.e("data_asd Received Data ", sb.toString());
+             if(bytes==19) {
+                  convertStringToHex(sb.toString(), readMessage);
+                       }
                      //   hexStringToByteArray(readMessage);
-                        runOnUiThread(new Runnable(){
-                            @Override
-                            public void run(){
-                                DecimalFormat df = new DecimalFormat();
-                                df.setMaximumFractionDigits(2);
-                                tempShow.setText(""+tempValueString);
-                                skinTemp2Show.setText(""+skinTemp2String);
-                                heaterOutput.setText(""+heaterOutputString);
-                                timerShow.setText(""+timerShowString);
-                                setSkinTemp.setText(""+floatCurrentSetTempValue);
-                                heatModeTextView.setText(""+heatModeString);
-                            }
+                        runOnUiThread(() -> {
+                            DecimalFormat df = new DecimalFormat();
+                            df.setMaximumFractionDigits(2);
+                            tempShow.setText(""+tempValueString);
+                            airTempShow.setText(""+airTempString);
+                            heaterOutput.setText(""+heaterOutputString);
+                            timerShow.setText(""+timerShowString);
+                            setSkinTemp.setText(""+floatCurrentSetTempValue);
+                            heatModeTextView.setText(""+heatModeString);
                         });
 
-                      //  mainHandler.post(myRunnable);
-                          /*
-                        handler.post(new Runnable()
-                        {
-                            public void run()
-                            {
-                                myLabel.setText(readMessage);
-                            }
-                        });
-                        */
 
 
                     } catch (IOException e) {
                        // break;
                     }
-               // }
+
             }
             catch (IOException e)
             {
@@ -911,7 +901,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                         sb.append(String.format("%02x ", b));
                     Log.e("Received Message: ", sb.toString());
 
-                    convertStringToHex(readMessage);
+                    convertStringToHex(sb.toString(),readMessage);
 
                     //   hexStringToByteArray(readMessage);
                     runOnUiThread(new Runnable(){
@@ -920,7 +910,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                             DecimalFormat df = new DecimalFormat();
                             df.setMaximumFractionDigits(2);
                             tempShow.setText(""+tempValueString);
-                            skinTemp2Show.setText(""+skinTemp2String);
+                            airTempShow.setText(""+airTempString);
                             heaterOutput.setText(""+heaterOutputString);
                             timerShow.setText(""+timerShowString);
                             setSkinTemp.setText(""+floatCurrentSetTempValue);
@@ -977,18 +967,22 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
 
 
 
-    private String convertStringToHex(String string)
+    private String convertStringToHex(String string, String rawMessage)
     {
         Log.d("logging","string length: "+string.length());
         StringBuilder newString = new StringBuilder();
         arrayHex = new String[19];
         rawArrayData =new String[19];
-        for (int i=0; i<=string.length(); i++)
+        arrayHex = string.split("\\s+");
+
+        for (int i=0; i<=rawMessage.length(); i++)
         {
             try {
-                arrayHex[i] = String.format("%x", (byte) (string.charAt(i)));
-                rawArrayData[i] = String.valueOf(string.charAt(i));
-                newString.append(String.format("%x ", (byte) (string.charAt(i))));
+              //  arrayHex[i] = String.format("%x", (byte) (string.charAt(i)));
+              //  Log.d("data_asd arrayHex[5]",arrayHex[5]+" "+string.charAt(i));
+                rawArrayData[i] = String.valueOf(rawMessage.charAt(i));
+                newString.append(String.format("%x ", (byte) (rawMessage.charAt(i))));
+                 // Log.d("data_asd rawData[]",""+rawArrayData[i]+" "+newString);
             }catch (Exception e){
 
             }
@@ -1001,6 +995,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
             skinTemp2 = (Integer.parseInt(arrayHex[5], 16));
             tempValue = (skinTemp1 << 8) | (skinTemp2);
             float tempValueFloat = (float) tempValue / 10;
+            Log.d("data_asd skin temp",""+tempValueFloat +" first:"+skinTemp1+" 2nd:"+skinTemp2+" "+arrayHex[5]);
             tempValueString = String.valueOf(tempValueFloat);
 
         }
@@ -1009,8 +1004,8 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
             airTemp6 = (Integer.parseInt(arrayHex[6], 16));
             airTemp7 = (Integer.parseInt(arrayHex[7], 16));
             airTemp = (airTemp6 << 8) | (airTemp7);
-            float skinTemp2Float = (float) airTemp / 10;
-            skinTemp2String = String.valueOf(skinTemp2Float);
+            float airTempFloat = (float) airTemp / 10;
+            airTempString = String.valueOf(airTempFloat);
         }
 
         if(arrayHex[8]!=null) {
@@ -1099,20 +1094,39 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         {
             currentTempValue--;
             floatCurrentSetTempValue = (float)(currentTempValue/10);
-            decimalToHex((int) (currentTempValue));
+
+            final Thread t = new Thread(new Runnable() {
+
+                @Override
+                public void run() {
+                    decimalToHex((int) (currentTempValue));
+                }
+            });
+            t.start();
+
         }
 
         updateHumDisplay();
     }
 
     public void humBtnPlusPressed() {
+
         initSetTempCheck = false;
         checkSendReceive = false;
         if (currentTempValue < maxValue)
         {
             currentTempValue++;
             floatCurrentSetTempValue = (float)(currentTempValue/10);
-            decimalToHex((int) (currentTempValue));
+
+
+            final Thread t = new Thread(new Runnable() {
+
+                @Override
+                public void run() {
+                    decimalToHex((int) (currentTempValue));
+                }
+            });
+            t.start();
         }
         updateHumDisplay();
     }
@@ -1122,7 +1136,8 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
 
     private void updateHumDisplay() {
         setSkinTemp.setText(""+floatCurrentSetTempValue);
-       // initSetTempCheck = true;
+        // initSetTempCheck = true;
+        checkSendReceive = true;
     }
     /*************************************************************************************************
     *                              End Increment and Decrement
@@ -1677,14 +1692,30 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                // changeUnit();
                 break;
             case R.id.servo:
-                try {
-                    servoOn();
-                }catch (Exception e){}
+                final Thread servo = new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        try {
+                            servoOn();
+                        }catch (Exception e){}
+                    }
+                });
+                servo.start();
+
                 break;
             case R.id.manual:
-                try {
-                    manualOn();
-                }catch (Exception e){}
+
+                final Thread manual = new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        try {
+                            manualOn();
+                        }catch (Exception e){}
+                    }
+                });
+                manual.start();
 
                 break;
             case R.id.timerBtn:
@@ -1757,6 +1788,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         // using array() method
         byte[] arr = (byte[])bb1.array();
         */
+
         String data="$"+"I"+
                 "0"+"W"+(tempFirst+tempSecond.charAt(0))+
                 rawArrayData[14]+rawArrayData[15]+
@@ -1821,7 +1853,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         // using array() method
         byte[] arr = (byte[])bb1.array();
 */
-        Log.d("Data_print",""+data);
+
 
         try {
             if(btSocket!=null) {
@@ -1829,7 +1861,12 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                 //receiveDataOnClick();
             
               // byte[] arr1 = data.getBytes("UTF-8");data
-                btSocket.getOutputStream().write(data.getBytes());
+               // if(rawArrayData[15]!=null && rawArrayData[14]!=null&& rawArrayData[16]!=null && rawArrayData[17]!=null){
+                  //  if(!arrayHex[17].contains("3b")) {
+                        Log.d("Data_print", "" + data + arrayHex[14] + "" + arrayHex[15] + "" + arrayHex[16] + "" + arrayHex[17]);
+                        btSocket.getOutputStream().write(data.getBytes());
+                  //  }
+              //  }
                 checkSendReceive = true;
 
             }
@@ -1865,10 +1902,12 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         checkSendReceive = false;
         String unitValue ;
         if(unitValue16 == 1){
-            unitValue ="\u0000";
+            //unitValue ="\u0000";
+             unitValue =  hexToAscii("0");
             unitCelCius();
         }else {
-            unitValue ="\u0001";
+           // unitValue ="\u0001";
+           unitValue =  hexToAscii("1");
             unitFarhenheit();
         }
 
@@ -1894,11 +1933,12 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     public void servoOn(){
             checkSendReceive = false;
             heatMode14 = 0;
+           String servo =  hexToAscii("0");
 
-           String data="$I0W"+rawArrayData[12]+rawArrayData[13]+"\u0000"+rawArrayData[15]+rawArrayData[16]+rawArrayData[17]+";";
+           String data="$I0W"+rawArrayData[12]+rawArrayData[13]+servo+rawArrayData[15]+rawArrayData[16]+rawArrayData[17]+";";
 
 
-           Log.d("data_asd 1",""+" "+data);
+           Log.d("data_asd servo",""+" "+data);
             try {
                 if(btSocket!=null) {
                   //  receiveData();
@@ -1923,14 +1963,16 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         checkSendReceive = false;
         String muteValue ;
         if(mute15 == 1){
-            muteValue ="\u0000";
+            //muteValue ="\u0000";
+            muteValue =  hexToAscii("0");
         }else {
-            muteValue ="\u0001";
+            //muteValue ="\u0001";
+            muteValue =  hexToAscii("1");
         }
 
         String data="$I0W"+rawArrayData[12]+rawArrayData[13]+rawArrayData[14]+muteValue+rawArrayData[16]+rawArrayData[17]+";";
 
-        Log.d("data_asd mute",""+" "+data);
+        Log.d("data_asd mute",""+" "+data+" "+mute15);
         //  Integer.toBinaryString(int  r)
         try {
             if(btSocket!=null) {
@@ -1950,14 +1992,16 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         checkSendReceive = false;
         String timerOnValue ;
         if(timerON == 1){
-            timerOnValue ="\u0000";
+          //  timerOnValue ="\u0000";
+            timerOnValue =  hexToAscii("0");
         }else {
-            timerOnValue ="\u0001";
+            //timerOnValue ="\u0001";
+            timerOnValue =  hexToAscii("1");
         }
 
         String data="$I0W"+rawArrayData[12]+rawArrayData[13]+rawArrayData[14]+rawArrayData[15]+rawArrayData[16]+timerOnValue+";";
 
-        Log.d("data_asd 2",""+" "+data);
+        Log.d("data_asd timer",""+" "+data);
         //  Integer.toBinaryString(int  r)
         try {
             if(btSocket!=null) {
@@ -1975,10 +2019,11 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     public void manualOn(){
         checkSendReceive = false;
         heatMode14 = 1;
+      String manual  =  hexToAscii("1");//"\u0001"
 
-       String data="$I0W"+rawArrayData[12]+rawArrayData[13]+"\u0001"+rawArrayData[15]+rawArrayData[16]+rawArrayData[17]+";";
+       String data="$I0W"+rawArrayData[12]+rawArrayData[13]+manual+rawArrayData[15]+rawArrayData[16]+rawArrayData[17]+";";
 
-            Log.d("data_asd 2",""+" "+data);
+            Log.d("data_asd manual",""+" "+data);
             //  Integer.toBinaryString(int  r)
             try {
                 if(btSocket!=null) {
@@ -2131,6 +2176,27 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                 // getSupportActionBar().setTitle(name);
                 connectionStatus.setText(R.string.device_connected);
                 connectionStatus.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.limeGreen));
+
+               timerTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        //what you want to do
+
+                        String data="$I0R;";
+                        try {
+                            if(btSocket!=null) {
+                                Log.d("checkSendReceive",""+checkSendReceive);
+                                if(checkSendReceive) {
+                                    btSocket.getOutputStream().write(data.getBytes());
+                                    receiveData();
+                                }
+                            }
+                        } catch (IOException e) {
+                            Log.d("timer_thread_stopped",""+e.getMessage());
+                            e.printStackTrace();
+                        }
+                    }
+                };
                 runDataSendThread();
 
 
