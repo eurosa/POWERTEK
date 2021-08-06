@@ -779,13 +779,17 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                         Log.d("checkSendReceive",""+checkSendReceive);
                         if(checkSendReceive) {
                             btSocket.getOutputStream().write(data.getBytes());
-                             handler.post(new Runnable() {
-                public void run() {
-                receiveData();
-                    Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show();
-                }
 
-            });
+                            final Thread receive = new Thread(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    try {
+                                        receiveData();
+                                    }catch (Exception e){}
+                                }
+                            });
+                            receive.start();
 
                         }
                     }
@@ -869,6 +873,29 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
 
     }
 
+
+
+
+
+    public static String replaceCharAt(String s, int pos, char c) {
+        return s.substring(0,pos) + c + s.substring(pos+1);
+    }
+
+   public int findPos(String s, char ch){
+
+        int pos = 0;
+        char[] array = s.toCharArray();
+        for(int i = 0; i < array.length; i++){
+            if(array[i] == ch){
+                System.out.println(i);
+                pos = i;
+            }
+        }
+        return  pos;
+    }
+
+
+
     public void receiveData() {
 
 
@@ -878,16 +905,21 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
             {
                 InputStream socketInputStream =  btSocket.getInputStream();
 
-                byte[] buffer = new byte[19];
+                byte[] buffer = new byte[33];
                 int bytes;
 
                 // Keep looping to listen for received messages
 
                     try {
                             bytes = socketInputStream.read(buffer);            //read bytes from input buffer
-                            final String readMessage = new String(buffer, 0, bytes);
+                            String readMessage = new String(buffer, 0, bytes);
                             // Send the obtained bytes to the UI Activity via handler
-                            Log.i("data_asd readMessage", readMessage + " Bytes: "+bytes);
+                      //  Log.i("data_asd readMessage", readMessage + " Bytes: "+bytes+" "+" Index of $: "+findPos(readMessage,'$'));
+                     //   if(findPos(readMessage,'$')==18){
+                         //   readMessage = readMessage.charAt(readMessage.length() - 1) + readMessage.substring(0, readMessage.length() - 1);
+                      //  }
+
+                            Log.i("data_asd readMessage", readMessage + " Bytes: "+bytes+" "+" Index of $: "+findPos(readMessage,'$'));
 
                         StringBuilder sb = new StringBuilder(bytes * 2);
                         for(byte b: buffer)
@@ -897,7 +929,24 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                   convertStringToHex(sb.toString(), readMessage);
                        }
                      //   hexStringToByteArray(readMessage);
-                        runOnUiThread(() -> {
+                        handler.post(new Runnable() {
+                            public void run() {
+                                runOnUiThread(() -> {
+                                DecimalFormat df = new DecimalFormat();
+                                df.setMaximumFractionDigits(2);
+                                tempShow.setText(""+tempValueString);
+                                airTempShow.setText(""+airTempString);
+                                heaterOutput.setText(""+heaterOutputString);
+                                timerShow.setText(""+timerShowString);
+                                setSkinTemp.setText(""+floatCurrentSetTempValue);
+                                heatModeTextView.setText(""+heatModeString);
+
+                                Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show();
+                                });
+                            }
+
+                        });
+                        /*runOnUiThread(() -> {
                             DecimalFormat df = new DecimalFormat();
                             df.setMaximumFractionDigits(2);
                             tempShow.setText(""+tempValueString);
@@ -906,7 +955,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                             timerShow.setText(""+timerShowString);
                             setSkinTemp.setText(""+floatCurrentSetTempValue);
                             heatModeTextView.setText(""+heatModeString);
-                        });
+                        });*/
 
 
 
