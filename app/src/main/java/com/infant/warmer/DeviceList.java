@@ -127,8 +127,8 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     boolean listViewFlag=true;
    
     
-    //==============================To connect bluetooth devices=============================
-    //-----------------------------Camera----------------------------------------------------
+    //==============================To connect bluetooth devices===============================
+    //-----------------------------Camera------------------------------------------------------
     private static final String LOG_TAG = "JBCamera";
     private static final int REQUEST_CAMERA_PERMISSION = 21;
     private static final int REQUEST_STORAGE_PERMISSION = 22;
@@ -136,8 +136,8 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     private Camera camera = null;
     private boolean waitForPermission = false;
     private boolean waitForStoragePermission = false;
-    //-----------------------------------Camera-----------------------------------------------
-    // ------------------------ Auto Repeat increment and decrement --------------------------
+    //-----------------------------------Camera------------------------------------------------
+    // ------------------------ Auto Repeat increment and decrement ---------------------------
     Integer currentDisplayValue = 0;
     float currentTempValue = 320;
     Integer maxValue = 380;
