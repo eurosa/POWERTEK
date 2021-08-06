@@ -92,6 +92,7 @@ import org.apache.commons.codec.binary.Hex;
 public class DeviceList extends AppCompatActivity implements  View.OnClickListener  , NavigationView.OnNavigationItemSelectedListener
 {
     private static final String MY_PREFS_NAME = "MyTxtFile";
+    private Handler handler = new Handler();
 
     /***************************************************************************************
     *                           Start Increment and Decrement
@@ -669,6 +670,8 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
        // receiveData();
         //receiveData();
        // receiveData4();
+      //  handler.postDelayed(runnable, 100);
+
     }
 
 
@@ -765,9 +768,59 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
 
 
     public void runDataSendThread(){
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                //what you want to do
 
+                String data="$I0R;";
+                try {
+                    if(btSocket!=null) {
+                        Log.d("checkSendReceive",""+checkSendReceive);
+                        if(checkSendReceive) {
+                            btSocket.getOutputStream().write(data.getBytes());
+                             handler.post(new Runnable() {
+                public void run() {
+                receiveData();
+                    Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show();
+                }
 
-        repeatTimer.schedule(timerTask, 100, 500);//wait 0 ms before doing the action and do it evry 1000ms (1second)
+            });
+
+                        }
+                    }
+                } catch (IOException e) {
+                    Log.d("timer_thread_stopped",""+e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        };
+
+     repeatTimer.schedule(timerTask, 100, 500);//wait 0 ms before doing the action and do it evry 1000ms (1second)
+
+     /*   Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+
+                String data="$I0R;";
+                try {
+                    if(btSocket!=null) {
+                        Log.d("checkSendReceive",""+checkSendReceive);
+                        if(checkSendReceive) {
+                            btSocket.getOutputStream().write(data.getBytes());
+                            receiveData();
+                        }
+                    }
+                } catch (IOException e) {
+                    Log.d("timer_thread_stopped",""+e.getMessage());
+                    e.printStackTrace();
+                }
+                // /* and here comes the "trick" /
+                handler.postDelayed(this, 500);
+            }
+        };
+
+        handler.postDelayed(runnable, 500);*/
 
     }
 
@@ -1692,21 +1745,16 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                // changeUnit();
                 break;
             case R.id.servo:
-                final Thread servo = new Thread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        try {
+                 try {
                             servoOn();
                         }catch (Exception e){}
-                    }
-                });
-                servo.start();
-
                 break;
             case R.id.manual:
+                   try {
+                            manualOn();
+                        }catch (Exception e){}
 
-                final Thread manual = new Thread(new Runnable() {
+               /* final Thread manual = new Thread(new Runnable() {
 
                     @Override
                     public void run() {
@@ -1715,7 +1763,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                         }catch (Exception e){}
                     }
                 });
-                manual.start();
+                manual.start();*/
 
                 break;
             case R.id.timerBtn:
@@ -1758,6 +1806,25 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         return "";
     }
 
+
+    /*
+    final Handler handler = new Handler();
+    Timer timer2 = new Timer();
+    TimerTask testing = new TimerTask() {
+        public void run() {
+            handler.post(new Runnable() {
+
+
+                public void run() {
+                    Toast.makeText(mainActivity.this, "test", Toast.LENGTH_SHORT).show();
+                }
+
+            });
+
+
+        }
+    };
+    timer2.schedule(testing, 1000);*/
 
     public void setTemp(String tempFirst, String tempSecond){
          char[] TxData  = new char[19];;
@@ -2177,26 +2244,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                 connectionStatus.setText(R.string.device_connected);
                 connectionStatus.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.limeGreen));
 
-               timerTask = new TimerTask() {
-                    @Override
-                    public void run() {
-                        //what you want to do
 
-                        String data="$I0R;";
-                        try {
-                            if(btSocket!=null) {
-                                Log.d("checkSendReceive",""+checkSendReceive);
-                                if(checkSendReceive) {
-                                    btSocket.getOutputStream().write(data.getBytes());
-                                    receiveData();
-                                }
-                            }
-                        } catch (IOException e) {
-                            Log.d("timer_thread_stopped",""+e.getMessage());
-                            e.printStackTrace();
-                        }
-                    }
-                };
                 runDataSendThread();
 
 
