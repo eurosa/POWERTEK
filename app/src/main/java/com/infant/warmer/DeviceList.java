@@ -941,7 +941,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                                 setSkinTemp.setText(""+floatCurrentSetTempValue);
                                 heatModeTextView.setText(""+heatModeString);
 
-                                Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show();
+                              //  Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show();
                                 });
                             }
 
