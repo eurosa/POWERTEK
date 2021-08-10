@@ -693,12 +693,12 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
      //   asciiToHex(Integer.toHexString(secondPart));
         int   joindd = (firstPart <<8 ) | (secondPart);
 
-
-        setTemp(hex1,hex2);
-
+     try {
+         setTemp(hex1, hex2);
+         }catch (Exception e) {
+        }
 
         Log.d("decimal_to_hex","hex:"+hex1+""+" secondPart: "+hex2.charAt(0)+" "+c+" "+joindd);
-
 
     }
 
@@ -925,27 +925,22 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                         for(byte b: buffer)
                             sb.append(String.format("%02x ", b));
                         Log.e("data_asd Received Data ", sb.toString());
-             if(bytes==19) {
-                  convertStringToHex(sb.toString(), readMessage);
-                       }
-                     //   hexStringToByteArray(readMessage);
-                        handler.post(new Runnable() {
-                            public void run() {
-                                runOnUiThread(() -> {
-                                DecimalFormat df = new DecimalFormat();
-                                df.setMaximumFractionDigits(2);
-                                tempShow.setText(""+tempValueString);
-                                airTempShow.setText(""+airTempString);
-                                heaterOutput.setText(""+heaterOutputString);
-                                timerShow.setText(""+timerShowString);
-                                setSkinTemp.setText(""+floatCurrentSetTempValue);
-                                heatModeTextView.setText(""+heatModeString);
+                        if(bytes==19) {
+                        convertStringToHex(sb.toString(), readMessage);
+                           }
+                        // hexStringToByteArray(readMessage);
+                        handler.post(() -> runOnUiThread(() -> {
+                        DecimalFormat df = new DecimalFormat();
+                        df.setMaximumFractionDigits(2);
+                        tempShow.setText(""+tempValueString);
+                        airTempShow.setText(""+airTempString);
+                        heaterOutput.setText(""+heaterOutputString);
+                        timerShow.setText(""+timerShowString);
+                        setSkinTemp.setText(""+floatCurrentSetTempValue);
+                        heatModeTextView.setText(""+heatModeString);
 
-                              //  Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show();
-                                });
-                            }
-
-                        });
+                        // Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show();
+                        }));
                         /*runOnUiThread(() -> {
                             DecimalFormat df = new DecimalFormat();
                             df.setMaximumFractionDigits(2);

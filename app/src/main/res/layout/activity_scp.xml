@@ -42,22 +42,20 @@
         </androidx.appcompat.widget.Toolbar>
 
 
-        <ScrollView
+<ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/my_toolbar"
-            >
+            android:layout_below="@+id/my_toolbar">
+
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/LinearLayout"
         android:layout_width="match_parent"
         android:layout_height="106dp"
-
         android:layout_marginTop="10dp"
         android:background="@color/whiteColor"
         android:orientation="horizontal"
@@ -77,9 +75,7 @@
                 android:gravity="center"
                 android:text="@string/skin"
                 android:id="@+id/skinTempTitle">
-
             </TextView>
-
 
             <LinearLayout
                 android:id="@+id/humLayout"
@@ -100,7 +96,7 @@
                     android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="00"
+                    android:text="@string/_000"
                     android:textColor="@color/limeGreen"
                     android:textSize="42sp" />
 
@@ -172,7 +168,7 @@
                             android:layout_marginRight="3dp"
                             android:gravity="center"
                             android:layout_gravity="center"
-                            android:text="00"
+                            android:text="@string/_000"
                             android:textColor="@color/colorBlack"
                             android:textSize="18sp" />
 
@@ -183,7 +179,8 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="1dp"
                             android:layout_marginEnd="6dp"
-                            android:text="@string/xb0_c"                         android:textColor="@color/colorBlack"
+                            android:text="@string/xb0_c"
+                            android:textColor="@color/colorBlack"
                             android:textSize="24sp"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -360,7 +357,7 @@
                             android:layout_height="60dp"
 
                             android:gravity="center"
-                            android:text="100"
+                            android:text="@string/_00"
                             android:textColor="@color/limeGreen"
                             android:textSize="29sp" />
 
@@ -368,7 +365,6 @@
                             android:id="@+id/percentUnit"
                             android:layout_width="70dp"
                             android:layout_height="60dp"
-
                             android:gravity="center"
                             android:text="%"
                             android:textColor="@color/limeGreen"
@@ -446,21 +442,21 @@
             android:gravity="center"
             android:layout_marginRight="51dp"
             android:layout_marginLeft="51dp"
-            android:layout_height="wrap_content">
+            android:textColor="@color/button_text"
+            android:layout_height="60dp">
 
         </Button>
 
         <Button
             android:id="@+id/manual"
             android:layout_width="42dp"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:textSize="12sp"
             android:layout_marginRight="51dp"
             android:layout_marginLeft="51dp"
-
             android:layout_weight="1"
-
             android:gravity="center"
+            android:textColor="@color/button_text"
             android:text="Manual" />
 
     </LinearLayout>
@@ -470,6 +466,7 @@
         android:id="@+id/alarmTitleLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/servoManualLayout"
         android:orientation="horizontal">
 
@@ -479,7 +476,7 @@
             android:id="@+id/alarmTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="20dp"
             android:gravity="end"
             android:layout_weight="1"
             android:textSize="24sp"
@@ -487,27 +484,31 @@
             android:textColor="@color/colorWhite">
         </TextView>
     </LinearLayout>
-
+    <View
+        android:id="@+id/lioUp"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_height="1dp"
+        android:layout_below="@id/alarmTitleLayout"
+        android:background="@color/darkGray"/>
     <LinearLayout
         android:id="@+id/firstRowGasLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:weightSum="2"
-        android:layout_below="@+id/alarmTitleLayout">
+        android:layout_below="@+id/lioUp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="end"
             android:orientation="vertical"
-            android:weightSum="2"
             android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -515,10 +516,11 @@
                 <Button
                     android:id="@+id/changeUnit"
                     android:layout_width="105dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_marginLeft="6dp"
                     android:layout_marginRight="6dp"
                     android:gravity="center"
+                    android:textColor="@color/button_text"
                     android:text="°C/°F"
                     android:textSize="12sp" />
 
@@ -527,37 +529,34 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal">
-
 
                 <Button
                     android:id="@+id/mute"
                     android:layout_width="105dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_marginLeft="6dp"
                     android:layout_marginRight="6dp"
                     android:gravity="center"
                     android:text="Mute"
+                    android:textColor="@color/button_text"
                     android:textSize="12sp" />
 
             </LinearLayout>
 
             <View
                 android:id="@+id/liod"
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:layout_height="1dp"
-                android:layout_below="@id/firstRowGasLayout"
                 android:background="@color/darkGray"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_weight="1"
                 android:gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="30dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
@@ -581,19 +580,25 @@
                     android:layout_width="105dp"
                     android:textSize="12sp"
                     android:gravity="center"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
+                    android:textColor="@color/button_text"
                     android:text="Timer On" />
             </LinearLayout>
-
-
-
         </LinearLayout>
 
+        <View
+            android:id="@+id/vCalSep"
+            android:layout_width="1dp"
+            android:layout_gravity="center"
+            android:layout_height="match_parent"
+            android:background="@color/darkGray"/>
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="end"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="10dp"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -613,8 +618,8 @@
 
                 <TextView
                     android:id="@+id/gasOneStatusIcon"
-                    android:layout_width="33dp"
-                    android:layout_height="33dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_margin="6dp"
                     android:background="@drawable/mybutton"
                     android:gravity="center"
@@ -640,8 +645,8 @@
                 </TextView>
             <TextView
                 android:id="@+id/gasFourStatusIcon"
-                android:layout_width="33dp"
-                android:layout_height="33dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_margin="6dp"
                 android:background="@drawable/mybutton"
                 android:gravity="center"
@@ -669,8 +674,8 @@
 
                 <TextView
                     android:id="@+id/gasTwoStatusIcon"
-                    android:layout_width="33dp"
-                    android:layout_height="33dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_margin="6dp"
                     android:background="@drawable/mybutton"
                     android:textColor="@color/colorBlack"
@@ -697,8 +702,8 @@
 
                 <TextView
                     android:id="@+id/gasFiveStatusIcon"
-                    android:layout_width="33dp"
-                    android:layout_height="33dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_margin="6dp"
                     android:background="@drawable/mybutton"
                     android:gravity="center"
@@ -725,8 +730,8 @@
 
                 <TextView
                     android:id="@+id/gasThreeStatusIcon"
-                    android:layout_width="33dp"
-                    android:layout_height="33dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:layout_margin="6dp"
                     android:background="@drawable/mybutton"
                     android:gravity="center"
@@ -752,8 +757,8 @@
 
                 <TextView
                     android:id="@+id/gasSixStatusIcon"
-                    android:layout_width="33dp"
-                    android:layout_height="33dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:background="@drawable/mybutton"
                     android:gravity="center"
                     android:layout_margin="6dp"
@@ -768,16 +773,16 @@
         android:id="@+id/lio"
         android:layout_width="match_parent"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
         android:layout_height="1dp"
         android:layout_below="@id/firstRowGasLayout"
         android:background="@color/darkGray"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="3dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
+        android:background="@color/colorWhite"
         android:layout_below="@+id/lio"
         android:weightSum="2"
         android:orientation="horizontal">
@@ -787,8 +792,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-
-            android:background="@color/colorBlack"
+            android:background="@color/colorWhite"
             android:src="@drawable/sst_logo_100_0">
 
         </ImageButton>

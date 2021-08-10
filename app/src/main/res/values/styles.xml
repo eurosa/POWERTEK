@@ -55,7 +55,7 @@
     <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">true</item>
-        <item name="colorPrimary">@color/colorPrimary</item><!--No Effect-->
+        <item name="colorPrimary">#0000ff</item><!--No Effect-->
         <item name="colorPrimaryDark">#000c66</item><!--Main back theme color-->
         <item name="colorAccent">#0000ff</item> <!--Action Bar Color-->
         <item name="android:textColor">@color/colorAccent</item>
@@ -106,9 +106,9 @@
 
     <style name="MyMaterialTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Add attributes here -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">#0000ff</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#0000ff</item>
         <item name="textAppearanceButton">@style/AppTextAppearance.Button</item>
     </style>
     <!--To fix rendering in preview -->
