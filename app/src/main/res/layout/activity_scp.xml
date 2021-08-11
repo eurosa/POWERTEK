@@ -467,38 +467,46 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:weightSum="2"
         android:layout_below="@+id/servoManualLayout"
         android:orientation="horizontal">
 
-
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="60dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textSize="24sp"
+            android:textColor="@color/colorWhite">
+        </TextView>
 
         <TextView
             android:id="@+id/alarmTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:gravity="end"
+            android:gravity="center"
             android:layout_weight="1"
             android:textSize="24sp"
             android:text="Alarms"
             android:textColor="@color/colorWhite">
         </TextView>
     </LinearLayout>
-    <View
+   <!-- <View
         android:id="@+id/lioUp"
         android:layout_width="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_gravity="end"
         android:layout_height="1dp"
         android:layout_below="@id/alarmTitleLayout"
-        android:background="@color/darkGray"/>
+        android:background="@color/darkGray"/>-->
     <LinearLayout
         android:id="@+id/firstRowGasLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:weightSum="2"
-        android:layout_below="@+id/lioUp">
+        android:layout_below="@+id/alarmTitleLayout">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -583,6 +591,8 @@
                     android:layout_height="60dp"
                     android:textColor="@color/button_text"
                     android:text="Timer On" />
+
+
             </LinearLayout>
         </LinearLayout>
 
@@ -597,13 +607,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="10dp"
             android:orientation="vertical">
+
+            <View
+                android:id="@+id/lioUpr"
+                android:layout_width="match_parent"
+                android:layout_gravity="end"
+                android:layout_height="1dp"
+                android:background="@color/darkGray"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="end"
+                android:gravity="center"
+                android:weightSum="2"
                 android:orientation="horizontal">
 
                 <TextView
@@ -611,6 +628,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:layout_weight="1"
                     android:text="@string/probe_fail"
                     android:textColor="@color/colorWhite">
 
@@ -620,8 +638,9 @@
                     android:id="@+id/gasOneStatusIcon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+
                     android:layout_margin="6dp"
-                    android:background="@drawable/mybutton"
+                    android:background="@drawable/rounded_textview"
                     android:gravity="center"
 
                     android:textColor="@color/colorBlack" />
@@ -632,7 +651,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="end"
+                android:gravity="center"
+                android:weightSum="2"
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/gasTwo"
@@ -640,6 +660,7 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/colorWhite"
                     android:gravity="center"
+                    android:layout_weight="1"
                     android:text="@string/temp_high">
 
                 </TextView>
@@ -648,7 +669,8 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_margin="6dp"
-                android:background="@drawable/mybutton"
+
+                android:background="@drawable/rounded_textview"
                 android:gravity="center"
 
                 android:textColor="@color/colorBlack"
@@ -659,7 +681,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="end"
+                android:gravity="center"
+                android:weightSum="2"
                 android:orientation="horizontal">
 
                 <TextView
@@ -668,6 +691,7 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/colorWhite"
                     android:gravity="center"
+                    android:layout_weight="1"
                     android:text="@string/temp_low">
 
                 </TextView>
@@ -677,7 +701,8 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_margin="6dp"
-                    android:background="@drawable/mybutton"
+
+                    android:background="@drawable/rounded_textview"
                     android:textColor="@color/colorBlack"
 
                     />
@@ -687,7 +712,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="center"
+                android:weightSum="2"
                 android:orientation="horizontal">
 
                 <TextView
@@ -695,6 +721,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:layout_weight="1"
                     android:text="@string/heater_fail"
                     android:textColor="@color/colorWhite">
 
@@ -705,7 +732,8 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_margin="6dp"
-                    android:background="@drawable/mybutton"
+
+                    android:background="@drawable/rounded_textview"
                     android:gravity="center"
                     android:textColor="@color/colorBlack"
 
@@ -715,7 +743,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="end"
+                android:gravity="center"
+                android:weightSum="2"
                 android:orientation="horizontal">
 
                 <TextView
@@ -724,6 +753,7 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/colorWhite"
                     android:gravity="center"
+                    android:layout_weight="1"
                     android:text="@string/power_fail">
 
                 </TextView>
@@ -733,7 +763,8 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_margin="6dp"
-                    android:background="@drawable/mybutton"
+
+                    android:background="@drawable/rounded_textview"
                     android:gravity="center"
 
                     android:textColor="@color/colorBlack" />
@@ -742,7 +773,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="center"
+                android:weightSum="2"
                 android:orientation="horizontal">
 
                 <TextView
@@ -751,6 +783,7 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/colorWhite"
                     android:gravity="center"
+                    android:layout_weight="1"
                     android:text="@string/system_fail">
 
                 </TextView>
@@ -759,8 +792,9 @@
                     android:id="@+id/gasSixStatusIcon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:background="@drawable/mybutton"
-                    android:gravity="center"
+
+                    android:background="@drawable/rounded_textview"
+                     android:gravity="center"
                     android:layout_margin="6dp"
                     android:textColor="@color/colorBlack" />
             </LinearLayout>

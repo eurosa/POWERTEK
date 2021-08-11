@@ -40,13 +40,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dcfbe793-51c3-4cf6-af46-b956e7d3f469" name="Default Changelist" comment="Commit">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/color/button_text.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/button_background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/mybutton_copy.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/circle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/rounded_textview.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_scp_copy_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
@@ -54,9 +55,10 @@
       <change beforePath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DeviceList.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DeviceList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/mybutton.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/mybutton.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/mybutton_minus.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/mybutton_minus.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/mybutton_plus.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/mybutton_plus.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_scp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_scp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -138,7 +140,7 @@
     <property name="android-custom-viewC:/Users/DIGILINE RANJAN/AppData/Local/Android/Sdk/sources/android-30/android/widget/Switch.java_SELECTED" value="Switch" />
     <property name="android-custom-viewC:/Users/DIGILINE RANJAN/AppData/Local/Android/Sdk/sources/android-30/android/widget/TextView.java_SELECTED" value="TextView" />
     <property name="com.intellij.openapi.externalSystem.service.settings.ExternalSystemGroupConfigurable" value="ALL" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/drawable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/layout" />
     <property name="project.structure.last.edited" value="SDK Location" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -154,11 +156,11 @@
       <recent name="com.bluetooth.scan" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Ranjan_Digiline\Final_21\Android Project\Warmer\app\src\main\res\layout" />
       <recent name="D:\Ranjan_Digiline\Final_21\Android Project\Warmer\app\src\main\res\drawable" />
       <recent name="D:\Ranjan_Digiline\Final_21\Android Project\SCP\app\src\main\res\layout" />
       <recent name="D:\Ranjan_Digiline\Final_21\Android Project\SCP" />
       <recent name="D:\Ranjan_Digiline\Final_21\Android Project\SCP\app\src\main\res\drawable" />
-      <recent name="D:\Ranjan_Digiline\Final_21\Android Project\DisplayTok\app\src\main\res\drawable" />
     </key>
   </component>
   <component name="RunManager">
@@ -239,13 +241,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1598381539889</updated>
-    </task>
-    <task id="LOCAL-00026" summary="commit">
-      <created>1624533897632</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1624533897632</updated>
     </task>
     <task id="LOCAL-00027" summary="commit">
       <created>1624693682795</created>
@@ -583,7 +578,14 @@
       <option name="project" value="LOCAL" />
       <updated>1628488059517</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="Commit">
+      <created>1628584893586</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1628584893587</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -662,10 +664,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="263" y="119" key="AndroidCreateResourceDirectoryDialog/0.0.1366.728@0.0.1366.728" timestamp="1624964153590" />
-    <state x="263" y="118" width="840" height="478" key="AndroidCreateResourceFileDialog" timestamp="1628575100367">
+    <state x="263" y="118" width="840" height="478" key="AndroidCreateResourceFileDialog" timestamp="1628666313080">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="263" y="118" width="840" height="478" key="AndroidCreateResourceFileDialog/0.0.1366.728@0.0.1366.728" timestamp="1628575100367" />
+    <state x="263" y="118" width="840" height="478" key="AndroidCreateResourceFileDialog/0.0.1366.728@0.0.1366.728" timestamp="1628666313080" />
     <state x="527" y="154" key="AndroidCreateXmlResourceDialog" timestamp="1627987182679">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -718,10 +720,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="8" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1627302070343" />
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1628252213139">
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1628584928325">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1628252213139" />
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1628584928325" />
     <state x="499" y="142" key="chooseDestDirectoryDialog" timestamp="1623823949943">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -752,92 +754,92 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DeviceList.java</url>
-          <line>1672</line>
+          <line>1668</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DeviceList.java</url>
-          <line>1674</line>
+          <line>1670</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DeviceList.java</url>
-          <line>1673</line>
+          <line>1669</line>
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DeviceList.java</url>
-          <line>1671</line>
+          <line>1667</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DeviceList.java</url>
-          <line>1827</line>
+          <line>1823</line>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DeviceList.java</url>
-          <line>1826</line>
+          <line>1822</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DeviceList.java</url>
-          <line>2182</line>
+          <line>2178</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DeviceList.java</url>
-          <line>1774</line>
+          <line>1770</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DeviceList.java</url>
-          <line>1775</line>
+          <line>1771</line>
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DeviceList.java</url>
-          <line>1776</line>
+          <line>1772</line>
           <option name="timeStamp" value="40" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DeviceList.java</url>
-          <line>1778</line>
+          <line>1774</line>
           <option name="timeStamp" value="41" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DeviceList.java</url>
-          <line>1779</line>
+          <line>1775</line>
           <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DeviceList.java</url>
-          <line>1780</line>
+          <line>1776</line>
           <option name="timeStamp" value="43" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DeviceList.java</url>
-          <line>1781</line>
+          <line>1777</line>
           <option name="timeStamp" value="44" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DeviceList.java</url>
-          <line>1783</line>
+          <line>1779</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DeviceList.java</url>
-          <line>1782</line>
+          <line>1778</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DeviceList.java</url>
-          <line>1824</line>
+          <line>1820</line>
           <option name="timeStamp" value="53" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DeviceList.java</url>
-          <line>1825</line>
+          <line>1821</line>
           <option name="timeStamp" value="54" />
         </line-breakpoint>
       </breakpoints>

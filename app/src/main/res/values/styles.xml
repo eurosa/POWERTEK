@@ -107,7 +107,7 @@
     <style name="MyMaterialTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Add attributes here -->
         <item name="colorPrimary">#0000ff</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/highGray</item>
         <item name="colorAccent">#0000ff</item>
         <item name="textAppearanceButton">@style/AppTextAppearance.Button</item>
     </style>

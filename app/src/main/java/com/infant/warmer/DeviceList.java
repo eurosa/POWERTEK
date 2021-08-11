@@ -72,7 +72,6 @@ import java.nio.CharBuffer;
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
-import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -80,14 +79,11 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import hearsilent.discreteslider.Dash;
 import hearsilent.discreteslider.DiscreteSlider;
 import hearsilent.discreteslider.Dot;
 import hearsilent.discreteslider.libs.Utils;
-
-import org.apache.commons.codec.binary.Hex;
 
 public class DeviceList extends AppCompatActivity implements  View.OnClickListener  , NavigationView.OnNavigationItemSelectedListener
 {
@@ -127,7 +123,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     boolean listViewFlag=true;
    
     
-    //==============================To connect bluetooth devices===============================
+    //==============================To connect Bluetooth devices===============================
     //-----------------------------Camera------------------------------------------------------
     private static final String LOG_TAG = "JBCamera";
     private static final int REQUEST_CAMERA_PERMISSION = 21;
