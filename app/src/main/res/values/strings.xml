@@ -85,4 +85,13 @@
     <string name="air">AIR</string>
     <string name="heater">HEATER</string>
     <string name="device_connected">Device connected</string>
+    <string name="c_f">°C/°F</string>
+    <string name="mute">Mute</string>
+    <string name="timer">TIMER</string>
+    <string name="timer_on">Timer On</string>
+    <string name="alarms">Alarms</string>
+    <string name="manual">Manual</string>
+    <string name="servo">Servo</string>
+    <string name="mode">MODE</string>
+
 </resources>
