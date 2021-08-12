@@ -110,7 +110,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
      *  Play and pause in only one button - Android
      ****************************************************************************************/
     //  private CameraKitView cameraKitView;
-    //==============================To Connect Bluetooth Device=============================
+    //==============================To Connect Bluetooth Device==============================
     private ProgressDialog progress;
     private boolean isBtConnected = false;
     BluetoothSocket btSocket = null;
