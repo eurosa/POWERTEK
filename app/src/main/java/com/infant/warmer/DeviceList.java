@@ -2161,13 +2161,13 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     public void unitCelCius(){
         celUnit.setText(R.string.xb0_c);
         airTempUnit.setText(R.string.xb0_c);
-        setTempUnit.setText(R.string.xb0_c);
+       // setTempUnit.setText(R.string.xb0_c);
     }
 
     public void unitFarhenheit(){
         celUnit.setText(R.string.xb0_f);
         airTempUnit.setText(R.string.xb0_f);
-        setTempUnit.setText(R.string.xb0_f);
+       // setTempUnit.setText(R.string.xb0_f);
     }
 
 
