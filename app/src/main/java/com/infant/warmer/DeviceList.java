@@ -257,7 +257,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     private boolean checkSendReceive =  true;
     private Button muteBtn;
     private boolean initSetTempCheck = true;
-    private float floatCurrentSetTempValue = 0;
+    private float floatCurrentSetTempValue = 32;
     private char[] TxData;
     private Timer repeatTimer;
     private TimerTask timerTask;

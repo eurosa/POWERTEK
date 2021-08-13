@@ -167,8 +167,8 @@
                             android:id="@+id/setSkinTemp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="3dp"
-                            android:layout_marginRight="3dp"
+                            android:layout_marginStart="3dp"
+                            android:layout_marginEnd="3dp"
                             android:gravity="center"
                             android:layout_gravity="center"
                             android:text="@string/_000"
@@ -328,8 +328,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="3dp"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_heater" />
-
+                    android:src="@drawable/ic_heater"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -353,7 +352,6 @@
                             android:textStyle="bold"
                             android:text="@string/heater"
                             android:textColor="@color/colorBlack"/>
-
                     </LinearLayout>
 
                     <LinearLayout
