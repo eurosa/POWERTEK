@@ -242,12 +242,12 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     private AlertDialog dialog;
     private TextView tempShow,airTempShow,heaterOutput,timerShow,setSkinTemp,heatModeTextView;
     private int tempValue;
-    private String tempValueString;
+    private String tempValueString = "00.0";
     private int skinTemp2,skinTemp1,airTemp6,airTemp7,timer8,heater9,setTemp12,
             setTemp13,heatMode14,timerON,setSkinTempValue,airTemp,unitValue16,mute15;
     private String skinTemp2String;
-    private String heaterOutputString;
-    private String timerShowString;
+    private String heaterOutputString = "00";
+    private String timerShowString = "00";
     private String setSkinTempString;
     private String heatModeString;
     private Button timerONBtn;
@@ -257,11 +257,11 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     private boolean checkSendReceive =  true;
     private Button muteBtn;
     private boolean initSetTempCheck = true;
-    private float floatCurrentSetTempValue;
+    private float floatCurrentSetTempValue = 0;
     private char[] TxData;
     private Timer repeatTimer;
     private TimerTask timerTask;
-    private String airTempString;
+    private String airTempString = "00.0";
 
 
     /***************************************************************************************

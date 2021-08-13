@@ -433,6 +433,7 @@
         android:gravity="center"
         android:layout_below="@id/LinearLayout3"
         android:weightSum="2"
+
         android:background="@color/whiteColor"
         android:orientation="horizontal">
         <Button
@@ -460,7 +461,6 @@
             android:gravity="center"
             android:textColor="@color/button_text"
             android:text="@string/manual" />
-
     </LinearLayout>
 
 
@@ -468,7 +468,7 @@
         android:id="@+id/alarmTitleLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+
         android:weightSum="2"
         android:layout_below="@+id/servoManualLayout"
         android:orientation="horizontal">
@@ -477,18 +477,26 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="60dp"
+            android:layout_marginEnd="84dp"
             android:gravity="center"
             android:layout_weight="1"
             android:textSize="24sp"
             android:textColor="@color/colorWhite">
         </TextView>
+        <View
+            android:id="@+id/vCal"
+            android:layout_width="1dp"
+            android:layout_gravity="center"
+            android:layout_height="match_parent"
+            android:background="@color/darkGray"/>
 
         <TextView
             android:id="@+id/alarmTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:textSize="24sp"
             android:text="@string/alarms"
@@ -540,6 +548,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:layout_marginBottom="15dp"
                 android:orientation="horizontal">
 
                 <Button
@@ -566,8 +575,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:gravity="center"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
