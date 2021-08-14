@@ -56,7 +56,6 @@
         android:layout_width="match_parent"
         android:layout_height="106dp"
         android:layout_marginTop="10dp"
-
         android:orientation="horizontal"
         android:background="@drawable/layout_bg"
         android:weightSum="2">
@@ -286,7 +285,6 @@
                         android:textSize="29sp" />
                     </LinearLayout>
                     </LinearLayout>
-
 
                 </LinearLayout>
 
