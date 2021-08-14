@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".DeviceList">
 
-    <item android:id="@+id/action_searchList"
+  <!--  <item android:id="@+id/action_searchList"
         android:icon="@drawable/ic_share"
         android:orderInCategory="1"
         app:showAsAction="never"
@@ -12,23 +12,22 @@
         android:icon="@drawable/ic_share"
         android:orderInCategory="2"
         app:showAsAction="never"
-        android:title="Connect to a Paired Device"/>
+        android:title="Connect to a Paired Device"/>-->
 
-    <item android:id="@+id/action_disconnect"
-        android:icon="@drawable/ic_share"
-        android:orderInCategory="3"
-        app:showAsAction="never"
-        android:title="Disconnect Bluetooth Device" />
+   <!-- <item android:id="@+id/menu_item"
+        android:icon="@drawable/ic_bluetooth"
+        android:title=""
+        app:showAsAction="always"/>-->
 
-   <!-- <item android:id="@+id/action_share"
-        android:icon="@drawable/ic_share"
-        android:orderInCategory="3"
-        app:showAsAction="never"
-        android:title="Share this App" />
-    <item android:id="@+id/action_about"
-        android:icon="@drawable/ic_share"
-        android:orderInCategory="4"
-        app:showAsAction="never"
-        android:title="About Us" />-->
+    <!-- <item android:id="@+id/action_share"
+         android:icon="@drawable/ic_share"
+         android:orderInCategory="3"
+         app:showAsAction="never"
+         android:title="Share this App" />
+     <item android:id="@+id/action_about"
+         android:icon="@drawable/ic_share"
+         android:orderInCategory="4"
+         app:showAsAction="never"
+         android:title="About Us" />-->
 
 </menu>

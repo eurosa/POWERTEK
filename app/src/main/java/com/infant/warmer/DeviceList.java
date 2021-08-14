@@ -1585,6 +1585,8 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
            case R.id.action_pairedList:
                pairedDevicesList();
                break;
+           case R.id.action_disconnect:
+               Disconnect();
 
         }
         //close navigation drawer
@@ -1641,10 +1643,6 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         switch (id) {
 
 
-            case R.id.action_disconnect:
-                Disconnect();
-
-                return true;
             case R.id.action_searchList:
                 ScanDevicesList();
                 return true;

@@ -23,13 +23,24 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorAccent"
-            android:elevation="4dp"
+
             android:gravity="center"
             android:theme="@style/MyMaterialTheme.Base"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:titleTextColor="#FFFFFF">
 
-            <TextView
+
+            <ImageButton
+                android:id="@+id/bltStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="6dp"
+                android:background="@color/colorPrimary"
+                android:src="@drawable/ic_bluetooth"/>
+
+
+           <TextView
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -37,12 +48,8 @@
                 android:text="@string/infant_warmer"
                 android:textColor="@color/whiteColor"
                 android:textSize="18sp" />
-            <ImageButton
-                android:id="@+id/bltStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:src="@drawable/ic_bluetooth"/>
+
+
 
         </androidx.appcompat.widget.Toolbar>
 
