@@ -138,7 +138,6 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     float currentTempValue = 320;
     Integer maxValue = 380;
     Integer minValue = 320;
-
     final int DisplayValueMin = 0;
     final int DisplayValueMax1 = 99;
     final int DisplayValueMax2 = 999;
@@ -210,6 +209,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     private String name = null;
     private String info_address;
     private TextView clockShow;
+    private ImageButton bltStatus;
 
     /****************************************************************************************
     * End of Navigation Drawer
@@ -262,6 +262,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     private Timer repeatTimer;
     private TimerTask timerTask;
     private String airTempString = "00.0";
+    private TextView tempControl;
 
 
     /***************************************************************************************
@@ -331,7 +332,8 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         //tabLayout.addTab(firstTab); // add  the tab to the TabLayout
         //https://abhiandroid.com/materialdesign/tablayout-example-android-studio.html
 
-        connectionStatus = findViewById(R.id.connectionStatus);
+      //  connectionStatus = findViewById(R.id.connectionStatus);
+        bltStatus = findViewById(R.id.bltStatus);
         IntentFilter filter = new IntentFilter();
         filter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
         filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
@@ -667,7 +669,10 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         //receiveData();
        // receiveData4();
       //  handler.postDelayed(runnable, 100);
-
+        tempControl = findViewById(R.id.tempControl);
+        Typeface face=Typeface.createFromAsset(getAssets(), "font/chakrapetchbold.ttf");
+        tempControl.setTypeface(face);
+        // text.setTypeface(Typeface.createFromAsset(getAssets(), "default.ttf"));
     }
 
 
@@ -2281,9 +2286,9 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                 name = infoBLE.replace(address, "");
                 msg("Device connected.");
                 // getSupportActionBar().setTitle(name);
-                connectionStatus.setText(R.string.device_connected);
-                connectionStatus.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.limeGreen));
-
+               // connectionStatus.setText(R.string.device_connected);
+               // connectionStatus.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.limeGreen));
+                bltStatus.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_bluetooth_green));
 
                 runDataSendThread();
 
@@ -2482,8 +2487,9 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
             else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
                 //Device has disconnected
                 // Toast.makeText(getApplicationContext(),name.trim()+" device disconnected",Toast.LENGTH_LONG).show();
-                connectionStatus.setText("No bluetooth device connected");
-                connectionStatus.setTextColor(ContextCompat.getColor(context, R.color.redColor));
+              //  connectionStatus.setText("No bluetooth device connected");
+//                connectionStatus.setTextColor(ContextCompat.getColor(context, R.color.redColor));
+                bltStatus.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_bluetooth));
             }
         }
     };

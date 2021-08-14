@@ -37,6 +37,12 @@
                 android:text="@string/infant_warmer"
                 android:textColor="@color/whiteColor"
                 android:textSize="18sp" />
+            <ImageButton
+                android:id="@+id/bltStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:src="@drawable/ic_bluetooth"/>
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -56,6 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="106dp"
         android:layout_marginTop="10dp"
+
         android:orientation="horizontal"
         android:background="@drawable/layout_bg"
         android:weightSum="2">
@@ -334,6 +341,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="vertical">
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -371,7 +379,7 @@
                             android:layout_width="20dp"
                             android:layout_height="60dp"
                             android:gravity="center"
-                            android:text="%"
+                            android:text="@string/percent"
                             android:textColor="@color/limeGreen"
                             android:textSize="29sp" />
 
@@ -853,7 +861,7 @@
 </RelativeLayout>
         </ScrollView>
 
-
+<!--
         <TextView
             android:id="@+id/connectionStatus"
             android:layout_width="wrap_content"
@@ -862,7 +870,7 @@
             android:text="@string/no_device_connected"
             android:textColor="@color/redColor"
             android:textSize="24sp">
-        </TextView>
+        </TextView>-->
 
     </RelativeLayout>
 
