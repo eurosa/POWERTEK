@@ -27,7 +27,7 @@
         android:icon="@drawable/ic_pair_bluetooth"/>
 
     <item android:id="@+id/action_disconnect"
-        android:icon="@drawable/ic_share"
+        android:icon="@drawable/ic_disconnect_bluetooth"
         android:gravity="right"
         android:title="Disconnect Bluetooth Device" />
 
