@@ -62,7 +62,7 @@ public class AboutActivity extends AppCompatActivity
 
     public void web(View view)
     {
-        Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.digilinesystems.com/"));
+        Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.sstechnomed.com/"));
         startActivity(webIntent);
     }
 }

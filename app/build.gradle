@@ -79,5 +79,8 @@ dependencies {
 
     implementation 'com.android.support:multidex:1.0.3'
 
+    implementation 'com.jjoe64:graphview:4.2.2'
+
+
 
 }
