@@ -833,8 +833,6 @@
         </LinearLayout>
     </LinearLayout>
 
-
-
     <View
         android:id="@+id/lio"
         android:layout_width="match_parent"
@@ -868,7 +866,7 @@
 </RelativeLayout>
         </ScrollView>
 
-<!--
+        <!--
         <TextView
             android:id="@+id/connectionStatus"
             android:layout_width="wrap_content"
