@@ -25,10 +25,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Table Columns Name
     private static final String KEY_ID = "id";
     private static final String KEY_DEVICE_ID = "devId";
-    private static final String KEY_NO_OF_DIGIT = "digitNo";
-    private static final String KEY_SOUND = "soundType";
-    private static final String KEY_SOUND_ID = "snd_id";
-    private static final String KEY_TYPE = "typeNo";
+
 
 
     Context context;
@@ -49,10 +46,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_DISPLAY_TOKEN + "("
-                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DEVICE_ID + " TEXT,"
-                + KEY_NO_OF_DIGIT + " TEXT ,"+ KEY_SOUND + " TEXT ,"+ KEY_TYPE + " TEXT,"+ KEY_SOUND_ID + " TEXT"+")";
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DEVICE_ID + " TEXT"+")";
         db.execSQL(CREATE_CONTACTS_TABLE);
-        db.execSQL("INSERT INTO " + TABLE_DISPLAY_TOKEN+ "("+KEY_DEVICE_ID+", "+KEY_NO_OF_DIGIT+", "+KEY_SOUND+", "+KEY_TYPE+","+KEY_SOUND_ID+" ) VALUES ('1', 2, 'English',4,2)");
+        db.execSQL("INSERT INTO " + TABLE_DISPLAY_TOKEN+ "("+KEY_DEVICE_ID+" ) VALUES ('1')");
         //db.execSQL("INSERT INTO "+TABLE_DISPLAY_TOKEN+"("+KEY_DEVICE_ID+","+KEY_NO_OF_DIGIT+","+KEY_SOUND,KEY_TYPE+")"+" VALUES(?,?,?,?)", new Object[]{"1", "2","3","4"}");");
         //  db.execSQL("INSERT INTO TABLE_DISPLAY_TOKEN(name, amount) VALUES(?, ?)", new Object[]{"Jerry", moneyOfJerry});
 
@@ -79,10 +75,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_DEVICE_ID, "1");
-        values.put(KEY_NO_OF_DIGIT, "2");
-        values.put(KEY_SOUND, "English");
 
-        values.put(KEY_TYPE, "1");
 
 
         // Inserting Row
@@ -101,10 +94,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_DEVICE_ID, dataModel.getDevId()); // Name
-        values.put(KEY_NO_OF_DIGIT, dataModel.getDigitNo()); //  Email
-        values.put(KEY_SOUND, dataModel.getSoundType()); // Name
-        values.put(KEY_TYPE, dataModel.getTypeNo()); // Name
-
 
 
         // Inserting Row
@@ -200,11 +189,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     //  contact.setID(Integer.parseInt(cursor.getString(0)));
                     // Toast.makeText(context, cursor.getString(cursor.getColumnIndex("devId")), Toast.LENGTH_LONG).show();
                     dataModel.setDevId(cursor.getString(cursor.getColumnIndex("devId")));
-                    dataModel.setDigitNo(cursor.getString(cursor.getColumnIndex("digitNo")));
-                    dataModel.setSoundType(cursor.getString(cursor.getColumnIndex("soundType")));
-                    dataModel.setTypeNo(cursor.getString(cursor.getColumnIndex("typeNo")));
-                    dataModel.setID(Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
-                    dataModel.setSound_id(cursor.getString(cursor.getColumnIndex("snd_id")));
+
 
                 } while (cursor.moveToNext());
             }
@@ -228,7 +213,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         //values.put(KEY_DEVICE_ID, dataModel.getDevId());
         //values.put(KEY_NO_OF_DIGIT, dataModel.getDigitNo());
-        values.put(KEY_SOUND, dataModel.getSoundType());
+
         // values.put(KEY_TYPE, dataModel.getTypeNo());
        // Toast.makeText(context, "Row ID: " + dataModel.getID(), Toast.LENGTH_SHORT).show();
         // updating row
@@ -245,7 +230,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         //values.put(KEY_DEVICE_ID, dataModel.getDevId());
-        values.put(KEY_NO_OF_DIGIT, dataModel.getDigitNo());
+      //  values.put(KEY_NO_OF_DIGIT, dataModel.getDigitNo());
         // values.put(KEY_SOUND, dataModel.getSoundType());
         // values.put(KEY_TYPE, dataModel.getTypeNo());
         // Toast.makeText(context, "Label Eleven: " + dataModel.getCntLabelEleven(), Toast.LENGTH_SHORT).show();
@@ -281,7 +266,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         //values.put(KEY_DEVICE_ID, dataModel.getDevId());
         //values.put(KEY_NO_OF_DIGIT, dataModel.getDigitNo());
-        values.put(KEY_TYPE, dataModel.getTypeNo());
+     //   values.put(KEY_TYPE, dataModel.getTypeNo());
         // values.put(KEY_TYPE, dataModel.getTypeNo());
         // Toast.makeText(context, "Label Eleven: " + dataModel.getCntLabelEleven(), Toast.LENGTH_SHORT).show();
         // updating row
@@ -298,9 +283,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_DEVICE_ID, dataModel.getDevId());
-        values.put(KEY_NO_OF_DIGIT, dataModel.getDigitNo());
-        values.put(KEY_SOUND, dataModel.getSoundType());
-        values.put(KEY_TYPE, dataModel.getTypeNo());
+       // values.put(KEY_NO_OF_DIGIT, dataModel.getDigitNo());
+      //  values.put(KEY_SOUND, dataModel.getSoundType());
+       // values.put(KEY_TYPE, dataModel.getTypeNo());
         // Toast.makeText(context, "Label Eleven: " + dataModel.getCntLabelEleven(), Toast.LENGTH_SHORT).show();
         // updating row
 

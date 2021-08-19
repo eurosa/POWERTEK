@@ -59,6 +59,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.gms.instantapps.InstantApps;
 import com.google.android.material.navigation.NavigationView;
+import com.infant.warmer.mpchart.RealtimeLineChartActivity;
+import com.infant.warmer.mpchart.Singleton;
 import com.kyleduo.switchbutton.SwitchButton;
 
 import java.io.ByteArrayOutputStream;
@@ -66,6 +68,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
@@ -75,6 +78,7 @@ import java.nio.charset.CharsetDecoder;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -263,6 +267,9 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     private TimerTask timerTask;
     private String airTempString = "00.0";
     private TextView tempControl;
+    private Singleton a;
+    private char CF,highTMP,lowTMP,tmerON,systemF,probeF,SET,htrON,htrFAIL,serVO,manUAL,CF2,mutE,amtTIME;
+    private TextView probeFailTxv,tempHighTxv,tempLowTxv,heaterFailTxv,powerFailTxv,systemFailTxv,timerOnTxv;
 
 
     /***************************************************************************************
@@ -293,6 +300,10 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         dataModel = new DataModel();
         dbHandler = new DatabaseHandler(this);
         dbHandler.getQmsUtilityById("1", dataModel);
+
+        a = Singleton.getInstance();
+
+        
         /*********************************************************************************
          * Initialize Database
          *
@@ -311,6 +322,14 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         // setUpView(mSlider2);
         // setUpView(mSlider3);
         // setUpView(mSlider4);
+
+        probeFailTxv = findViewById(R.id.gasOneStatusIcon);//Probe Fail
+        tempHighTxv = findViewById(R.id.gasTwoStatusIcon); // temp High
+        tempLowTxv = findViewById(R.id.gasThreeStatusIcon); // temp Low
+        heaterFailTxv = findViewById(R.id.gasFourStatusIcon); // heater Fail
+        powerFailTxv =  findViewById(R.id.gasFiveStatusIcon); // power Fail
+        systemFailTxv = findViewById(R.id.gasSixStatusIcon); // System fail
+        timerOnTxv  = findViewById(R.id.timerONStatusIcon);
 
         /************************************************************************************
          *
@@ -906,7 +925,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
             {
                 InputStream socketInputStream =  btSocket.getInputStream();
 
-                byte[] buffer = new byte[33];
+                byte[] buffer = new byte[40];
                 int bytes;
 
                 // Keep looping to listen for received messages
@@ -926,7 +945,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                         for(byte b: buffer)
                             sb.append(String.format("%02x ", b));
                         Log.e("data_asd Received Data ", sb.toString());
-                        if(bytes==19) {
+                        if(bytes==21) {
                         convertStringToHex(sb.toString(), readMessage);
                            }
                         // hexStringToByteArray(readMessage);
@@ -940,6 +959,46 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                         setSkinTemp.setText(""+floatCurrentSetTempValue);
                         heatModeTextView.setText(""+heatModeString);
 
+                        a.setSkinTempData(tempValueString);
+
+                        dataModel.setSkinTempValue(tempValueString);
+                         // ------------------ -----------------------
+                            // private TextView probeFailTxv,tempHighTxv,tempLowTxv,heaterFailTxv,powerFailTxv,systemFailTxv;
+                        // private char CF,highTMP,lowTMP,tmerON,systemF,probeF,SET,htrON,htrFAIL,serVO,manUAL,CF2,mutE,amtTIME;
+                        // ***********************8********************88**************8
+
+                            if(probeF =='1'){
+                                 probeFailTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview_red));
+                            }else{
+                                probeFailTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview));
+                            }
+                            if(highTMP =='1'){
+                                tempHighTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview_red));
+                            }else{
+                                tempHighTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview));
+                            }
+                            if(lowTMP =='1'){
+                                tempLowTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview_red));
+                            }else{
+                                tempLowTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview));
+                            }
+                            if(systemF =='1'){
+                                systemFailTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview_red));
+                            }else{
+                                systemFailTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview));
+                            }
+                            if(htrFAIL =='1'){
+                                heaterFailTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview_red));
+                            }else{
+                                heaterFailTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview));
+                            }
+                            if(tmerON =='1'){
+                                timerOnTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview_red));
+                            }else{
+                                timerOnTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview));
+                            }
+
+                        Log.d("skin_temp_update",""+dataModel.getSkinTempValue());
                         // Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show();
                         }));
                         /*runOnUiThread(() -> {
@@ -1069,8 +1128,8 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     {
         Log.d("logging","string length: "+string.length());
         StringBuilder newString = new StringBuilder();
-        arrayHex = new String[19];
-        rawArrayData =new String[19];
+        arrayHex = new String[21];
+        rawArrayData =new String[21];
         arrayHex = string.split("\\s+");
 
         for (int i=0; i<=rawMessage.length(); i++)
@@ -1158,13 +1217,52 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                 heatModeString = String.valueOf("PREHEAT");
             }
 
+         String bin1 =   HexToBinary(arrayHex[18]);
+          CF  = getCharFromString(bin1,1);
+          highTMP  = getCharFromString(bin1,2);
+          lowTMP  = getCharFromString(bin1,3);
+          tmerON  = getCharFromString(bin1,4);
+          systemF  = getCharFromString(bin1,5);
+          probeF  = getCharFromString(bin1,6);
+         String bin2 =   HexToBinary(arrayHex[19]);
+          SET  = getCharFromString(bin2,0);
+          htrON  = getCharFromString(bin2,1);
+          htrFAIL  = getCharFromString(bin2,2);
+          serVO  = getCharFromString(bin2,3);
+          manUAL  = getCharFromString(bin2,4);
+          CF2  = getCharFromString(bin2,5);
+          mutE  = getCharFromString(bin2,6);
+          amtTIME  = getCharFromString(bin2,7);
 
-            Log.i("logging", Arrays.toString(arrayHex)+"  "+Arrays.toString(rawArrayData));
+
+            Log.i("logging", Arrays.toString(arrayHex)+"  "+Arrays.toString(rawArrayData)+" Binary1: "+bin1+" Binary2: "+bin2);
 
 
         //hexStringToByteArray(newString.toString());
         return newString.toString();
     }
+    public  String HexToBinary(String Hex) {
+        String bin =  new BigInteger(Hex, 16).toString(2);
+        int inb = Integer.parseInt(bin);
+        byte b = Byte.parseByte(bin, 2);
+
+        bin = String.format(Locale.getDefault(),"%08d", inb);
+      //  Log.i("logging bit",""+getCharFromString(bin,6));
+        return bin;
+    }
+
+    public int getBit(int position, byte ID)
+    {
+      return  ((ID & ( 1 << position)) >> position);
+       // return (byte) ((ID) & (0x01 << position));
+    }
+
+    public static char getCharFromString(String str, int index)
+    {
+        return str.charAt(index);
+    }
+
+
     public static String hexToBinary(String hex) {
         return new BigInteger(hex, 16).toString(2);
     }
@@ -1585,8 +1683,16 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
            case R.id.action_pairedList:
                pairedDevicesList();
                break;
+           case R.id.graphView:
+               Intent i  = new Intent(this, RealtimeLineChartActivity.class);
+               i.putExtra("MyModel",   dataModel);
+               if (i != null) startActivity(i);
+
+               overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
+               break;
            case R.id.action_disconnect:
                Disconnect();
+               break;
 
         }
         //close navigation drawer

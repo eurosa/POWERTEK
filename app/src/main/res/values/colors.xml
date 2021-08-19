@@ -4,7 +4,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
 
-
+    <color name="darkGray">#a9a9a9</color>
     <color name="colorDeepBlue">#172734</color>
     <color name="colorWhite">#FCFCFC</color>
     <color name="colorBlack">#FF00060B</color>
@@ -24,7 +24,7 @@
     <color name="whiteColor">#FFFFFF</color>
     <color name="babyBlue">#7ec8e3</color>
     <color name="blue">#0000ff</color>
-    <color name="darkGray">#a6a6a6</color>
+    <color name="gray">#a6a6a6</color>
     <color name="solidDarkColor">#7f7f7f</color>
     <color name="solidBlueColor">#00004c</color>
     <color name="silverColor">#C0C0C0</color>

@@ -94,6 +94,11 @@
     <string name="servo">Servo</string>
     <string name="mode">MODE</string>
     <string name="who_we_are">A leader in the health care industry Being a market leader in providing the best health care solutions, SS Technomed is putting down a foundation of quality, loyalty and consistency in the health care industry. We work steadfast to provide constructive technologies (Infant Care Equipment) that improve the patient’s comfort and makes their treatment easy and painless. Providing state-of-the-art equipments and well-organized services at a reasonable cost.</string>
+    <string name="actionAddEntry">Add Entry</string>
+    <string name="actionClearChart">Clear Chart</string>
+    <string name="actionFeedMultiple">Feed Mulitiple</string>
+    <string name="actionSave">Save to Gallery</string>
+    <string name="real_time_graph">Realtime Graph</string>
 
 
 </resources>

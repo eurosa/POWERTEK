@@ -44,6 +44,16 @@
                 android:title="About Us" />
         </menu>
     </item>
+
+    <group
+        android:id="@+id/graph_group"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/graphView"
+            android:title="Show Realtime Graph"
+            android:icon="@drawable/ic_exit_button"/>
+    </group>
+
     <group
         android:id="@+id/group_exit"
         android:checkableBehavior="single">

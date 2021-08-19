@@ -1,10 +1,21 @@
 package com.infant.warmer;
 
-public class DataModel {
+import java.io.Serializable;
+
+public class DataModel implements Serializable {
 
     // private variables
     public int _id;
 
+    public String getSkinTempValue() {
+        return skinTempValue;
+    }
+
+    public void setSkinTempValue(String skinTempValue) {
+        this.skinTempValue = skinTempValue;
+    }
+
+    public String skinTempValue;
 
     public String getDevId() {
         return devId;

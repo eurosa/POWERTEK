@@ -607,6 +607,7 @@
                     android:gravity="center"
                     android:text="@string/timer"/>
 
+
                 <TextView
                     android:id="@+id/timerShow"
                     android:layout_width="match_parent"
@@ -616,6 +617,7 @@
                     android:text="@string/_00"
                     android:textSize="24sp" />
 
+
                 <Button
                     android:id="@+id/timerBtn"
                     android:layout_width="105dp"
@@ -624,6 +626,14 @@
                     android:layout_height="60dp"
                     android:textColor="@color/button_text"
                     android:text="@string/timer_on" />
+                <TextView
+                    android:id="@+id/timerONStatusIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/rounded_textview"
+
+                    android:textColor="@color/colorBlack" />
+
             </LinearLayout>
         </LinearLayout>
 
@@ -670,7 +680,6 @@
                     android:id="@+id/gasOneStatusIcon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-
                     android:layout_margin="6dp"
                     android:background="@drawable/rounded_textview"
                     android:gravity="center"
@@ -697,7 +706,7 @@
 
                 </TextView>
             <TextView
-                android:id="@+id/gasFourStatusIcon"
+                android:id="@+id/gasTwoStatusIcon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_margin="6dp"
@@ -729,7 +738,7 @@
                 </TextView>
 
                 <TextView
-                    android:id="@+id/gasTwoStatusIcon"
+                    android:id="@+id/gasThreeStatusIcon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_margin="6dp"
@@ -760,7 +769,7 @@
                 </TextView>
 
                 <TextView
-                    android:id="@+id/gasFiveStatusIcon"
+                    android:id="@+id/gasFourStatusIcon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_margin="6dp"
@@ -790,7 +799,7 @@
                 </TextView>
 
                 <TextView
-                    android:id="@+id/gasThreeStatusIcon"
+                    android:id="@+id/gasFiveStatusIcon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_margin="6dp"
@@ -829,6 +838,8 @@
                     android:layout_margin="6dp"
                     android:textColor="@color/colorBlack" />
             </LinearLayout>
+
+
         </LinearLayout>
     </LinearLayout>
 

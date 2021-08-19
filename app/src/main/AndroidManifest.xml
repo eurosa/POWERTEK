@@ -36,6 +36,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.infant.warmer.mpchart.RealtimeLineChartActivity"
+            android:theme="@style/MyMaterialTheme.Base"/>
         <activity
             android:screenOrientation="fullSensor"
             android:name="com.infant.warmer.DeviceList"
