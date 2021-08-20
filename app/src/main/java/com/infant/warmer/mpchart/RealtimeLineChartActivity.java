@@ -2,18 +2,16 @@
 package com.infant.warmer.mpchart;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.WindowManager;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
@@ -22,28 +20,24 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.Legend.LegendForm;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.components.YAxis.AxisDependency;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.infant.warmer.DataModel;
 import com.infant.warmer.R;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.github.mikephil.charting.components.YAxis.AxisDependency.*;
+import static com.github.mikephil.charting.components.YAxis.AxisDependency.LEFT;
 
 
-public class RealtimeLineChartActivity extends DemoBase implements
-        OnChartValueSelectedListener {
+public class RealtimeLineChartActivity extends DemoBase
+{
 
     private LineChart chart;
     private TimerTask timerTask;
@@ -54,11 +48,11 @@ public class RealtimeLineChartActivity extends DemoBase implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-     //   getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-       //         WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //   getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        //         WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_realtime_linechart);
         repeatTimer = new Timer();
-       // setTitle("RealtimeLineChartActivity");
+        // setTitle("RealtimeLineChartActivity");
         b = Singleton.getInstance();
 
         //=========================Adding Toolbar in android layout=======================================
@@ -80,7 +74,7 @@ public class RealtimeLineChartActivity extends DemoBase implements
         runDataSendThread();
 
         chart = findViewById(R.id.chart1);
-        chart.setOnChartValueSelectedListener(this);
+
 
         // enable description text
         chart.getDescription().setEnabled(true);
@@ -111,12 +105,12 @@ public class RealtimeLineChartActivity extends DemoBase implements
         // modify the legend ...
         l.setForm(LegendForm.LINE);
         l.setTypeface(tfLight);
-        l.setTextColor(Color.WHITE);
+        l.setTextColor(Color.RED);
 
         XAxis xl = chart.getXAxis();
         xl.setTypeface(tfLight);
         xl.setPosition(XAxis.XAxisPosition.BOTTOM);// Bottom position of changing time value
-        xl.setTextColor(Color.WHITE);
+        xl.setTextColor(Color.RED);
         // xl.setGranularity(1f); // only intervals of 1 day
         xl.setDrawGridLines(true);
 
@@ -125,9 +119,14 @@ public class RealtimeLineChartActivity extends DemoBase implements
 
         YAxis leftAxis = chart.getAxisLeft();
         leftAxis.setTypeface(tfLight);
-        leftAxis.setTextColor(Color.WHITE);
+        leftAxis.setTextColor(Color.RED);
+
         leftAxis.setAxisMaximum(100f);
         leftAxis.setAxisMinimum(0f);
+        leftAxis.setTextSize(15);
+
+        leftAxis.setCenterAxisLabels(true);
+        leftAxis.setLabelCount(11, /*force: */true);
         leftAxis.setDrawGridLines(true);
 
         YAxis rightAxis = chart.getAxisRight();
@@ -165,21 +164,22 @@ public class RealtimeLineChartActivity extends DemoBase implements
     private List<Entry> getIncomeEntries() {
         ArrayList<Entry> incomeEntries = new ArrayList<>();
 
-        incomeEntries.add(new Entry(1, 1));
-        incomeEntries.add(new Entry(2, 2));
-        incomeEntries.add(new Entry(3, 3));
-        incomeEntries.add(new Entry(4, 4));
-        incomeEntries.add(new Entry(5, 5));
-        incomeEntries.add(new Entry(6, 6));
-        incomeEntries.add(new Entry(7, 7));
-        incomeEntries.add(new Entry(8, 8));
-        incomeEntries.add(new Entry(9, 9));
-        incomeEntries.add(new Entry(10, 10));
-        incomeEntries.add(new Entry(11, 11));
-        incomeEntries.add(new Entry(12, 12));
+        incomeEntries.add(new Entry(0, 5));
+        incomeEntries.add(new Entry(1, 10));
+        incomeEntries.add(new Entry(2, 15));
+        incomeEntries.add(new Entry(3, 20));
+        incomeEntries.add(new Entry(4, 25));
+        incomeEntries.add(new Entry(5, 30));
+        incomeEntries.add(new Entry(6, 35));
+        incomeEntries.add(new Entry(7, 40));
+        incomeEntries.add(new Entry(8, 45));
+        incomeEntries.add(new Entry(9, 50));
+        incomeEntries.add(new Entry(10, 55));
+        incomeEntries.add(new Entry(11, 60));
         return incomeEntries.subList(0, 12);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void addEntry() {
 
         LineData data = chart.getData();
@@ -190,7 +190,7 @@ public class RealtimeLineChartActivity extends DemoBase implements
             // set.addEntry(...); // can be called as well
 
             if (set == null) {
-                set = createSet();
+                set = createSet1();
                 data.addDataSet(set);
             }
 
@@ -224,19 +224,19 @@ public class RealtimeLineChartActivity extends DemoBase implements
                 try {
 
 
-                            final Thread receive = new Thread(() -> {
-                                try {
-                                    runOnUiThread(new Runnable(){
-                                        @Override
-                                        public void run(){
-                                            Log.d("skin_temp_update real",""+dataModel.getSkinTempValue()+"  "+b.getSkinTempData());
+                    final Thread receive = new Thread(() -> {
+                        try {
+                            runOnUiThread(new Runnable(){
+                                @Override
+                                public void run(){
+                                    Log.d("skin_temp_update real",""+dataModel.getSkinTempValue()+"  "+b.getSkinTempData());
 
-                                            feedMultiple();
-                                        }
-                                    });
-                                }catch (Exception e){}
+                                    feedMultiple();
+                                }
                             });
-                            receive.start();
+                        }catch (Exception e){}
+                    });
+                    receive.start();
 
 
 
@@ -276,6 +276,7 @@ public class RealtimeLineChartActivity extends DemoBase implements
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void addData() {
 
         LineData data = chart.getData();
@@ -283,14 +284,19 @@ public class RealtimeLineChartActivity extends DemoBase implements
         if (data != null) {
 
             ILineDataSet set = data.getDataSetByIndex(0);
+            ILineDataSet set2 = data.getDataSetByIndex(1);
             // set.addEntry(...); // can be called as well
 
             if (set == null) {
-                set = createSet();
+                set = createSet1();
+                set2 = createSet2();
                 data.addDataSet(set);
+                data.addDataSet(set2);
             }
 
-            data.addEntry(new Entry(set.getEntryCount(), Float.parseFloat(dataModel.getSkinTempValue())), 0);
+            data.addEntry(new Entry(set.getEntryCount(), Float.parseFloat(b.getSkinTempData())), 0);
+            data.addEntry(new Entry(set2.getEntryCount(), Float.parseFloat(b.getAirtTempData())), 1);
+
             data.notifyDataChanged();
 
             // let the chart know it's data has changed
@@ -310,15 +316,41 @@ public class RealtimeLineChartActivity extends DemoBase implements
     }
 
 
-    private LineDataSet createSet() {
-
-        LineDataSet set = new LineDataSet(getIncomeEntries(), "Dynamic Data");
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private LineDataSet createSet1() {
+        // LineDataSet set = new LineDataSet(getIncomeEntries(), "Dynamic Data");
+        LineDataSet set = new LineDataSet(null, "Skin Temp");
         set.setAxisDependency(LEFT);
         set.setColor(ColorTemplate.getHoloBlue());
         set.setCircleColor(Color.WHITE);
         set.setLineWidth(2f);
         set.setCircleRadius(4f);
         set.setFillAlpha(65);
+
+        // set.setValueFormatter(new IndexAxisValueFormatter(weekdays));
+        set.setFillColor(ColorTemplate.getHoloBlue());
+        set.setHighLightColor(Color.rgb(244, 117, 117));
+        set.setValueTextColor(Color.RED);
+        set.setValueTextSize(9f);
+        set.setDrawValues(true);
+        return set;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private LineDataSet createSet2() {
+        // LineDataSet set = new LineDataSet(getIncomeEntries(), "Dynamic Data");
+
+
+        // create a dataset and give it a type
+        LineDataSet set  = new LineDataSet(null, "Air Temp");
+        set.setAxisDependency(LEFT);
+        set.setColor(Color.YELLOW);
+        set.setCircleColor(Color.WHITE);
+        set.setLineWidth(2f);
+        set.setCircleRadius(4f);
+        set.setFillAlpha(65);
+
+        // set.setValueFormatter(new IndexAxisValueFormatter(weekdays));
         set.setFillColor(ColorTemplate.getHoloBlue());
         set.setHighLightColor(Color.rgb(244, 117, 117));
         set.setValueTextColor(Color.RED);
@@ -336,6 +368,7 @@ public class RealtimeLineChartActivity extends DemoBase implements
 
         final Runnable runnable = new Runnable() {
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void run() {
                 addData();
@@ -346,17 +379,17 @@ public class RealtimeLineChartActivity extends DemoBase implements
 
             @Override
             public void run() {
-               // for (int i = 0; i < 1000; i++) {
+                // for (int i = 0; i < 1000; i++) {
 
-                    // Don't generate garbage runnables inside the loop.
-                    runOnUiThread(runnable);
+                // Don't generate garbage runnables inside the loop.
+                runOnUiThread(runnable);
 
-                    try {
-                        Thread.sleep(25);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-               // }
+                try {
+                    Thread.sleep(25);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                // }
             }
         });
 
@@ -369,6 +402,7 @@ public class RealtimeLineChartActivity extends DemoBase implements
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -404,15 +438,7 @@ public class RealtimeLineChartActivity extends DemoBase implements
         saveToGallery(chart, "RealtimeLineChartActivity");
     }
 
-    @Override
-    public void onValueSelected(Entry e, Highlight h) {
-        Log.i("Entry selected", e.toString());
-    }
 
-    @Override
-    public void onNothingSelected() {
-        Log.i("Nothing selected", "Nothing selected.");
-    }
 
     @Override
     protected void onPause() {

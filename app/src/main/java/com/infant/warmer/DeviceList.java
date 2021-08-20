@@ -960,6 +960,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                         heatModeTextView.setText(""+heatModeString);
 
                         a.setSkinTempData(tempValueString);
+                        a.setAirtTempData(airTempString);
 
                         dataModel.setSkinTempValue(tempValueString);
                          // ------------------ -----------------------

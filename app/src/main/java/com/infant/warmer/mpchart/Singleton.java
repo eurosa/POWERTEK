@@ -14,6 +14,16 @@ public class Singleton {
 
     public String skinTempData;
 
+    public String getAirtTempData() {
+        return airtTempData;
+    }
+
+    public void setAirtTempData(String airtTempData) {
+        this.airtTempData = airtTempData;
+    }
+
+    public String airtTempData;
+
     private Singleton(){
 
     }
