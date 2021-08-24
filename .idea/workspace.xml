@@ -77,7 +77,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[SerialNumber@192.168.1.12:5555]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[VirtualDevicePath@C:\Users\DIGILINE RANJAN\.android\avd\Pixel_XL_API_30.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -724,22 +724,22 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="460" y="69" key="Github.UntrackedFilesDialog/0.0.1366.728@0.0.1366.728" timestamp="1625312902533" />
-    <state width="1345" height="158" key="GridCell.Tab.0.bottom" timestamp="1629721526647">
+    <state width="1345" height="76" key="GridCell.Tab.0.bottom" timestamp="1629780520442">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="158" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1629721526647" />
-    <state width="1345" height="158" key="GridCell.Tab.0.center" timestamp="1629721526647">
+    <state width="1345" height="76" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1629780520442" />
+    <state width="1345" height="76" key="GridCell.Tab.0.center" timestamp="1629780520442">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="158" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1629721526647" />
-    <state width="1345" height="158" key="GridCell.Tab.0.left" timestamp="1629721526647">
+    <state width="1345" height="76" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1629780520442" />
+    <state width="1345" height="76" key="GridCell.Tab.0.left" timestamp="1629780520442">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="158" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1629721526647" />
-    <state width="1345" height="158" key="GridCell.Tab.0.right" timestamp="1629721526647">
+    <state width="1345" height="76" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1629780520442" />
+    <state width="1345" height="76" key="GridCell.Tab.0.right" timestamp="1629780520442">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="158" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1629721526647" />
+    <state width="1345" height="76" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1629780520442" />
     <state x="356" y="68" key="NewModule_or_Project.wizard" timestamp="1628842760954">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
