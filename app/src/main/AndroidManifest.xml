@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.infant.warmer">
 
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
+
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -16,6 +15,7 @@
     <uses-feature android:name="android.hardware.camera"/>
     <uses-feature android:name="android.hardware.camera.autofocus" />-->
 
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/sst_logo_200_100"
@@ -38,6 +38,12 @@
         </activity>
         <activity android:name="com.infant.warmer.mpchart.RealtimeLineChartActivity"
             android:theme="@style/MyMaterialTheme.Base"/>
+
+        <activity android:name="com.infant.warmer.mpchart.LineChartTime"
+            android:theme="@style/MyMaterialTheme.Base"/>
+        <activity android:name="com.infant.warmer.mpchart.RealtimeCharteMultiLine"
+            android:theme="@style/MyMaterialTheme.Base"/>
+
         <activity
             android:screenOrientation="fullSensor"
             android:name="com.infant.warmer.DeviceList"

@@ -7,6 +7,7 @@ public class DataModel implements Serializable {
     // private variables
     public int _id;
 
+
     public String getSkinTempValue() {
         return skinTempValue;
     }
@@ -17,55 +18,25 @@ public class DataModel implements Serializable {
 
     public String skinTempValue;
 
-    public String getDevId() {
-        return devId;
+    public String getCurrent_time() {
+        return current_time;
     }
 
-    public void setDevId(String devId) {
-        this.devId = devId;
+    public void setCurrent_time(String current_time) {
+        this.current_time = current_time;
     }
 
-    public String getDigitNo() {
-        return digitNo;
+    public String current_time;
+
+    public String getAirTempValue() {
+        return airTempValue;
     }
 
-    public void setDigitNo(String digitNo) {
-        this.digitNo = digitNo;
+    public void setAirTempValue(String airTempValue) {
+        this.airTempValue = airTempValue;
     }
 
-    public String getSoundType() {
-        return soundType;
-    }
-
-    public void setSoundType(String soundType) {
-        this.soundType = soundType;
-    }
-
-    public String getTypeNo() {
-        return typeNo;
-    }
-
-    public void setTypeNo(String typeNo) {
-        this.typeNo = typeNo;
-    }
-
-    public String devId;
-    public String digitNo;
-    public String soundType;
-    public String typeNo;
-
-    public String getSound_id() {
-        return sound_id;
-    }
-
-    public void setSound_id(String sound_id) {
-        this.sound_id = sound_id;
-    }
-
-    public  String sound_id;
-
-
-
+    public String airTempValue;
 
 
     public DataModel() {

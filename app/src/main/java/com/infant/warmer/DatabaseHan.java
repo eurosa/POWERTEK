@@ -100,10 +100,10 @@ public class DatabaseHan extends SQLiteOpenHelper {
     public void Add_QmsUtility(DataModel dataModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_DEVICE_ID, dataModel.getDevId()); // Name
-        values.put(KEY_NO_OF_DIGIT, dataModel.getDigitNo()); //  Email
-        values.put(KEY_SOUND, dataModel.getSoundType()); // Name
-        values.put(KEY_TYPE, dataModel.getTypeNo()); // Name
+    //    values.put(KEY_DEVICE_ID, dataModel.getDevId()); // Name
+    //    values.put(KEY_NO_OF_DIGIT, dataModel.getDigitNo()); //  Email
+      //  values.put(KEY_SOUND, dataModel.getSoundType()); // Name
+      //  values.put(KEY_TYPE, dataModel.getTypeNo()); // Name
 
 
 
@@ -199,12 +199,12 @@ public class DatabaseHan extends SQLiteOpenHelper {
                     // DataModel contact = new DataModel();
                     //  contact.setID(Integer.parseInt(cursor.getString(0)));
                     // Toast.makeText(context, cursor.getString(cursor.getColumnIndex("devId")), Toast.LENGTH_LONG).show();
-                    dataModel.setDevId(cursor.getString(cursor.getColumnIndex("devId")));
-                    dataModel.setDigitNo(cursor.getString(cursor.getColumnIndex("digitNo")));
-                    dataModel.setSoundType(cursor.getString(cursor.getColumnIndex("soundType")));
-                    dataModel.setTypeNo(cursor.getString(cursor.getColumnIndex("typeNo")));
+                  //  dataModel.setDevId(cursor.getString(cursor.getColumnIndex("devId")));
+                   // dataModel.setDigitNo(cursor.getString(cursor.getColumnIndex("digitNo")));
+                   // dataModel.setSoundType(cursor.getString(cursor.getColumnIndex("soundType")));
+                   // dataModel.setTypeNo(cursor.getString(cursor.getColumnIndex("typeNo")));
                     dataModel.setID(Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
-                    dataModel.setSound_id(cursor.getString(cursor.getColumnIndex("snd_id")));
+                   // dataModel.setSound_id(cursor.getString(cursor.getColumnIndex("snd_id")));
 
                 } while (cursor.moveToNext());
             }
@@ -228,7 +228,7 @@ public class DatabaseHan extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         //values.put(KEY_DEVICE_ID, dataModel.getDevId());
         //values.put(KEY_NO_OF_DIGIT, dataModel.getDigitNo());
-        values.put(KEY_SOUND, dataModel.getSoundType());
+        //values.put(KEY_SOUND, dataModel.getSoundType());
         // values.put(KEY_TYPE, dataModel.getTypeNo());
        // Toast.makeText(context, "Row ID: " + dataModel.getID(), Toast.LENGTH_SHORT).show();
         // updating row
@@ -245,7 +245,7 @@ public class DatabaseHan extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         //values.put(KEY_DEVICE_ID, dataModel.getDevId());
-        values.put(KEY_NO_OF_DIGIT, dataModel.getDigitNo());
+      //  values.put(KEY_NO_OF_DIGIT, dataModel.getDigitNo());
         // values.put(KEY_SOUND, dataModel.getSoundType());
         // values.put(KEY_TYPE, dataModel.getTypeNo());
         // Toast.makeText(context, "Label Eleven: " + dataModel.getCntLabelEleven(), Toast.LENGTH_SHORT).show();
@@ -260,7 +260,7 @@ public class DatabaseHan extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_DEVICE_ID, dataModel.getDevId());
+    //    values.put(KEY_DEVICE_ID, dataModel.getDevId());
         //values.put(KEY_NO_OF_DIGIT, dataModel.getDigitNo());
        // values.put(KEY_SOUND, dataModel.getSoundType());
         // values.put(KEY_TYPE, dataModel.getTypeNo());
@@ -281,7 +281,7 @@ public class DatabaseHan extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         //values.put(KEY_DEVICE_ID, dataModel.getDevId());
         //values.put(KEY_NO_OF_DIGIT, dataModel.getDigitNo());
-        values.put(KEY_TYPE, dataModel.getTypeNo());
+        //values.put(KEY_TYPE, dataModel.getTypeNo());
         // values.put(KEY_TYPE, dataModel.getTypeNo());
         // Toast.makeText(context, "Label Eleven: " + dataModel.getCntLabelEleven(), Toast.LENGTH_SHORT).show();
         // updating row
@@ -297,10 +297,10 @@ public class DatabaseHan extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_DEVICE_ID, dataModel.getDevId());
-        values.put(KEY_NO_OF_DIGIT, dataModel.getDigitNo());
-        values.put(KEY_SOUND, dataModel.getSoundType());
-        values.put(KEY_TYPE, dataModel.getTypeNo());
+      //  values.put(KEY_DEVICE_ID, dataModel.getDevId());
+      //  values.put(KEY_NO_OF_DIGIT, dataModel.getDigitNo());
+      //  values.put(KEY_SOUND, dataModel.getSoundType());
+       // values.put(KEY_TYPE, dataModel.getTypeNo());
         // Toast.makeText(context, "Label Eleven: " + dataModel.getCntLabelEleven(), Toast.LENGTH_SHORT).show();
         // updating row
 

@@ -59,6 +59,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.gms.instantapps.InstantApps;
 import com.google.android.material.navigation.NavigationView;
+import com.infant.warmer.mpchart.LineChartTime;
+import com.infant.warmer.mpchart.RealtimeCharteMultiLine;
 import com.infant.warmer.mpchart.RealtimeLineChartActivity;
 import com.infant.warmer.mpchart.Singleton;
 import com.kyleduo.switchbutton.SwitchButton;
@@ -76,8 +78,10 @@ import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Set;
 import java.util.Timer;
@@ -270,6 +274,8 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     private Singleton a;
     private char CF,highTMP,lowTMP,tmerON,systemF,probeF,SET,htrON,htrFAIL,serVO,manUAL,CF2,mutE,amtTIME;
     private TextView probeFailTxv,tempHighTxv,tempLowTxv,heaterFailTxv,powerFailTxv,systemFailTxv,timerOnTxv;
+    private TimerTask timerDBTask;
+    private Timer repeatDbTimer;
 
 
     /***************************************************************************************
@@ -285,6 +291,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
 //----------------------------Grant storage permission--------------------------------------------------
         setAnimation();
         repeatTimer = new Timer();
+        repeatDbTimer = new Timer();
         /***************************************************************************************
          *   Play and pause in only one button - Android
          ****************************************************************************************/
@@ -299,7 +306,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
          * *******************************************************************************/
         dataModel = new DataModel();
         dbHandler = new DatabaseHandler(this);
-        dbHandler.getQmsUtilityById("1", dataModel);
+       // dbHandler.getQmsUtilityById("1", dataModel);
 
         a = Singleton.getInstance();
 
@@ -692,6 +699,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         Typeface face=Typeface.createFromAsset(getAssets(), "font/chakrapetchbold.ttf");
         tempControl.setTypeface(face);
         // text.setTypeface(Typeface.createFromAsset(getAssets(), "default.ttf"));
+        saveDataInDb();
     }
 
 
@@ -962,7 +970,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                         a.setSkinTempData(tempValueString);
                         a.setAirtTempData(airTempString);
 
-                        dataModel.setSkinTempValue(tempValueString);
+                       // dataModel.setSkinTempValue(tempValueString);
                          // ------------------ -----------------------
                             // private TextView probeFailTxv,tempHighTxv,tempLowTxv,heaterFailTxv,powerFailTxv,systemFailTxv;
                         // private char CF,highTMP,lowTMP,tmerON,systemF,probeF,SET,htrON,htrFAIL,serVO,manUAL,CF2,mutE,amtTIME;
@@ -999,7 +1007,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                                 timerOnTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview));
                             }
 
-                        Log.d("skin_temp_update",""+dataModel.getSkinTempValue());
+                       // Log.d("skin_temp_update",""+dataModel.getSkinTempValue());
                         // Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show();
                         }));
                         /*runOnUiThread(() -> {
@@ -1366,7 +1374,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
 
 
 
-    private void sendData()
+    /*private void sendData()
     {
         if (btSocket!=null)
         {
@@ -1403,7 +1411,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                 msg("Error");
             }
         }
-    }
+    }*/
 
     private String fixedLengthString(String textData , int length)
     {
@@ -1688,7 +1696,6 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                Intent i  = new Intent(this, RealtimeLineChartActivity.class);
                i.putExtra("MyModel",   dataModel);
                if (i != null) startActivity(i);
-
                overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
                break;
            case R.id.action_disconnect:
@@ -2423,6 +2430,63 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
 
         }
     }
+
+
+
+    public void saveDataInDb(){
+        timerDBTask = new TimerTask() {
+            @Override
+            public void run() {
+                //what you want to do
+
+
+                try {
+                                String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
+                               // dataModel.setSkinTempValue(a.getSkinTempData());
+                                //dataModel.setAirTempValue(a.getAirtTempData());
+                                if(a.getAirtTempData()!=null && a.getSkinTempData()!=null){
+
+                                dbHandler.AddData(a.getSkinTempData(),a.getAirtTempData(),currentTime);
+                                }
+
+                                Log.d("skin_temp_update main",""+a.getSkinTempData()+"  "+a.getAirtTempData()+ "  "+currentTime);
+
+
+                } catch (Exception e) {
+                    Log.d("timer_thread_stopped",""+e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        repeatDbTimer.schedule(timerDBTask, 1000, 60000);//wait 0 ms before doing the action and do it evry 1000ms (1second)
+
+     /*   Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+
+                String data="$I0R;";
+                try {
+                    if(btSocket!=null) {
+                        Log.d("checkSendReceive",""+checkSendReceive);
+                        if(checkSendReceive) {
+                            btSocket.getOutputStream().write(data.getBytes());
+                            receiveData();
+                        }
+                    }
+                } catch (IOException e) {
+                    Log.d("timer_thread_stopped",""+e.getMessage());
+                    e.printStackTrace();
+                }
+                // /* and here comes the "trick" /
+                handler.postDelayed(this, 500);
+            }
+        };
+
+        handler.postDelayed(runnable, 500);*/
+
+    }
+
 
 
 

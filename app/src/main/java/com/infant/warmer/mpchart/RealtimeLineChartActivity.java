@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.Legend.LegendForm;
 import com.github.mikephil.charting.components.XAxis;
@@ -23,15 +24,27 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.infant.warmer.DataModel;
+import com.infant.warmer.DatabaseHandler;
 import com.infant.warmer.R;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import static com.github.mikephil.charting.components.YAxis.AxisDependency.LEFT;
 
@@ -44,7 +57,12 @@ public class RealtimeLineChartActivity extends DemoBase
     private Timer repeatTimer;
     private DataModel dataModel;
     private Singleton b;
+    private DatabaseHandler dbHandler;
+    private List<Entry> incomeEntries,incomeEntries2;
+    private HashMap<String,String> xAxisValues;
+    private ArrayList<String> xAxisValues34;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,12 +88,15 @@ public class RealtimeLineChartActivity extends DemoBase
 
 
         dataModel = (DataModel) getIntent().getSerializableExtra("MyModel");
+        dbHandler = new DatabaseHandler(this);
 
-        runDataSendThread();
+
 
         chart = findViewById(R.id.chart1);
 
-
+       xAxisValues34 = new ArrayList<>(Arrays.asList("Jan", "Feb", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"));
+     //   incomeEntries = getIncomeEntries();
+      //  incomeEntries2 = getIncomeEntries2();
         // enable description text
         chart.getDescription().setEnabled(true);
 
@@ -111,9 +132,15 @@ public class RealtimeLineChartActivity extends DemoBase
         xl.setTypeface(tfLight);
         xl.setPosition(XAxis.XAxisPosition.BOTTOM);// Bottom position of changing time value
         xl.setTextColor(Color.RED);
+       // chart.getXAxis().setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(xAxisValues));
         // xl.setGranularity(1f); // only intervals of 1 day
         xl.setDrawGridLines(true);
 
+
+        xl.setGranularity(1f); // one hour
+
+        // xl.setValueFormatter(new GraphXAxisValueFormatter());
+        // xl.setValueFormatter(new IndexAxisValueFormatter(weekdays));
         xl.setAvoidFirstLastClipping(true);
         xl.setEnabled(true);
 
@@ -126,12 +153,16 @@ public class RealtimeLineChartActivity extends DemoBase
         leftAxis.setTextSize(15);
 
         leftAxis.setCenterAxisLabels(true);
-        leftAxis.setLabelCount(11, /*force: */true);
-        leftAxis.setDrawGridLines(true);
+        leftAxis.setLabelCount(11, true);
+        //leftAxis.setDrawGridLines(true);
 
         YAxis rightAxis = chart.getAxisRight();
 
-        rightAxis.setEnabled(false);
+       // rightAxis.setEnabled(false);
+
+        runDataSendThread();
+
+       // plotStrignLAbelCOunt();
 
     }
     public void setChartProperties() {
@@ -161,57 +192,24 @@ public class RealtimeLineChartActivity extends DemoBase
         //dataSet.setColor(R.color.graphLineColor);
     }
 
-    private List<Entry> getIncomeEntries() {
+    private List<Entry> getIncomeEntries(float x, float y) {
         ArrayList<Entry> incomeEntries = new ArrayList<>();
 
-        incomeEntries.add(new Entry(0, 5));
-        incomeEntries.add(new Entry(1, 10));
-        incomeEntries.add(new Entry(2, 15));
-        incomeEntries.add(new Entry(3, 20));
-        incomeEntries.add(new Entry(4, 25));
-        incomeEntries.add(new Entry(5, 30));
-        incomeEntries.add(new Entry(6, 35));
-        incomeEntries.add(new Entry(7, 40));
-        incomeEntries.add(new Entry(8, 45));
-        incomeEntries.add(new Entry(9, 50));
-        incomeEntries.add(new Entry(10, 55));
-        incomeEntries.add(new Entry(11, 60));
-        return incomeEntries.subList(0, 12);
+        incomeEntries.add(new Entry(x, y));
+
+        return incomeEntries;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void addEntry() {
 
-        LineData data = chart.getData();
+    private List<Entry> getIncomeEntries2(float x, float y) {
+        ArrayList<Entry> incomeEntries = new ArrayList<>();
 
-        if (data != null) {
+        incomeEntries.add(new Entry(x, y));
 
-            ILineDataSet set = data.getDataSetByIndex(0);
-            // set.addEntry(...); // can be called as well
-
-            if (set == null) {
-                set = createSet1();
-                data.addDataSet(set);
-            }
-
-            data.addEntry(new Entry(set.getEntryCount(), (float) (Math.random() * 40) + 30f), 0);
-            data.notifyDataChanged();
-
-            // let the chart know it's data has changed
-            chart.notifyDataSetChanged();
-
-            // limit the number of visible entries
-            chart.setVisibleXRangeMaximum(120);
-            // chart.setVisibleYRange(30, AxisDependency.LEFT);
-
-            // move to the latest entry
-            chart.moveViewToX(data.getEntryCount());
-
-            // this automatically refreshes the chart (calls invalidate())
-            // chart.moveViewTo(data.getXValCount()-7, 55f,
-            // AxisDependency.LEFT);
-        }
+        return incomeEntries;
     }
+
+
 
 
     public void runDataSendThread(){
@@ -229,9 +227,33 @@ public class RealtimeLineChartActivity extends DemoBase
                             runOnUiThread(new Runnable(){
                                 @Override
                                 public void run(){
-                                    Log.d("skin_temp_update real",""+dataModel.getSkinTempValue()+"  "+b.getSkinTempData());
+                                  //  String currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
+//                                    dataModel.setAirTempValue(b.getAirtTempData());
+                                //    dataModel.setCurrent_time(currentTime);
+                                //    dbHandler.AddData(dataModel);
 
-                                    feedMultiple();
+                                    xAxisValues= dbHandler.GetInfantData();
+                                    Iterator myVeryOwnIterator = xAxisValues.keySet().iterator();
+                                    while(myVeryOwnIterator.hasNext()) {
+                                        String key=(String)myVeryOwnIterator.next();
+                                        String value=(String)xAxisValues.get(key);
+
+                                        incomeEntries = getIncomeEntries(10,20);
+                                        incomeEntries2 = getIncomeEntries2(11,25);
+
+                                       // xAxisValues.clear();
+                                        Log.d("key_value","Key: "+key+" Value: "+value);
+                                       // Toast.makeText(getApplicationContext(), "Key: "+key+" Value: "+value, Toast.LENGTH_LONG).show();
+                                    }
+
+                                   chart.getXAxis().setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(xAxisValues34));
+                                  // for(String name:dataList) {
+                                 //     Log.d("skin_temp_update List",name);
+                                //    }
+                                   // setData(10,15);
+                                    Log.d("skin_temp_update real",""+dataModel.getSkinTempValue()+"  "+b.getAirtTempData());
+
+                                   feedMultiple(incomeEntries,incomeEntries2);
                                 }
                             });
                         }catch (Exception e){}
@@ -247,7 +269,7 @@ public class RealtimeLineChartActivity extends DemoBase
             }
         };
 
-        repeatTimer.schedule(timerTask, 0, 6000);//wait 0 ms before doing the action and do it evry 1000ms (1second)
+        repeatTimer.schedule(timerTask, 0, 60000);//wait 0 ms before doing the action and do it evry 1000ms (1second)
 
      /*   Runnable runnable = new Runnable() {
             @Override
@@ -277,9 +299,22 @@ public class RealtimeLineChartActivity extends DemoBase
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void addData() {
+    private void addData(List<Entry> incomeEntries, List<Entry> incomeEntries2) {
 
-        LineData data = chart.getData();
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+       // List<String> xAxisValues = new ArrayList<>(Arrays.asList("Jan", "Feb", "March", "April", "May", "June","July", "August", "September", "October", "November", "Decemeber"));
+
+        dataSets = new ArrayList<>();
+        LineDataSet set0,set1;
+        set0 = createSet1(incomeEntries);
+        set1 = createSet2(incomeEntries);
+        dataSets.add(set0);
+        dataSets.add(set1);
+
+        LineData data = new LineData(dataSets);
+        chart.setData(data);
+
+       // LineData data = chart.getData();
 
         if (data != null) {
 
@@ -287,15 +322,17 @@ public class RealtimeLineChartActivity extends DemoBase
             ILineDataSet set2 = data.getDataSetByIndex(1);
             // set.addEntry(...); // can be called as well
 
-            if (set == null) {
-                set = createSet1();
-                set2 = createSet2();
-                data.addDataSet(set);
-                data.addDataSet(set2);
-            }
+           if (set == null) {
+             //   set = createSet1(incomeEntries);
+             //   set2 = createSet2(incomeEntries2);
+              //  data.addDataSet(set);
+               // data.addDataSet(set2);
+          }
+            Log.d("entry_count",""+set.getEntryCount());
+             data.addEntry(new Entry(0, 20), 0);
+             data.addEntry(new Entry(1, 25), 0);
 
-            data.addEntry(new Entry(set.getEntryCount(), Float.parseFloat(b.getSkinTempData())), 0);
-            data.addEntry(new Entry(set2.getEntryCount(), Float.parseFloat(b.getAirtTempData())), 1);
+             data.addEntry(new Entry(set2.getEntryCount(), 25), 1);
 
             data.notifyDataChanged();
 
@@ -317,8 +354,8 @@ public class RealtimeLineChartActivity extends DemoBase
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private LineDataSet createSet1() {
-        // LineDataSet set = new LineDataSet(getIncomeEntries(), "Dynamic Data");
+    private LineDataSet createSet1(List<Entry> incomeEntries) {
+        // LineDataSet set = new LineDataSet(incomeEntries, "Skin Temp");
         LineDataSet set = new LineDataSet(null, "Skin Temp");
         set.setAxisDependency(LEFT);
         set.setColor(ColorTemplate.getHoloBlue());
@@ -326,6 +363,10 @@ public class RealtimeLineChartActivity extends DemoBase
         set.setLineWidth(2f);
         set.setCircleRadius(4f);
         set.setFillAlpha(65);
+        set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+
+
+
 
         // set.setValueFormatter(new IndexAxisValueFormatter(weekdays));
         set.setFillColor(ColorTemplate.getHoloBlue());
@@ -337,11 +378,12 @@ public class RealtimeLineChartActivity extends DemoBase
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private LineDataSet createSet2() {
+    private LineDataSet createSet2(List<Entry> incomeEntries) {
         // LineDataSet set = new LineDataSet(getIncomeEntries(), "Dynamic Data");
 
 
         // create a dataset and give it a type
+        //LineDataSet set  = new LineDataSet(incomeEntries2, "Air Temp");
         LineDataSet set  = new LineDataSet(null, "Air Temp");
         set.setAxisDependency(LEFT);
         set.setColor(Color.YELLOW);
@@ -349,6 +391,8 @@ public class RealtimeLineChartActivity extends DemoBase
         set.setLineWidth(2f);
         set.setCircleRadius(4f);
         set.setFillAlpha(65);
+        set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+
 
         // set.setValueFormatter(new IndexAxisValueFormatter(weekdays));
         set.setFillColor(ColorTemplate.getHoloBlue());
@@ -361,7 +405,7 @@ public class RealtimeLineChartActivity extends DemoBase
 
     private Thread thread;
 
-    private void feedMultiple() {
+    private void feedMultiple(List<Entry> incomeEntries, List<Entry> incomeEntries2) {
 
         if (thread != null)
             thread.interrupt();
@@ -371,7 +415,7 @@ public class RealtimeLineChartActivity extends DemoBase
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void run() {
-                addData();
+                addData(incomeEntries, incomeEntries2);
             }
         };
 
@@ -407,20 +451,12 @@ public class RealtimeLineChartActivity extends DemoBase
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-
-            case R.id.actionAdd: {
-                addEntry();
-                break;
-            }
             case R.id.actionClear: {
                 chart.clearValues();
                 Toast.makeText(this, "Chart cleared!", Toast.LENGTH_SHORT).show();
                 break;
             }
-            case R.id.actionFeedMultiple: {
-                feedMultiple();
-                break;
-            }
+
             case R.id.actionSave: {
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     saveToGallery();
@@ -448,4 +484,160 @@ public class RealtimeLineChartActivity extends DemoBase
             thread.interrupt();
         }
     }
+
+
+    private void setData12(int count, float range) {
+
+        // now in hours
+        long now = TimeUnit.MILLISECONDS.toHours(System.currentTimeMillis());
+
+        ArrayList<Entry> values = new ArrayList<>();
+
+        // count = hours
+        float to = now + count;
+
+        // increment by 1 hour
+        for (float x = now; x < to; x++) {
+
+            float y = getRandom(range, 50);
+            values.add(new Entry(x, y)); // add one entry per hour
+        }
+
+        // create a dataset and give it a type
+        LineDataSet set1 = new LineDataSet(values, "DataSet 1");
+        set1.setAxisDependency(YAxis.AxisDependency.LEFT);
+        set1.setColor(ColorTemplate.getHoloBlue());
+        set1.setValueTextColor(ColorTemplate.getHoloBlue());
+        set1.setLineWidth(1.5f);
+        set1.setDrawCircles(false);
+        set1.setDrawValues(false);
+        set1.setFillAlpha(65);
+        set1.setFillColor(ColorTemplate.getHoloBlue());
+        set1.setHighLightColor(Color.rgb(244, 117, 117));
+        set1.setDrawCircleHole(false);
+
+        // create a data object with the data sets
+        LineData data = new LineData(set1);
+        data.setValueTextColor(Color.WHITE);
+        data.setValueTextSize(9f);
+
+        // set data
+        chart.setData(data);
+    }
+
+    private void setData(int count, float range) {
+
+        ArrayList<String> xVals = new ArrayList<String>();
+        for (int i = 0; i < count; i++) {
+            xVals.add((i) + "");
+        }
+
+        ArrayList<Entry> yVals = new ArrayList<Entry>();
+
+        for (int i = 0; i < count; i++) {
+            float mult = (range + 1);
+            float val = (float) (Math.random() * mult) + 3;// + (float)
+            // ((mult *
+            // 0.1) / 10);
+            yVals.add(new Entry(val, i));
+        }
+        xVals.add("15");
+
+        // create a dataset and give it a type
+        LineDataSet set = new LineDataSet(yVals, "Test set");
+
+        set.setColor(Color.GREEN);
+        set.setCircleColor(Color.BLACK);
+        set.setLineWidth(2f);
+        set.setCircleSize(3f);
+        set.setFillAlpha(10);
+        set.setFillColor(Color.BLACK);
+
+        set.setDrawCircles(false);
+
+
+        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+        dataSets.add(set); // add the datasets
+
+        // create a data object with the datasets
+        LineData data = new LineData((ILineDataSet) xVals, (ILineDataSet) dataSets);
+
+
+        // set data
+        chart.setData(data);
+    }
+/*public void plotStrignLAbelCOunt(){
+
+    ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+    List<String> xAxisValues = new ArrayList<>(Arrays.asList("Jan", "Feb", "March", "April", "May", "June","July", "August", "September", "October", "November", "Decemeber"));
+    List<Entry> incomeEntries = getIncomeEntries();
+    List<Entry> incomeEntries2 = getIncomeEntries2();
+    dataSets = new ArrayList<>();
+    LineDataSet set1,set2;
+
+    set1 = new LineDataSet(incomeEntries, "Skin Temp");
+    set1.setColor(Color.rgb(65, 168, 121));
+    set1.setValueTextColor(Color.rgb(55, 70, 73));
+    set1.setValueTextSize(10f);
+
+    set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+
+    set2 = new LineDataSet(incomeEntries2, "Air Temp");
+    set2.setColor(Color.rgb(65, 168, 20));
+    set2.setValueTextColor(Color.rgb(55, 70, 73));
+    set2.setValueTextSize(10f);
+    set2.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+
+    dataSets.add(set1);
+    dataSets.add(set2);
+
+//customization
+    LineChart mLineGraph = findViewById(R.id.chart1);
+    mLineGraph.setTouchEnabled(true);
+    mLineGraph.setDragEnabled(true);
+    mLineGraph.setScaleEnabled(false);
+    mLineGraph.setPinchZoom(false);
+    mLineGraph.setDrawGridBackground(false);
+    mLineGraph.setExtraLeftOffset(15);
+    mLineGraph.setExtraRightOffset(15);
+//to hide background lines
+    mLineGraph.getXAxis().setDrawGridLines(false);
+    mLineGraph.getAxisLeft().setDrawGridLines(false);
+    mLineGraph.getAxisRight().setDrawGridLines(false);
+
+//to hide right Y and top X border
+    YAxis rightYAxis = mLineGraph.getAxisRight();
+    rightYAxis.setEnabled(false);
+    YAxis leftYAxis = mLineGraph.getAxisLeft();
+    leftYAxis.setEnabled(true);
+    XAxis topXAxis = mLineGraph.getXAxis();
+    topXAxis.setEnabled(false);
+
+
+    XAxis xAxis = mLineGraph.getXAxis();
+    xAxis.setGranularity(1f);
+    xAxis.setCenterAxisLabels(true);
+    xAxis.setEnabled(true);
+    xAxis.setDrawGridLines(false);
+    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+    set1.setLineWidth(4f);
+    set1.setCircleRadius(3f);
+    set1.setDrawValues(false);
+    set1.setCircleHoleColor(Color.RED);
+    set1.setCircleColor(Color.RED);
+
+//String setter in x-Axis
+    mLineGraph.getXAxis().setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(xAxisValues));
+
+    LineData data = new LineData(dataSets);
+    mLineGraph.setData(data);
+ //   mLineGraph.animateX(2000);
+    mLineGraph.invalidate();
+     mLineGraph.moveViewToX(set1.getEntryCount());
+     mLineGraph.moveViewToX(set2.getEntryCount());
+    mLineGraph.getLegend().setEnabled(true);// Label Name
+    mLineGraph.getDescription().setEnabled(true);
+}*/
+
 }

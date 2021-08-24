@@ -8,30 +8,35 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class DatabaseHandler extends SQLiteOpenHelper {
+public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
 
     // Database Name
-    private static final String DATABASE_NAME = "DisplayTokenDB";
+    private static final String DATABASE_NAME = "infant_db";
 
     // Database Version
     private static final int DATABASE_VERSION = 1;
 
     // Table Name
-    private static final String TABLE_DISPLAY_TOKEN = "displaytoken";
+    private static final String TABLE_INFANT_WARMER = "infant_warmer";
 
     // Table Columns Name
     private static final String KEY_ID = "id";
-    private static final String KEY_DEVICE_ID = "devId";
+    private static final String KEY_SKIN_TEMP = "skin_temp";
+    private static final String KEY_ARI_TEMP = "air_temp";
+    private static final String KEY_HM = "curr_time";
+
 
 
 
     Context context;
 
-    private final ArrayList<String> qms_list = new ArrayList<>();
-
+    private final List<String> dataList = new ArrayList<>();
+    HashMap<String, String> hashMap = new HashMap<String, String>();
     public DatabaseHandler(Context context) {
 
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -45,10 +50,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_DISPLAY_TOKEN + "("
-                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_DEVICE_ID + " TEXT"+")";
-        db.execSQL(CREATE_CONTACTS_TABLE);
-        db.execSQL("INSERT INTO " + TABLE_DISPLAY_TOKEN+ "("+KEY_DEVICE_ID+" ) VALUES ('1')");
+       // String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_INFANT_WARMER + "("
+           //     + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_SKIN_TEMP + " TEXT,"+ KEY_ARI_TEMP + " TEXT,"+ KEY_HM + " TEXT  UNIQUE "+")";
+        db.execSQL(" CREATE TABLE IF NOT EXISTS " + TABLE_INFANT_WARMER + " (" +
+                KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                KEY_SKIN_TEMP + " TEXT NOT NULL, " +
+                KEY_ARI_TEMP + " TEXT NOT NULL, " +
+                KEY_HM + " TEXT UNIQUE NOT NULL );"
+        );
+
+      //  db.execSQL(CREATE_CONTACTS_TABLE);
+       // db.execSQL("INSERT INTO " + TABLE_INFANT_WARMER+ "("+KEY_SKIN_TEMP+","+KEY_ARI_TEMP+" ) VALUES ('1','2')");
         //db.execSQL("INSERT INTO "+TABLE_DISPLAY_TOKEN+"("+KEY_DEVICE_ID+","+KEY_NO_OF_DIGIT+","+KEY_SOUND,KEY_TYPE+")"+" VALUES(?,?,?,?)", new Object[]{"1", "2","3","4"}");");
         //  db.execSQL("INSERT INTO TABLE_DISPLAY_TOKEN(name, amount) VALUES(?, ?)", new Object[]{"Jerry", moneyOfJerry});
 
@@ -65,7 +77,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older Table if already Exist
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DISPLAY_TOKEN);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_INFANT_WARMER);
         // Create tables again
         onCreate(db);
     }
@@ -74,12 +86,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void Add_displayToken() {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_DEVICE_ID, "1");
+       // values.put(KEY_DEVICE_ID, "1");
 
 
 
         // Inserting Row
-        long rowInserted = db.insert(TABLE_DISPLAY_TOKEN, null, values);
+        long rowInserted = db.insert(TABLE_INFANT_WARMER, null, values);
 
         if(rowInserted != -1)
             Toast.makeText(context, "New row added, row id: " + rowInserted, Toast.LENGTH_SHORT).show();
@@ -90,31 +102,38 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     // Adding new contact
-    public void Add_QmsUtility(DataModel dataModel) {
+    public void AddData(String skintemp , String airTemp, String currentTime) {
+        Log.d("database_data inert",""+ skintemp+" "+airTemp+ " " +currentTime );
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_DEVICE_ID, dataModel.getDevId()); // Name
+        values.put(KEY_ARI_TEMP, airTemp); // Name
+        values.put(KEY_SKIN_TEMP, skintemp); // Name
+        values.put(KEY_HM, currentTime); // Name
 
 
         // Inserting Row
-        long rowInserted = db.insert(TABLE_DISPLAY_TOKEN, null, values);
+        long rowInserted = db.insert(TABLE_INFANT_WARMER, null, values);
 
         if(rowInserted != -1)
-            Toast.makeText(context, "New row added, row id: " + rowInserted, Toast.LENGTH_SHORT).show();
+            Log.d("New row added",""+ rowInserted);
+            //Toast.makeText(context, "New row added, row id: " + rowInserted, Toast.LENGTH_SHORT).show();
         else
-            Toast.makeText(context, "Something wrong", Toast.LENGTH_SHORT).show();
+            Log.d("Some thing wrong","Something wrong"+ rowInserted);
+            //Toast.makeText(context, "Something wrong", Toast.LENGTH_SHORT).show();
         db.close(); // Close Database Connection
     }
 
 
     // Getting All QmsUtility
-    public ArrayList<String> Get_QmsUtility() {
+    public HashMap<String,String> GetInfantData() {
+        hashMap.clear();
         try {
             // https://stackoverflow.com/questions/14331175/load-from-spinner-sqlite-with-text-and-value
-            qms_list.clear();
-            qms_list.add("New Record");
+            //dataList.clear();
+           // dataList.add("New Record");
             // Select All Query
-            String selectQuery = "SELECT  * FROM " + TABLE_DISPLAY_TOKEN;
+            String selectQuery = "SELECT  * FROM " + TABLE_INFANT_WARMER+" ORDER BY id DESC\n" +
+                    " LIMIT 1";
 
             SQLiteDatabase db = this.getWritableDatabase();
             Cursor cursor = db.rawQuery(selectQuery, null);
@@ -124,35 +143,36 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 do {
                    // DataModel contact = new DataModel();
                    //  contact.setID(Integer.parseInt(cursor.getString(0)));
-                   // Toast.makeText(context, "Something: "+cursor.getString(1),
-                   //      Toast.LENGTH_SHORT).show();
-                   // contact.setInstName(cursor.getString(1));
-                   // contact.setEmail(cursor.getString(2));
-                   // contact.setImage(cursor.getBlob(3));
-                   // Adding contact to list
-                    qms_list.add(cursor.getString(cursor.getColumnIndex("recordName")));
-                    // qms_list.add(cursor.getString(cursor.getColumnIndex("recordName")));
-                    // qms_list.add(cursor.getString(1));
+
+
+                   // dataList.add(cursor.getString(cursor.getColumnIndex(KEY_SKIN_TEMP)));
+                  //  dataList.add(cursor.getString(cursor.getColumnIndex(KEY_ARI_TEMP)));
+                    hashMap.put("skin_temp"+cursor.getString(cursor.getColumnIndex(KEY_ID)),cursor.getString(cursor.getColumnIndex(KEY_SKIN_TEMP)));
+                    hashMap.put("air_temp"+cursor.getString(cursor.getColumnIndex(KEY_ID)),cursor.getString(cursor.getColumnIndex(KEY_ARI_TEMP)));
+                    hashMap.put("time_date"+cursor.getString(cursor.getColumnIndex(KEY_ID)),cursor.getString(cursor.getColumnIndex(KEY_HM)));
+                    Log.d("database_data get", ""+cursor.getString(cursor.getColumnIndex(KEY_SKIN_TEMP))+" " +
+                            ""+cursor.getString(cursor.getColumnIndex(KEY_ARI_TEMP))+" "+cursor.getString(cursor.getColumnIndex(KEY_HM)));
+
                 } while (cursor.moveToNext());
             }
 
             // return contact list
             cursor.close();
             db.close();
-            return qms_list;
+            return hashMap;
         } catch (Exception e) {
             // TODO: handle exception
             Log.e("all_qmsUtility", "" + e);
         }
 
-        return qms_list;
+        return hashMap;
     }
 
 
     public List < SpinnerObject> getAllLabels(){
         List< SpinnerObject > labels = new ArrayList < SpinnerObject > ();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_DISPLAY_TOKEN;
+        String selectQuery = "SELECT  * FROM " + TABLE_INFANT_WARMER;
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -177,7 +197,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try {
 
             // Select All Query
-            String selectQuery = "SELECT  * FROM " + TABLE_DISPLAY_TOKEN+" WHERE id = ?";
+            String selectQuery = "SELECT  * FROM " + TABLE_INFANT_WARMER+" WHERE id = ?";
 
             SQLiteDatabase db = this.getWritableDatabase();
             Cursor cursor = db.rawQuery(selectQuery, new String[] {id});
@@ -188,7 +208,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     // DataModel contact = new DataModel();
                     //  contact.setID(Integer.parseInt(cursor.getString(0)));
                     // Toast.makeText(context, cursor.getString(cursor.getColumnIndex("devId")), Toast.LENGTH_LONG).show();
-                    dataModel.setDevId(cursor.getString(cursor.getColumnIndex("devId")));
+                    //   dataModel.setDevId(cursor.getString(cursor.getColumnIndex("devId")));
 
 
                 } while (cursor.moveToNext());
@@ -218,7 +238,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
        // Toast.makeText(context, "Row ID: " + dataModel.getID(), Toast.LENGTH_SHORT).show();
         // updating row
 
-        return db.update(TABLE_DISPLAY_TOKEN, values, KEY_ID + " = ?",
+        return db.update(TABLE_INFANT_WARMER, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(dataModel.getID()) });
 
     }
@@ -236,7 +256,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // Toast.makeText(context, "Label Eleven: " + dataModel.getCntLabelEleven(), Toast.LENGTH_SHORT).show();
         // updating row
 
-        return db.update(TABLE_DISPLAY_TOKEN, values, KEY_ID + " = ?",
+        return db.update(TABLE_INFANT_WARMER, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(dataModel.getID()) });
 
     }
@@ -245,14 +265,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_DEVICE_ID, dataModel.getDevId());
+     //   values.put(KEY_DEVICE_ID, dataModel.getDevId());
         //values.put(KEY_NO_OF_DIGIT, dataModel.getDigitNo());
        // values.put(KEY_SOUND, dataModel.getSoundType());
         // values.put(KEY_TYPE, dataModel.getTypeNo());
         // Toast.makeText(context, "Label Eleven: " + dataModel.getCntLabelEleven(), Toast.LENGTH_SHORT).show();
         // updating row
 
-        return db.update(TABLE_DISPLAY_TOKEN, values, KEY_ID + " = ?",
+        return db.update(TABLE_INFANT_WARMER, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(dataModel.getID()) });
 
 
@@ -271,7 +291,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // Toast.makeText(context, "Label Eleven: " + dataModel.getCntLabelEleven(), Toast.LENGTH_SHORT).show();
         // updating row
 
-        return db.update(TABLE_DISPLAY_TOKEN, values, KEY_ID + " = ?",
+        return db.update(TABLE_INFANT_WARMER, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(dataModel.getID()) });
 
     }
@@ -282,14 +302,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_DEVICE_ID, dataModel.getDevId());
+       // values.put(KEY_DEVICE_ID, dataModel.getDevId());
        // values.put(KEY_NO_OF_DIGIT, dataModel.getDigitNo());
       //  values.put(KEY_SOUND, dataModel.getSoundType());
        // values.put(KEY_TYPE, dataModel.getTypeNo());
         // Toast.makeText(context, "Label Eleven: " + dataModel.getCntLabelEleven(), Toast.LENGTH_SHORT).show();
         // updating row
 
-        return db.update(TABLE_DISPLAY_TOKEN, values, KEY_ID + " = ?",
+        return db.update(TABLE_INFANT_WARMER, values, KEY_ID + " = ?",
               new String[] { String.valueOf(dataModel.getID()) });
 
     }
@@ -298,7 +318,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Deleting single qmsUtility
     public void Delete_QmsUtility(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_DISPLAY_TOKEN, KEY_ID + " = ?",
+        db.delete(TABLE_INFANT_WARMER, KEY_ID + " = ?",
                 new String[] { String.valueOf(id) });
         db.close();
     }
@@ -306,7 +326,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Getting qmsUtility Count
     public int Get_Total_QmsUtility() {
-        String countQuery = "SELECT  * FROM " + TABLE_DISPLAY_TOKEN;
+        String countQuery = "SELECT  * FROM " + TABLE_INFANT_WARMER;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
 
