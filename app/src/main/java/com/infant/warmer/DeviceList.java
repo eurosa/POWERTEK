@@ -1006,6 +1006,12 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                             }else{
                                 timerOnTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview));
                             }
+                            if(CF =='1'){
+                                unitFarhenheit();
+
+                            }else{
+                                unitCelCius();
+                            }
 
                        // Log.d("skin_temp_update",""+dataModel.getSkinTempValue());
                         // Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show();
@@ -1227,12 +1233,12 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
             }
 
          String bin1 =   HexToBinary(arrayHex[18]);
-          CF  = getCharFromString(bin1,1);
-          highTMP  = getCharFromString(bin1,2);
-          lowTMP  = getCharFromString(bin1,3);
+          CF  = getCharFromString(bin1,7);
+          highTMP  = getCharFromString(bin1,6);
+          lowTMP  = getCharFromString(bin1,5);
           tmerON  = getCharFromString(bin1,4);
-          systemF  = getCharFromString(bin1,5);
-          probeF  = getCharFromString(bin1,6);
+          systemF  = getCharFromString(bin1,3);
+          probeF  = getCharFromString(bin1,2);
          String bin2 =   HexToBinary(arrayHex[19]);
           SET  = getCharFromString(bin2,0);
           htrON  = getCharFromString(bin2,1);
@@ -2133,11 +2139,11 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         if(unitValue16 == 1){
             //unitValue ="\u0000";
              unitValue =  hexToAscii("0");
-            unitCelCius();
+            // unitCelCius();
         }else {
            // unitValue ="\u0001";
            unitValue =  hexToAscii("1");
-            unitFarhenheit();
+           // unitFarhenheit();
         }
 
         String data="$I0W"+rawArrayData[12]+rawArrayData[13]+rawArrayData[14]+rawArrayData[15]+unitValue+rawArrayData[17]+";";
