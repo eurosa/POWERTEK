@@ -52,6 +52,10 @@
             android:id="@+id/graphView"
             android:title="Show Realtime Graph"
             android:icon="@drawable/ic_exit_button"/>
+        <item
+            android:id="@+id/tableView"
+            android:title="Show Data"
+            android:icon="@drawable/ic_exit_button"/>
     </group>
 
     <group

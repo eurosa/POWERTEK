@@ -37,6 +37,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -45,13 +46,13 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import static com.github.mikephil.charting.components.YAxis.AxisDependency.LEFT;
 
 
 public class RealtimeLineChartActivity extends DemoBase
 {
-
     private LineChart chart;
     private TimerTask timerTask;
     private Timer repeatTimer;
@@ -61,6 +62,7 @@ public class RealtimeLineChartActivity extends DemoBase
     private List<Entry> incomeEntries,incomeEntries2;
     private HashMap<String,String> xAxisValues;
     private ArrayList<String> xAxisValues34;
+    private HashMap<String,String> skinTempArray, airTempArray, timeDateArray;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -72,7 +74,9 @@ public class RealtimeLineChartActivity extends DemoBase
         repeatTimer = new Timer();
         // setTitle("RealtimeLineChartActivity");
         b = Singleton.getInstance();
-
+         skinTempArray = new HashMap<>();
+         airTempArray=new HashMap<>();
+         timeDateArray =new  HashMap<>();
         //=========================Adding Toolbar in android layout=======================================
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_too);
         myToolbar.setTitleTextColor(Color.WHITE);
@@ -148,12 +152,12 @@ public class RealtimeLineChartActivity extends DemoBase
         leftAxis.setTypeface(tfLight);
         leftAxis.setTextColor(Color.RED);
 
-        leftAxis.setAxisMaximum(100f);
-        leftAxis.setAxisMinimum(0f);
+      //  leftAxis.setAxisMaximum(100f);
+       // leftAxis.setAxisMinimum(0f);
         leftAxis.setTextSize(15);
 
         leftAxis.setCenterAxisLabels(true);
-        leftAxis.setLabelCount(11, true);
+        // leftAxis.setLabelCount(11, true);
         //leftAxis.setDrawGridLines(true);
 
         YAxis rightAxis = chart.getAxisRight();
@@ -237,23 +241,29 @@ public class RealtimeLineChartActivity extends DemoBase
                                     while(myVeryOwnIterator.hasNext()) {
                                         String key=(String)myVeryOwnIterator.next();
                                         String value=(String)xAxisValues.get(key);
+                                        String myString = key;
+                                        String[] splitString = myString.split("#");
+                                        Log.d("split_key",""+splitString[0]+" "+splitString[1]);
+                                        if(key.contains("skin_temp")) {
+                                            skinTempArray.put(splitString[1],splitString[2]);
+                                        }
+                                        if(key.contains("air_temp")) {
+                                            airTempArray.put(splitString[1],splitString[2]);
+                                        }
 
-                                        incomeEntries = getIncomeEntries(10,20);
-                                        incomeEntries2 = getIncomeEntries2(11,25);
+                                        if(key.contains("time_date")) {
+                                            timeDateArray.put(splitString[1],splitString[2]);
+                                        }
+
+                                       // incomeEntries = getIncomeEntries(10,20);
+                                      //  incomeEntries2 = getIncomeEntries2(11,25);
 
                                        // xAxisValues.clear();
                                         Log.d("key_value","Key: "+key+" Value: "+value);
-                                       // Toast.makeText(getApplicationContext(), "Key: "+key+" Value: "+value, Toast.LENGTH_LONG).show();
+                                         // Toast.makeText(getApplicationContext(), "Key: "+key+" Value: "+value, Toast.LENGTH_LONG).show();
                                     }
 
-                                   chart.getXAxis().setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(xAxisValues34));
-                                  // for(String name:dataList) {
-                                 //     Log.d("skin_temp_update List",name);
-                                //    }
-                                   // setData(10,15);
-                                    Log.d("skin_temp_update real",""+dataModel.getSkinTempValue()+"  "+b.getAirtTempData());
-
-                                   feedMultiple(incomeEntries,incomeEntries2);
+                                   feedMultiple(skinTempArray,airTempArray,timeDateArray);
                                 }
                             });
                         }catch (Exception e){}
@@ -299,10 +309,19 @@ public class RealtimeLineChartActivity extends DemoBase
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void addData(List<Entry> incomeEntries, List<Entry> incomeEntries2) {
+    private void addData(HashMap<String,String> skinTempArray,HashMap<String,String> airTempArray, HashMap<String,String> timeDateArray) {
+      //  List<String> xAxisValues = new ArrayList<>(Arrays.asList("Jan", "Feb", "March", "April", "May", "June","July", "August", "September", "October", "November", "Decemeber"));
+        List<String> xAxisVal = timeDateArray.values()
+                .stream()
+                .collect(Collectors.toList());
+        for (String s : xAxisVal){
 
+            System.out.println("Data of timed "+xAxisVal.indexOf(s)+" "+s);
+
+        }
+
+        chart.getXAxis().setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(xAxisVal));
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-       // List<String> xAxisValues = new ArrayList<>(Arrays.asList("Jan", "Feb", "March", "April", "May", "June","July", "August", "September", "October", "November", "Decemeber"));
 
         dataSets = new ArrayList<>();
         LineDataSet set0,set1;
@@ -314,33 +333,62 @@ public class RealtimeLineChartActivity extends DemoBase
         LineData data = new LineData(dataSets);
         chart.setData(data);
 
-       // LineData data = chart.getData();
+
+        List<String> skinTemp = skinTempArray.values()
+                .stream()
+                .collect(Collectors.toList());
+
+        List<String> airTemp = airTempArray.values()
+                .stream()
+                .collect(Collectors.toList());
+
 
         if (data != null) {
 
-            ILineDataSet set = data.getDataSetByIndex(0);
-            ILineDataSet set2 = data.getDataSetByIndex(1);
-            // set.addEntry(...); // can be called as well
+        /*    Iterator myVeryOwnIterator1 = timeDateArray.keySet().iterator();
+            while(myVeryOwnIterator1.hasNext()) {
+                String key = (String) myVeryOwnIterator1.next();
+                String value = (String) timeDateArray.get(key);
+                String myString = key;
+                Log.d("data_value_hash tdate","key: "+key+" "+value);
 
-           if (set == null) {
-             //   set = createSet1(incomeEntries);
-             //   set2 = createSet2(incomeEntries2);
-              //  data.addDataSet(set);
-               // data.addDataSet(set2);
-          }
-            Log.d("entry_count",""+set.getEntryCount());
-             data.addEntry(new Entry(0, 20), 0);
-             data.addEntry(new Entry(1, 25), 0);
+            }*/
 
-             data.addEntry(new Entry(set2.getEntryCount(), 25), 1);
+        /*    Iterator myVeryOwnIterator = skinTempArray.keySet().iterator();
+            while(myVeryOwnIterator.hasNext()) {
+                String key = (String) myVeryOwnIterator.next();
+                String value = (String) skinTempArray.get(key);
+                String myString = key;
+                Log.d("data_value_hash skin","key: "+key+" "+value);
+                data.addEntry(new Entry(250, Float.parseFloat(value)), 0);
+            }*/
 
-            data.notifyDataChanged();
+            for (String s : skinTemp){
+                data.addEntry(new Entry(skinTemp.indexOf(s), Float.parseFloat(s)), 0);
+                 System.out.println("Data of skin "+skinTemp.indexOf(s)+" "+Float.parseFloat(s));
+
+            }
+
+            for (String s1 : airTemp){
+                data.addEntry(new Entry(airTemp.indexOf(s1), Float.parseFloat(s1)), 1);
+                System.out.println("Data of air "+skinTemp.indexOf(s1)+" "+Float.parseFloat(s1));
+
+            }
+
+            // data.addEntry(new Entry(0, 26.4f), 0);
+            // data.addEntry(new Entry(1, 25), 0);
+
+           //  data.addEntry(new Entry(0, 26.8f), 1);
+            // data.addEntry(new Entry(1, 25.4f), 1);
+
+
+             data.notifyDataChanged();
 
             // let the chart know it's data has changed
             chart.notifyDataSetChanged();
 
             // limit the number of visible entries
-            chart.setVisibleXRangeMaximum(10);
+            chart.setVisibleXRangeMaximum(3);
             //chart.setVisibleYRange(30, AxisDependency.LEFT);
 
             // move to the latest entry
@@ -364,9 +412,6 @@ public class RealtimeLineChartActivity extends DemoBase
         set.setCircleRadius(4f);
         set.setFillAlpha(65);
         set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-
-
-
 
         // set.setValueFormatter(new IndexAxisValueFormatter(weekdays));
         set.setFillColor(ColorTemplate.getHoloBlue());
@@ -405,7 +450,7 @@ public class RealtimeLineChartActivity extends DemoBase
 
     private Thread thread;
 
-    private void feedMultiple(List<Entry> incomeEntries, List<Entry> incomeEntries2) {
+    private void feedMultiple(HashMap<String,String> skinTempArray,HashMap<String,String> airTempArray, HashMap<String,String> timeDateArray) {
 
         if (thread != null)
             thread.interrupt();
@@ -415,7 +460,7 @@ public class RealtimeLineChartActivity extends DemoBase
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void run() {
-                addData(incomeEntries, incomeEntries2);
+                addData(skinTempArray, airTempArray,timeDateArray);
             }
         };
 

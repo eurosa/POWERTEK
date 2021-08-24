@@ -1698,6 +1698,11 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                if (i != null) startActivity(i);
                overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
                break;
+           case R.id.tableView:
+               Intent intent1  = new Intent(this, TableViewMainActivity.class);
+               if (intent1 != null) startActivity(intent1);
+
+               break;
            case R.id.action_disconnect:
                Disconnect();
                break;

@@ -54,6 +54,8 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation 'androidx.drawerlayout:drawerlayout:1.1.1'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     // implementation "com.github.tarek360:instacapture:2.0.1"
@@ -63,8 +65,8 @@ dependencies {
     // Java language implementation
     implementation "androidx.fragment:fragment:$fragment_version"
 
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     // Add Dependencies!!
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
@@ -77,12 +79,15 @@ dependencies {
     implementation 'org.apache.commons:commons-collections4:4.4'
     implementation 'commons-codec:commons-codec:1.13'
 
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.multidex:multidex:2.0.0'
 
     implementation 'com.jjoe64:graphview:4.2.2'
     // MPAndroidChart dependency
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.github.blackfizz:eazegraph:1.2.5l@aar'
     implementation 'com.nineoldandroids:library:2.4.0'
+    implementation 'com.github.levitnudi:LegacyTableView:master-SNAPSHOT'
+
+    implementation 'androidx.cardview:cardview:1.0.0'
 
 }

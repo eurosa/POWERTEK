@@ -8,6 +8,7 @@ public class DataModel implements Serializable {
     public int _id;
 
 
+
     public String getSkinTempValue() {
         return skinTempValue;
     }

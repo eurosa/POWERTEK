@@ -8,10 +8,16 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.levitnudi.legacytableview.LegacyTableView;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static com.infant.warmer.mDB.Constants.KEY_ARI_TEMP;
+import static com.infant.warmer.mDB.Constants.KEY_HM;
+import static com.infant.warmer.mDB.Constants.KEY_SKIN_TEMP;
 
 public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
 
@@ -112,7 +118,9 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
 
 
         // Inserting Row
-        long rowInserted = db.insert(TABLE_INFANT_WARMER, null, values);
+        try {
+            long rowInserted = db.insert(TABLE_INFANT_WARMER, null, values);
+
 
         if(rowInserted != -1)
             Log.d("New row added",""+ rowInserted);
@@ -120,6 +128,9 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
         else
             Log.d("Some thing wrong","Something wrong"+ rowInserted);
             //Toast.makeText(context, "Something wrong", Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+
+        }
         db.close(); // Close Database Connection
     }
 
@@ -147,9 +158,9 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
 
                    // dataList.add(cursor.getString(cursor.getColumnIndex(KEY_SKIN_TEMP)));
                   //  dataList.add(cursor.getString(cursor.getColumnIndex(KEY_ARI_TEMP)));
-                    hashMap.put("skin_temp"+cursor.getString(cursor.getColumnIndex(KEY_ID)),cursor.getString(cursor.getColumnIndex(KEY_SKIN_TEMP)));
-                    hashMap.put("air_temp"+cursor.getString(cursor.getColumnIndex(KEY_ID)),cursor.getString(cursor.getColumnIndex(KEY_ARI_TEMP)));
-                    hashMap.put("time_date"+cursor.getString(cursor.getColumnIndex(KEY_ID)),cursor.getString(cursor.getColumnIndex(KEY_HM)));
+                    hashMap.put("skin_temp#"+cursor.getString(cursor.getColumnIndex(KEY_ID))+"#"+cursor.getString(cursor.getColumnIndex(KEY_SKIN_TEMP)),cursor.getString(cursor.getColumnIndex(KEY_SKIN_TEMP)));
+                    hashMap.put("air_temp#"+cursor.getString(cursor.getColumnIndex(KEY_ID))+"#"+cursor.getString(cursor.getColumnIndex(KEY_ARI_TEMP)),cursor.getString(cursor.getColumnIndex(KEY_ARI_TEMP)));
+                    hashMap.put("time_date#"+cursor.getString(cursor.getColumnIndex(KEY_ID))+"#"+cursor.getString(cursor.getColumnIndex(KEY_HM)),cursor.getString(cursor.getColumnIndex(KEY_HM)));
                     Log.d("database_data get", ""+cursor.getString(cursor.getColumnIndex(KEY_SKIN_TEMP))+" " +
                             ""+cursor.getString(cursor.getColumnIndex(KEY_ARI_TEMP))+" "+cursor.getString(cursor.getColumnIndex(KEY_HM)));
 
@@ -336,6 +347,23 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
         // return qms utility
         cursor.close();
         return cursor.getCount();
+    }
+    public void getFromDatabase(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor =  db.rawQuery("SELECT * FROM infant_warmer", null);
+
+        if(cursor.getCount()>0){
+            //use database column names or custom names for the columns
+            /* insert your column titles using legacy insertLegacyTitle() function*/
+            LegacyTableView.insertLegacyTitle("Skin Temp", "Air Temp","Time & Date");
+        }
+        while(cursor.moveToNext()) {
+            //simple table content insert method for table contents
+            LegacyTableView.insertLegacyContent(cursor.getString(cursor.getColumnIndex(KEY_SKIN_TEMP)),
+                    cursor.getString(cursor.getColumnIndex(KEY_ARI_TEMP)), cursor.getString(cursor.getColumnIndex(KEY_HM)));
+        }
+        //remember to close your database to avoid memory leaks
+        cursor.close();
     }
 
 }

@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.infant.warmer">
 
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -21,7 +27,8 @@
         android:icon="@drawable/sst_logo_200_100"
         android:label=""
         android:requestLegacyExternalStorage="true"
-        android:theme="@style/MyMaterialTheme.Base">
+        android:theme="@style/MyMaterialTheme.Base"
+        tools:replace="android:label">
 
         <activity
             android:name="com.infant.warmer.ScanActivity"
@@ -42,6 +49,8 @@
         <activity android:name="com.infant.warmer.mpchart.LineChartTime"
             android:theme="@style/MyMaterialTheme.Base"/>
         <activity android:name="com.infant.warmer.mpchart.RealtimeCharteMultiLine"
+            android:theme="@style/MyMaterialTheme.Base"/>
+        <activity android:name="com.infant.warmer.TableViewMainActivity"
             android:theme="@style/MyMaterialTheme.Base"/>
 
         <activity
