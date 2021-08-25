@@ -62,7 +62,7 @@ public class RealtimeLineChartActivity extends DemoBase
     private List<Entry> incomeEntries,incomeEntries2;
     private HashMap<String,String> xAxisValues;
     private ArrayList<String> xAxisValues34;
-    private HashMap<String,String> skinTempArray, airTempArray, timeDateArray;
+    private ArrayList<String> skinTempArray, airTempArray, timeDateArray;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -74,9 +74,9 @@ public class RealtimeLineChartActivity extends DemoBase
         repeatTimer = new Timer();
         // setTitle("RealtimeLineChartActivity");
         b = Singleton.getInstance();
-         skinTempArray = new HashMap<>();
-         airTempArray=new HashMap<>();
-         timeDateArray =new  HashMap<>();
+         skinTempArray = new ArrayList<>();
+         airTempArray=new ArrayList<>();
+         timeDateArray =new  ArrayList<>();
         //=========================Adding Toolbar in android layout=======================================
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_too);
         myToolbar.setTitleTextColor(Color.WHITE);
@@ -236,32 +236,35 @@ public class RealtimeLineChartActivity extends DemoBase
                                 //    dataModel.setCurrent_time(currentTime);
                                 //    dbHandler.AddData(dataModel);
 
-                                    xAxisValues= dbHandler.GetInfantData();
-                                    Iterator myVeryOwnIterator = xAxisValues.keySet().iterator();
-                                    while(myVeryOwnIterator.hasNext()) {
-                                        String key=(String)myVeryOwnIterator.next();
-                                        String value=(String)xAxisValues.get(key);
-                                        String myString = key;
-                                        String[] splitString = myString.split("#");
-                                        Log.d("split_key",""+splitString[0]+" "+splitString[1]);
-                                        if(key.contains("skin_temp")) {
-                                            skinTempArray.put(splitString[1],splitString[2]);
-                                        }
-                                        if(key.contains("air_temp")) {
-                                            airTempArray.put(splitString[1],splitString[2]);
-                                        }
+                                  //  xAxisValues= dbHandler.GetInfantData();
+                                  //  Iterator myVeryOwnIterator = xAxisValues.keySet().iterator();
+                                  //  while(myVeryOwnIterator.hasNext()) {
+                                   //     String key=(String)myVeryOwnIterator.next();
+                                   //     String value=(String)xAxisValues.get(key);
+                                     //   String myString = key;
+                                      //  String[] splitString = myString.split("#");
+                                       // Log.d("split_key",""+splitString[0]+" "+value);
+                                      //  if(key.contains("skin_temp")) {
+                                     //       skinTempArray.add( value);
+                                    //    }
+                                    //    if(key.contains("air_temp")) {
+                                   //         airTempArray.add( value);
+                                   //     }
 
-                                        if(key.contains("time_date")) {
-                                            timeDateArray.put(splitString[1],splitString[2]);
-                                        }
+                                    //    if(key.contains("time_date")) {
+                                      //      timeDateArray.add(value);
+                                    //    }
 
                                        // incomeEntries = getIncomeEntries(10,20);
                                       //  incomeEntries2 = getIncomeEntries2(11,25);
 
                                        // xAxisValues.clear();
-                                        Log.d("key_value","Key: "+key+" Value: "+value);
+                                        //Log.d("key_value","Key: "+key+" Value: "+value);
                                          // Toast.makeText(getApplicationContext(), "Key: "+key+" Value: "+value, Toast.LENGTH_LONG).show();
-                                    }
+                                   // }
+                                    List<String> skinTempArray = dbHandler.GetSKinTemp();
+                                    List<String> airTempArray = dbHandler.GetAirTemp();
+                                    List<String> timeDateArray = dbHandler.timeDate();
 
                                    feedMultiple(skinTempArray,airTempArray,timeDateArray);
                                 }
@@ -309,18 +312,21 @@ public class RealtimeLineChartActivity extends DemoBase
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void addData(HashMap<String,String> skinTempArray,HashMap<String,String> airTempArray, HashMap<String,String> timeDateArray) {
+    private void addData(List<String>  skinTempArray,List<String>  airTempArray, List<String>  timeDateArray) {
+       // List<String> skinTemp = skinTempArray;
+      //  List<String> airTemp = airTempArray;
+      //  List<String> timeDate = timeDateArray;
       //  List<String> xAxisValues = new ArrayList<>(Arrays.asList("Jan", "Feb", "March", "April", "May", "June","July", "August", "September", "October", "November", "Decemeber"));
-        List<String> xAxisVal = timeDateArray.values()
-                .stream()
-                .collect(Collectors.toList());
-        for (String s : xAxisVal){
+       // List<String> xAxisVal = timeDateArray.values()
+       //         .stream()
+      //          .collect(Collectors.toList());
+       // for (String s : xAxisVal){
 
-            System.out.println("Data of timed "+xAxisVal.indexOf(s)+" "+s);
+       //     System.out.println("Data of timed "+xAxisVal.indexOf(s)+" "+s);
 
-        }
+     //   }
 
-        chart.getXAxis().setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(xAxisVal));
+        chart.getXAxis().setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(timeDateArray));
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
         dataSets = new ArrayList<>();
@@ -334,13 +340,27 @@ public class RealtimeLineChartActivity extends DemoBase
         chart.setData(data);
 
 
-        List<String> skinTemp = skinTempArray.values()
-                .stream()
-                .collect(Collectors.toList());
+        for(int i = 0; i < skinTempArray.size(); i++)
+        {
+            data.addEntry(new Entry(i, Float.parseFloat(skinTempArray.get(i))), 0);
+          //  System.out.println(skinTempArray.get(i));
+        }
 
-        List<String> airTemp = airTempArray.values()
-                .stream()
-                .collect(Collectors.toList());
+        for(int i = 0; i < airTempArray.size(); i++)
+        {
+            data.addEntry(new Entry(i, Float.parseFloat(airTempArray.get(i))), 1);
+        }
+
+      airTempArray.clear();
+      skinTempArray.clear();
+      timeDateArray.clear();
+        //List<String> skinTemp = skinTempArray.values()
+         //       .stream()
+         //      .collect(Collectors.toList());
+
+       // List<String> airTemp = airTempArray.values()
+         //       .stream()
+        //        .collect(Collectors.toList());
 
 
         if (data != null) {
@@ -363,17 +383,17 @@ public class RealtimeLineChartActivity extends DemoBase
                 data.addEntry(new Entry(250, Float.parseFloat(value)), 0);
             }*/
 
-            for (String s : skinTemp){
-                data.addEntry(new Entry(skinTemp.indexOf(s), Float.parseFloat(s)), 0);
-                 System.out.println("Data of skin "+skinTemp.indexOf(s)+" "+Float.parseFloat(s));
+            //for (String s : skinTemp){
+            //    data.addEntry(new Entry(skinTemp.indexOf(s), Float.parseFloat(s)), 0);
+            //     System.out.println("Data of skin "+skinTemp.indexOf(s)+" "+Float.parseFloat(s));
+//
+          //  }
 
-            }
+           // for (String s1 : airTemp){
+          //      data.addEntry(new Entry(airTemp.indexOf(s1), Float.parseFloat(s1)), 1);
+          //      System.out.println("Data of air "+skinTemp.indexOf(s1)+" "+Float.parseFloat(s1));
 
-            for (String s1 : airTemp){
-                data.addEntry(new Entry(airTemp.indexOf(s1), Float.parseFloat(s1)), 1);
-                System.out.println("Data of air "+skinTemp.indexOf(s1)+" "+Float.parseFloat(s1));
-
-            }
+         //   }
 
             // data.addEntry(new Entry(0, 26.4f), 0);
             // data.addEntry(new Entry(1, 25), 0);
@@ -450,7 +470,7 @@ public class RealtimeLineChartActivity extends DemoBase
 
     private Thread thread;
 
-    private void feedMultiple(HashMap<String,String> skinTempArray,HashMap<String,String> airTempArray, HashMap<String,String> timeDateArray) {
+    private void feedMultiple(List<String> skinTempArray,List<String>  airTempArray, List<String>  timeDateArray) {
 
         if (thread != null)
             thread.interrupt();

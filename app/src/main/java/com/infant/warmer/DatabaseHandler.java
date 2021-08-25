@@ -41,7 +41,9 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
 
     Context context;
 
-    private final List<String> dataList = new ArrayList<>();
+    private final List<String> skinTempList = new ArrayList<>();
+    private final List<String> airTempList = new ArrayList<>();
+    private final List<String> timeDateList = new ArrayList<>();
     HashMap<String, String> hashMap = new HashMap<String, String>();
     public DatabaseHandler(Context context) {
 
@@ -143,8 +145,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
             //dataList.clear();
            // dataList.add("New Record");
             // Select All Query
-            String selectQuery = "SELECT  * FROM " + TABLE_INFANT_WARMER+" ORDER BY id DESC\n" +
-                    " LIMIT 1";
+            String selectQuery = "SELECT  * FROM " + TABLE_INFANT_WARMER;
 
             SQLiteDatabase db = this.getWritableDatabase();
             Cursor cursor = db.rawQuery(selectQuery, null);
@@ -178,6 +179,106 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
 
         return hashMap;
     }
+
+
+    public List<String> GetSKinTemp() {
+        skinTempList.clear();
+        try {
+
+            String selectQuery = "SELECT  * FROM " + TABLE_INFANT_WARMER;
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+
+                    skinTempList.add(cursor.getString(cursor.getColumnIndex(KEY_SKIN_TEMP)));
+
+                    Log.d("database_data get", ""+cursor.getString(cursor.getColumnIndex(KEY_SKIN_TEMP))+" " +
+                            ""+cursor.getString(cursor.getColumnIndex(KEY_ARI_TEMP))+" "+cursor.getString(cursor.getColumnIndex(KEY_HM)));
+
+                } while (cursor.moveToNext());
+            }
+
+            cursor.close();
+            db.close();
+            return skinTempList;
+        } catch (Exception e) {
+            // TODO: handle exception
+            Log.e("all_qmsUtility", "" + e);
+        }
+
+        return skinTempList;
+    }
+    public List<String> GetAirTemp() {
+        airTempList.clear();
+        try {
+
+            String selectQuery = "SELECT  * FROM " + TABLE_INFANT_WARMER;
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+
+                    airTempList.add(cursor.getString(cursor.getColumnIndex(KEY_ARI_TEMP)));
+
+                    Log.d("database_data get", ""+cursor.getString(cursor.getColumnIndex(KEY_SKIN_TEMP))+" " +
+                            ""+cursor.getString(cursor.getColumnIndex(KEY_ARI_TEMP))+" "+cursor.getString(cursor.getColumnIndex(KEY_HM)));
+
+                } while (cursor.moveToNext());
+            }
+
+
+            cursor.close();
+            db.close();
+            return airTempList;
+        } catch (Exception e) {
+            // TODO: handle exception
+            Log.e("all_qmsUtility", "" + e);
+        }
+
+        return airTempList;
+    }
+
+
+    public List<String> timeDate() {
+        timeDateList.clear();
+        try {
+
+            String selectQuery = "SELECT  * FROM " + TABLE_INFANT_WARMER;
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+
+                    timeDateList.add(cursor.getString(cursor.getColumnIndex(KEY_HM)));
+
+                    Log.d("database_data get", ""+cursor.getString(cursor.getColumnIndex(KEY_SKIN_TEMP))+" " +
+                            ""+cursor.getString(cursor.getColumnIndex(KEY_ARI_TEMP))+" "+cursor.getString(cursor.getColumnIndex(KEY_HM)));
+
+                } while (cursor.moveToNext());
+            }
+
+
+            cursor.close();
+            db.close();
+            return timeDateList;
+        } catch (Exception e) {
+            // TODO: handle exception
+            Log.e("all_qmsUtility", "" + e);
+        }
+
+        return timeDateList;
+    }
+
 
 
     public List < SpinnerObject> getAllLabels(){
