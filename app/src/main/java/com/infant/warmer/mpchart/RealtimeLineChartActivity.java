@@ -26,7 +26,9 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.infant.warmer.DataModel;
@@ -51,8 +53,7 @@ import java.util.stream.Collectors;
 import static com.github.mikephil.charting.components.YAxis.AxisDependency.LEFT;
 
 
-public class RealtimeLineChartActivity extends DemoBase
-{
+public class RealtimeLineChartActivity extends DemoBase implements OnChartValueSelectedListener {
     private LineChart chart;
     private TimerTask timerTask;
     private Timer repeatTimer;
@@ -103,7 +104,7 @@ public class RealtimeLineChartActivity extends DemoBase
       //  incomeEntries2 = getIncomeEntries2();
         // enable description text
         chart.getDescription().setEnabled(true);
-
+        chart.setOnChartValueSelectedListener(this);
         // enable touch gestures
         chart.setTouchEnabled(true);
 
@@ -116,7 +117,7 @@ public class RealtimeLineChartActivity extends DemoBase
         chart.setPinchZoom(true);
 
         // set an alternative background color
-        chart.setBackgroundColor(Color.LTGRAY);
+        chart.setBackgroundColor(Color.BLACK);
 
         LineData data = new LineData();
         data.setValueTextColor(Color.WHITE);
@@ -141,7 +142,7 @@ public class RealtimeLineChartActivity extends DemoBase
         xl.setDrawGridLines(true);
 
 
-        xl.setGranularity(1f); // one hour
+       // xl.setGranularity(1f); // one hour
 
         // xl.setValueFormatter(new GraphXAxisValueFormatter());
         // xl.setValueFormatter(new IndexAxisValueFormatter(weekdays));
@@ -152,13 +153,18 @@ public class RealtimeLineChartActivity extends DemoBase
         leftAxis.setTypeface(tfLight);
         leftAxis.setTextColor(Color.RED);
 
-      //  leftAxis.setAxisMaximum(100f);
-       // leftAxis.setAxisMinimum(0f);
-        leftAxis.setTextSize(15);
+        leftAxis.setAxisMaximum(100f);
+        leftAxis.setAxisMinimum(26f);
+        leftAxis.setCenterAxisLabels(true);
+      //  leftAxis.setTextSize(10);
 
         leftAxis.setCenterAxisLabels(true);
-        // leftAxis.setLabelCount(11, true);
+        leftAxis.setLabelCount(11, true);
         //leftAxis.setDrawGridLines(true);
+        chart.zoom(0f,20f,0,0);
+
+
+        //chart.fitScreen();
 
         YAxis rightAxis = chart.getAxisRight();
 
@@ -344,11 +350,15 @@ public class RealtimeLineChartActivity extends DemoBase
         {
             data.addEntry(new Entry(i, Float.parseFloat(skinTempArray.get(i))), 0);
           //  System.out.println(skinTempArray.get(i));
+            data.notifyDataChanged();
         }
 
         for(int i = 0; i < airTempArray.size(); i++)
         {
+            Log.d("entry_value_my_data",""+Float.parseFloat(airTempArray.get(i)));
+
             data.addEntry(new Entry(i, Float.parseFloat(airTempArray.get(i))), 1);
+            data.notifyDataChanged();
         }
 
       airTempArray.clear();
@@ -363,7 +373,7 @@ public class RealtimeLineChartActivity extends DemoBase
         //        .collect(Collectors.toList());
 
 
-        if (data != null) {
+       // if (data != null) {
 
         /*    Iterator myVeryOwnIterator1 = timeDateArray.keySet().iterator();
             while(myVeryOwnIterator1.hasNext()) {
@@ -402,50 +412,66 @@ public class RealtimeLineChartActivity extends DemoBase
             // data.addEntry(new Entry(1, 25.4f), 1);
 
 
-             data.notifyDataChanged();
+
 
             // let the chart know it's data has changed
             chart.notifyDataSetChanged();
-
+            chart.invalidate();
             // limit the number of visible entries
             chart.setVisibleXRangeMaximum(3);
             //chart.setVisibleYRange(30, AxisDependency.LEFT);
 
             // move to the latest entry
             chart.moveViewToX(data.getEntryCount());
+            // chart.moveViewTo(data.getEntryCount() - 7, 50f, YAxis.AxisDependency.LEFT);
 
             // this automatically refreshes the chart (calls invalidate())
-            // chart.moveViewTo(data.getXValCount()-7, 55f,
-            // AxisDependency.LEFT);
-        }
+              //   chart.moveViewTo(data.getXValCount()-7, 55f,
+              // YAxis.AxisDependency.LEFT);
+      //  }
     }
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private LineDataSet createSet1(List<Entry> incomeEntries) {
         // LineDataSet set = new LineDataSet(incomeEntries, "Skin Temp");
-        LineDataSet set = new LineDataSet(null, "Skin Temp");
+
+        ArrayList<Entry> values = new ArrayList<>();
+
+       // for (int i = 0; i < 1; i++) {
+            values.add(new Entry(0, 5.2f));
+      //  }
+
+        LineDataSet set = new LineDataSet(values, "Skin Temp");
         set.setAxisDependency(LEFT);
         set.setColor(ColorTemplate.getHoloBlue());
         set.setCircleColor(Color.WHITE);
         set.setLineWidth(2f);
         set.setCircleRadius(4f);
+
         set.setFillAlpha(65);
         set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        set.setVisible(true);
+        set.setDrawHighlightIndicators(true);
 
         // set.setValueFormatter(new IndexAxisValueFormatter(weekdays));
         set.setFillColor(ColorTemplate.getHoloBlue());
         set.setHighLightColor(Color.rgb(244, 117, 117));
-        set.setValueTextColor(Color.RED);
+        set.setValueTextColor(ColorTemplate.getHoloBlue());
         set.setValueTextSize(9f);
         set.setDrawValues(true);
+        set.setDrawHighlightIndicators(true);
+        set.setDrawCircleHole(true);
+
         return set;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private LineDataSet createSet2(List<Entry> incomeEntries) {
         // LineDataSet set = new LineDataSet(getIncomeEntries(), "Dynamic Data");
+        ArrayList<Entry> values = new ArrayList<>();
 
+            values.add(new Entry(0f, 2.2f));
 
         // create a dataset and give it a type
         //LineDataSet set  = new LineDataSet(incomeEntries2, "Air Temp");
@@ -462,7 +488,7 @@ public class RealtimeLineChartActivity extends DemoBase
         // set.setValueFormatter(new IndexAxisValueFormatter(weekdays));
         set.setFillColor(ColorTemplate.getHoloBlue());
         set.setHighLightColor(Color.rgb(244, 117, 117));
-        set.setValueTextColor(Color.RED);
+        set.setValueTextColor(Color.YELLOW);
         set.setValueTextSize(9f);
         set.setDrawValues(true);
         return set;
@@ -630,6 +656,21 @@ public class RealtimeLineChartActivity extends DemoBase
 
         // set data
         chart.setData(data);
+    }
+
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+       // Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected() {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 /*public void plotStrignLAbelCOunt(){
 
