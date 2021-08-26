@@ -41,10 +41,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dcfbe793-51c3-4cf6-af46-b956e7d3f469" name="Default Changelist" comment="Commit">
+      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/infant/warmer/mpchart/RealtimeLineChartActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/infant/warmer/mpchart/RealtimeLineChartActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -235,13 +240,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1598381539889</updated>
-    </task>
-    <task id="LOCAL-00055" summary="Commit">
-      <created>1626090415799</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1626090415799</updated>
     </task>
     <task id="LOCAL-00056" summary="Commit">
       <created>1626093478476</created>
@@ -579,7 +577,14 @@
       <option name="project" value="LOCAL" />
       <updated>1629965461795</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="Commit">
+      <created>1629968329968</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1629968329968</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -698,22 +703,22 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="460" y="69" key="Github.UntrackedFilesDialog/0.0.1366.728@0.0.1366.728" timestamp="1625312902533" />
-    <state width="1345" height="-40" key="GridCell.Tab.0.bottom" timestamp="1629964136584">
+    <state width="1345" height="318" key="GridCell.Tab.0.bottom" timestamp="1629970807733">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="-40" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1629964136584" />
-    <state width="1345" height="-40" key="GridCell.Tab.0.center" timestamp="1629964136583">
+    <state width="1345" height="318" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1629970807733" />
+    <state width="1345" height="318" key="GridCell.Tab.0.center" timestamp="1629970807733">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="-40" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1629964136583" />
-    <state width="1345" height="-40" key="GridCell.Tab.0.left" timestamp="1629964136583">
+    <state width="1345" height="318" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1629970807733" />
+    <state width="1345" height="318" key="GridCell.Tab.0.left" timestamp="1629970807732">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="-40" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1629964136583" />
-    <state width="1345" height="-40" key="GridCell.Tab.0.right" timestamp="1629964136584">
+    <state width="1345" height="318" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1629970807732" />
+    <state width="1345" height="318" key="GridCell.Tab.0.right" timestamp="1629970807733">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="-40" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1629964136584" />
+    <state width="1345" height="318" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1629970807733" />
     <state x="356" y="68" key="NewModule_or_Project.wizard" timestamp="1628842760954">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -726,10 +731,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="8" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1627302070343" />
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1629965566634">
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1629968343622">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1629965566634" />
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1629968343622" />
     <state x="499" y="142" key="chooseDestDirectoryDialog" timestamp="1623823949943">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

@@ -127,7 +127,7 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
 
         // add empty data
         chart.setData(data);
-        chart.fitScreen();
+       // chart.fitScreen();
         // get the legend (only possible after setting data)
         Legend l = chart.getLegend();
 
@@ -346,8 +346,9 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
         twoArrayMerge.addAll(airFloatList);
 
       Float skinMinimumFloatValueTemp =   getMinimumFLoatValue(twoArrayMerge);
+        Float maxFloatValueTemp = getMaximumFLoatValue(twoArrayMerge);
       // Float airMinimumFloatValueTemp =   getMinimumFLoatValue(airFloatList);
-      Log.d("minimum_Temp ",""+skinMinimumFloatValueTemp);
+      Log.d("minimum_Temp ","min "+skinMinimumFloatValueTemp+" max "+maxFloatValueTemp);
       //Log.d("minimum_Temp Air ",""+airMinimumFloatValueTemp);
        // List<String> skinTemp = skinTempArray;
       //  List<String> airTemp = airTempArray;
@@ -394,6 +395,7 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
 
         }
         leftAxis.setAxisMinimum(skinMinimumFloatValueTemp-2);
+     //   leftAxis.setAxisMaximum(maxFloatValueTemp+2);
         airTempArray.clear();
         skinTempArray.clear();
         timeDateArray.clear();
@@ -633,6 +635,14 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
             }
         }
         return min;
+    }
+
+    public static float getMaximumFLoatValue(final List<Float> values) {
+        float max = Float.MIN_VALUE;
+        for (final float v : values) {
+            max = Math.max(v, max);
+        }//ww w  .  j  a v a 2 s . c  o m
+        return max;
     }
 
 
