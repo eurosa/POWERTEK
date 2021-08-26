@@ -127,7 +127,7 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
 
         // add empty data
         chart.setData(data);
-
+        chart.fitScreen();
         // get the legend (only possible after setting data)
         Legend l = chart.getLegend();
 
