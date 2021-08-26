@@ -17,7 +17,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="minimum_Temp" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="TouchGesture" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
@@ -48,7 +48,10 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.7.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DatabaseHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/infant/warmer/DatabaseHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/infant/warmer/mpchart/RealtimeLineChartActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/infant/warmer/mpchart/RealtimeLineChartActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -240,13 +243,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1598381539889</updated>
-    </task>
-    <task id="LOCAL-00056" summary="Commit">
-      <created>1626093478476</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1626093478476</updated>
     </task>
     <task id="LOCAL-00057" summary="Commit">
       <created>1626159095822</created>
@@ -584,7 +580,14 @@
       <option name="project" value="LOCAL" />
       <updated>1629968329968</updated>
     </task>
-    <option name="localTasksCounter" value="105" />
+    <task id="LOCAL-00105" summary="Commit">
+      <created>1629971100458</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1629971100459</updated>
+    </task>
+    <option name="localTasksCounter" value="106" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -703,22 +706,22 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="460" y="69" key="Github.UntrackedFilesDialog/0.0.1366.728@0.0.1366.728" timestamp="1625312902533" />
-    <state width="1345" height="318" key="GridCell.Tab.0.bottom" timestamp="1629970807733">
+    <state width="1345" height="165" key="GridCell.Tab.0.bottom" timestamp="1629979727933">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="318" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1629970807733" />
-    <state width="1345" height="318" key="GridCell.Tab.0.center" timestamp="1629970807733">
+    <state width="1345" height="165" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1629979727933" />
+    <state width="1345" height="165" key="GridCell.Tab.0.center" timestamp="1629979727933">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="318" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1629970807733" />
-    <state width="1345" height="318" key="GridCell.Tab.0.left" timestamp="1629970807732">
+    <state width="1345" height="165" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1629979727933" />
+    <state width="1345" height="165" key="GridCell.Tab.0.left" timestamp="1629979727933">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="318" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1629970807732" />
-    <state width="1345" height="318" key="GridCell.Tab.0.right" timestamp="1629970807733">
+    <state width="1345" height="165" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1629979727933" />
+    <state width="1345" height="165" key="GridCell.Tab.0.right" timestamp="1629979727933">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1345" height="318" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1629970807733" />
+    <state width="1345" height="165" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1629979727933" />
     <state x="356" y="68" key="NewModule_or_Project.wizard" timestamp="1628842760954">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -731,10 +734,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="8" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1627302070343" />
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1629968343622">
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1629971112191">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1629968343622" />
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1629971112191" />
     <state x="499" y="142" key="chooseDestDirectoryDialog" timestamp="1623823949943">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

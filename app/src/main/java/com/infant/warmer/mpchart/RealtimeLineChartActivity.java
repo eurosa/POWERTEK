@@ -23,6 +23,7 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.Legend.LegendForm;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -30,8 +31,11 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.ChartTouchListener;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.MPPointD;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.infant.warmer.DataModel;
 import com.infant.warmer.DatabaseHandler;
@@ -67,7 +71,7 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
     private ArrayList<String> xAxisValues34;
     private ArrayList<String> skinTempArray, airTempArray, timeDateArray;
     private YAxis leftAxis;
-
+    private String TAG = "TouchGesture";
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,7 +162,7 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
 
         leftAxis.setAxisMaximum(100f);
         // chart.animateX(3000);
-
+        leftAxis.setAxisMinimum(0);
 
         leftAxis.setCenterAxisLabels(true);
       //  leftAxis.setTextSize(10);
@@ -190,6 +194,64 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
                 return false;
             }
         });*/
+
+        chart.setOnChartGestureListener(new OnChartGestureListener() {
+            @Override
+            public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+                Log.d(TAG,"onChartGestureStart");
+                return;
+            }
+
+            @Override
+            public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+                Log.d(TAG,"onChartGestureEnd");
+                return;
+            }
+
+            @Override
+            public void onChartLongPressed(MotionEvent me) {
+                Log.d(TAG,"onChartLongPressed");
+                return;
+            }
+
+            @Override
+            public void onChartDoubleTapped(MotionEvent me) {
+                Log.d(TAG,"onChartDoubleTapped");
+                return;
+            }
+
+            @Override
+            public void onChartSingleTapped(MotionEvent me) {
+                Log.d(TAG,"onChartSingleTapped");
+
+                return;
+            }
+
+            @Override
+            public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
+                Log.d(TAG,"onChartFling");
+            }
+
+            @Override
+            public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
+                Log.d(TAG, "onChartScale"+scaleX+" "+scaleY);
+                return;
+            }
+
+            @Override
+            public void onChartTranslate(MotionEvent me, float dX, float dY) {
+
+                float lowX = chart.getLowestVisibleX();
+
+
+                float xrange = chart.getVisibleXRange() ;//better to fix x-ranges, getVisibleXRange may be inaccurate
+                float centerX = lowX + xrange / 2;
+                Log.d(TAG, "onChartTranslate "+dX+" "+dY+ " "+lowX+" "+lowX+xrange+" "+centerX);
+
+                return;
+            }
+        });
+
 
     }
     public void setChartProperties() {
@@ -288,6 +350,7 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
                                     List<String> skinTempArray = dbHandler.GetSKinTemp();
                                     List<String> airTempArray = dbHandler.GetAirTemp();
                                     List<String> timeDateArray = dbHandler.timeDate();
+                                  //  dbHandler.delOlderData();
 
                                    feedMultiple(skinTempArray,airTempArray,timeDateArray);
                                 }
@@ -348,7 +411,8 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
       Float skinMinimumFloatValueTemp =   getMinimumFLoatValue(twoArrayMerge);
         Float maxFloatValueTemp = getMaximumFLoatValue(twoArrayMerge);
       // Float airMinimumFloatValueTemp =   getMinimumFLoatValue(airFloatList);
-      Log.d("minimum_Temp ","min "+skinMinimumFloatValueTemp+" max "+maxFloatValueTemp);
+
+
       //Log.d("minimum_Temp Air ",""+airMinimumFloatValueTemp);
        // List<String> skinTemp = skinTempArray;
       //  List<String> airTemp = airTempArray;
@@ -377,12 +441,13 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
         chart.setData(data);
 
 
+
         for(int i = 0; i < skinTempArray.size(); i++)
         {
             data.addEntry(new Entry(i, Float.parseFloat(skinTempArray.get(i))), 0);
           //  System.out.println(skinTempArray.get(i));
             data.notifyDataChanged();
-           // leftAxis.setAxisMinimum(Float.parseFloat(skinTempArray.get(i))-2);
+            leftAxis.setAxisMinimum(Float.parseFloat(skinTempArray.get(i))-1.5f);
         }
 
         for(int i = 0; i < airTempArray.size(); i++)
@@ -394,7 +459,11 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
 
 
         }
-        leftAxis.setAxisMinimum(skinMinimumFloatValueTemp-2);
+
+        Log.d("minimum_Temp ","min "+skinMinimumFloatValueTemp+" max "+maxFloatValueTemp+" "+chart.getLineData().getXMax()+" "+chart.getLineData().getXMin());
+       //  leftAxis.setAxisMinimum(skinMinimumFloatValueTemp-1.5f);
+
+
      //   leftAxis.setAxisMaximum(maxFloatValueTemp+2);
         airTempArray.clear();
         skinTempArray.clear();
@@ -729,17 +798,23 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {
-      //  Toast.makeText(this, e.toString()+" "+h, Toast.LENGTH_SHORT).show();
+   Toast.makeText(this, e.toString()+" "+h, Toast.LENGTH_SHORT).show();
+       // e.getData();
+        Log.d("VAL SELECTED",
+                "Value: " + e.getY() + ", xIndex: " + e.getX()
+                        + ", DataSet index: " + h.getDataSetIndex());
     }
 
     @Override
     public void onNothingSelected() {
     //    Toast.makeText(this,  "Nothing", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
      //   Toast.makeText(this,  " "+hasCapture, Toast.LENGTH_SHORT).show();
+
     }
 /*public void plotStrignLAbelCOunt(){
 

@@ -355,6 +355,12 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
 
     }
 
+    public void delOlderData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "DELETE FROM "+TABLE_INFANT_WARMER +" WHERE "+KEY_HM +"<= date('now','-2 day')";
+        db.execSQL(sql);
+    }
+
 
 
     public int updateDigitNo(DataModel dataModel) {
