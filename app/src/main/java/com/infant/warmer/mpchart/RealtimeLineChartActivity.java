@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -64,6 +66,7 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
     private HashMap<String,String> xAxisValues;
     private ArrayList<String> xAxisValues34;
     private ArrayList<String> skinTempArray, airTempArray, timeDateArray;
+    private YAxis leftAxis;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -149,12 +152,14 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
         xl.setAvoidFirstLastClipping(true);
         xl.setEnabled(true);
 
-        YAxis leftAxis = chart.getAxisLeft();
+        leftAxis = chart.getAxisLeft();
         leftAxis.setTypeface(tfLight);
         leftAxis.setTextColor(Color.RED);
 
         leftAxis.setAxisMaximum(100f);
-        leftAxis.setAxisMinimum(26f);
+        // chart.animateX(3000);
+
+
         leftAxis.setCenterAxisLabels(true);
       //  leftAxis.setTextSize(10);
 
@@ -173,6 +178,18 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
         runDataSendThread();
 
        // plotStrignLAbelCOunt();
+
+
+      /*  chart.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+              //  if (!(chart.getLowestVisibleX() == chart.getXAxis().getAxisMinimum() || chart.getHighestVisibleX() == chart.getXAxis().getAxisMaximum())) {
+                    // Do your work here
+                    Toast.makeText(getApplicationContext(), "Hello Scroll to end check working"+leftAxis.getAxisMinimum(), Toast.LENGTH_LONG).show();
+
+                return false;
+            }
+        });*/
 
     }
     public void setChartProperties() {
@@ -317,8 +334,21 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
     }
 
 
+
+
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void addData(List<String>  skinTempArray,List<String>  airTempArray, List<String>  timeDateArray) {
+      List<Float> skinFloatList =   getFloatList(skinTempArray);
+      List<Float> airFloatList =   getFloatList(airTempArray);
+
+        List<Float> twoArrayMerge = new ArrayList<Float>(skinFloatList);
+        twoArrayMerge.addAll(airFloatList);
+
+      Float skinMinimumFloatValueTemp =   getMinimumFLoatValue(twoArrayMerge);
+      // Float airMinimumFloatValueTemp =   getMinimumFLoatValue(airFloatList);
+      Log.d("minimum_Temp ",""+skinMinimumFloatValueTemp);
+      //Log.d("minimum_Temp Air ",""+airMinimumFloatValueTemp);
        // List<String> skinTemp = skinTempArray;
       //  List<String> airTemp = airTempArray;
       //  List<String> timeDate = timeDateArray;
@@ -351,6 +381,7 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
             data.addEntry(new Entry(i, Float.parseFloat(skinTempArray.get(i))), 0);
           //  System.out.println(skinTempArray.get(i));
             data.notifyDataChanged();
+           // leftAxis.setAxisMinimum(Float.parseFloat(skinTempArray.get(i))-2);
         }
 
         for(int i = 0; i < airTempArray.size(); i++)
@@ -359,11 +390,13 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
 
             data.addEntry(new Entry(i, Float.parseFloat(airTempArray.get(i))), 1);
             data.notifyDataChanged();
-        }
 
-      airTempArray.clear();
-      skinTempArray.clear();
-      timeDateArray.clear();
+
+        }
+        leftAxis.setAxisMinimum(skinMinimumFloatValueTemp-2);
+        airTempArray.clear();
+        skinTempArray.clear();
+        timeDateArray.clear();
         //List<String> skinTemp = skinTempArray.values()
          //       .stream()
          //      .collect(Collectors.toList());
@@ -396,19 +429,19 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
             //for (String s : skinTemp){
             //    data.addEntry(new Entry(skinTemp.indexOf(s), Float.parseFloat(s)), 0);
             //     System.out.println("Data of skin "+skinTemp.indexOf(s)+" "+Float.parseFloat(s));
-//
-          //  }
+            //
+            //  }
 
-           // for (String s1 : airTemp){
-          //      data.addEntry(new Entry(airTemp.indexOf(s1), Float.parseFloat(s1)), 1);
-          //      System.out.println("Data of air "+skinTemp.indexOf(s1)+" "+Float.parseFloat(s1));
+            // for (String s1 : airTemp){
+            //      data.addEntry(new Entry(airTemp.indexOf(s1), Float.parseFloat(s1)), 1);
+            //      System.out.println("Data of air "+skinTemp.indexOf(s1)+" "+Float.parseFloat(s1));
 
-         //   }
+            //   }
 
             // data.addEntry(new Entry(0, 26.4f), 0);
             // data.addEntry(new Entry(1, 25), 0);
 
-           //  data.addEntry(new Entry(0, 26.8f), 1);
+            //  data.addEntry(new Entry(0, 26.8f), 1);
             // data.addEntry(new Entry(1, 25.4f), 1);
 
 
@@ -577,6 +610,32 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
     }
 
 
+    private List<Float> getFloatList(List<String> stringList)
+    {
+        List<Float> floatList = new ArrayList<>();
+
+        for (int i = 0; i < stringList.size(); i++)
+        {
+            Float number = Float.valueOf(stringList.get(i));
+            floatList.add(number);
+        }
+
+        return floatList;
+    }
+    public Float getMinimumFLoatValue(List<Float> data) {
+        float min = Float.MAX_VALUE;
+        int index = -1;
+        for (int i = 0; i < data.size(); i++) {
+            Float f = data.get(i);
+            if (Float.compare(f.floatValue(), min) < 0) {
+                min = f.floatValue();
+                index = i;
+            }
+        }
+        return min;
+    }
+
+
     private void setData12(int count, float range) {
 
         // now in hours
@@ -660,17 +719,17 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {
-       // Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(this, e.toString()+" "+h, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onNothingSelected() {
-
+    //    Toast.makeText(this,  "Nothing", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
-
+     //   Toast.makeText(this,  " "+hasCapture, Toast.LENGTH_SHORT).show();
     }
 /*public void plotStrignLAbelCOunt(){
 
