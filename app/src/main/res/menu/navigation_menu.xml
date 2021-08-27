@@ -36,11 +36,11 @@
         <item
             android:id="@+id/graphView"
             android:title="Show Realtime Graph"
-            android:icon="@drawable/ic_chart_graph"/>
+            android:icon="@drawable/ic_graph_view"/>
         <item
             android:id="@+id/tableView"
             android:title="Show Data"
-            android:icon="@drawable/ic_exit_button"/>
+            android:icon="@drawable/ic_skin_air_temp"/>
     </menu>
     </item>
 
