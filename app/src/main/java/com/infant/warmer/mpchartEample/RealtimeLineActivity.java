@@ -421,10 +421,10 @@ public class RealtimeLineActivity extends DemoBase
                 Toast.makeText(this, "Chart cleared!", Toast.LENGTH_SHORT).show();
                 break;
             }
-            case R.id.actionFeedMultiple: {
-                feedMultiple();
-                break;
-            }
+          //  case R.id.actionFeedMultiple: {
+            //    feedMultiple();
+           //     break;
+           // }
             case R.id.actionSave: {
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     saveToGallery();
