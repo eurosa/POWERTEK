@@ -35,7 +35,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
     private static final String KEY_SKIN_TEMP = "skin_temp";
     private static final String KEY_ARI_TEMP = "air_temp";
     private static final String KEY_HM = "curr_time";
-
+    private static final String KEY_DATE = "date_now";
 
 
 
@@ -64,7 +64,8 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
                 KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 KEY_SKIN_TEMP + " TEXT NOT NULL, " +
                 KEY_ARI_TEMP + " TEXT NOT NULL, " +
-                KEY_HM + " TEXT UNIQUE NOT NULL );"
+                KEY_HM + " TEXT NOT NULL UNIQUE, " +
+                KEY_DATE + " TEXT NOT NULL );"
         );
 
       //  db.execSQL(CREATE_CONTACTS_TABLE);
@@ -110,13 +111,14 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
 
 
     // Adding new contact
-    public void AddData(String skintemp , String airTemp, String currentTime) {
+    public void AddData(String skintemp , String airTemp, String currentTime,String currentDate) {
         Log.d("database_data inert",""+ skintemp+" "+airTemp+ " " +currentTime );
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_ARI_TEMP, airTemp); // Name
         values.put(KEY_SKIN_TEMP, skintemp); // Name
         values.put(KEY_HM, currentTime); // Name
+        values.put(KEY_DATE, currentDate); // Name
 
 
         // Inserting Row
@@ -357,8 +359,10 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
 
     public void delOlderData(){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "DELETE FROM "+TABLE_INFANT_WARMER +" WHERE "+KEY_HM +"<= date('now','-2 day')";
+        String sql = "DELETE FROM "+TABLE_INFANT_WARMER +" WHERE "+KEY_DATE +"<= date('now','-1 day')"+" and id not in (SELECT id FROM "
+                +TABLE_INFANT_WARMER +" ORDER BY id desc limit 100"+")";
         db.execSQL(sql);
+        db.close();
     }
 
 

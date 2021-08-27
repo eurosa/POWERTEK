@@ -170,7 +170,7 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
         leftAxis.setCenterAxisLabels(true);
         leftAxis.setLabelCount(11, true);
         //leftAxis.setDrawGridLines(true);
-        chart.zoom(0f,20f,0,0);
+        chart.zoom(0f,6f,0,0);
 
 
         //chart.fitScreen();
@@ -410,7 +410,7 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
 
       Float skinMinimumFloatValueTemp =   getMinimumFLoatValue(twoArrayMerge);
         Float maxFloatValueTemp = getMaximumFLoatValue(twoArrayMerge);
-      // Float airMinimumFloatValueTemp =   getMinimumFLoatValue(airFloatList);
+        Float  MinimumFloatValueTemp =   getMinimumFLoatValue(airFloatList);
 
 
       //Log.d("minimum_Temp Air ",""+airMinimumFloatValueTemp);
@@ -447,24 +447,29 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
             data.addEntry(new Entry(i, Float.parseFloat(skinTempArray.get(i))), 0);
           //  System.out.println(skinTempArray.get(i));
             data.notifyDataChanged();
-            leftAxis.setAxisMinimum(Float.parseFloat(skinTempArray.get(i))-1.5f);
+            chart.moveViewTo(i,Float.parseFloat(skinTempArray.get(i)),YAxis.AxisDependency.LEFT);
         }
 
         for(int i = 0; i < airTempArray.size(); i++)
         {
-            Log.d("entry_value_my_data",""+Float.parseFloat(airTempArray.get(i)));
+            Log.d("entry_value_my_data",i+" "+Float.parseFloat(airTempArray.get(i)));
 
             data.addEntry(new Entry(i, Float.parseFloat(airTempArray.get(i))), 1);
             data.notifyDataChanged();
 
-
+            chart.moveViewTo(i,Float.parseFloat(airTempArray.get(i)),YAxis.AxisDependency.LEFT);
         }
 
         Log.d("minimum_Temp ","min "+skinMinimumFloatValueTemp+" max "+maxFloatValueTemp+" "+chart.getLineData().getXMax()+" "+chart.getLineData().getXMin());
        //  leftAxis.setAxisMinimum(skinMinimumFloatValueTemp-1.5f);
 
 
+        ViewPortHandler handler = chart.getViewPortHandler();
+
+        MPPointD topLeft = chart.getValuesByTouchPoint(handler.contentLeft(), handler.contentTop(), YAxis.AxisDependency.LEFT);
+        MPPointD bottomRight = chart.getValuesByTouchPoint(handler.contentRight(), handler.contentBottom(), YAxis.AxisDependency.LEFT);
      //   leftAxis.setAxisMaximum(maxFloatValueTemp+2);
+        
         airTempArray.clear();
         skinTempArray.clear();
         timeDateArray.clear();
@@ -526,8 +531,13 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
             //chart.setVisibleYRange(30, AxisDependency.LEFT);
 
             // move to the latest entry
-            chart.moveViewToX(data.getEntryCount());
-            // chart.moveViewTo(data.getEntryCount() - 7, 50f, YAxis.AxisDependency.LEFT);
+      //      chart.moveViewToX(chart.getXChartMax());
+           // chart.moveViewToX(data.getEntryCount());
+
+            Log.d("chart_max",""+chart.getXChartMax()+" "+data.getEntryCount());
+            // chart.setScaleMinima(10f,10f);
+           // leftAxis.setAxisMinimum( MinimumFloatValueTemp-2f);
+           // chart.moveViewTo(data.getEntryCount() - 7, 50f, YAxis.AxisDependency.LEFT);
 
             // this automatically refreshes the chart (calls invalidate())
               //   chart.moveViewTo(data.getXValCount()-7, 55f,
