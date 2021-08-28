@@ -47,6 +47,7 @@ public class TableViewMainActivity  extends AppCompatActivity {
         //initialize database and insert dummy data
        // initializeDatabase();
         //get dummy data from database and insert in the arrays
+        // dbHabn.delOlderData();
         dbHabn.getFromDatabase();
 
         LegacyTableView legacyTableView = (LegacyTableView)findViewById(R.id.legacy_table_view);
