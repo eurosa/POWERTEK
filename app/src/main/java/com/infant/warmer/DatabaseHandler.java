@@ -362,8 +362,12 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
 
     public void delOlderData(){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "DELETE FROM "+TABLE_INFANT_WARMER +" WHERE "+KEY_DATE +"<= date('now','-1 day')"+" and id not in (SELECT id FROM "
+        String sql = "DELETE FROM "+TABLE_INFANT_WARMER +" WHERE  id not in (SELECT id FROM "
                 +TABLE_INFANT_WARMER +" ORDER BY id desc limit 100"+")";
+        /*
+        * String sql = "DELETE FROM "+TABLE_INFANT_WARMER +" WHERE "+KEY_DATE +"<= date('now','-1 day')"+" and id not in (SELECT id FROM "
+                +TABLE_INFANT_WARMER +" ORDER BY id desc limit 100"+")";
+        * */
         db.execSQL(sql);
         db.close();
     }
@@ -464,7 +468,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
     }
     public void getFromDatabase(){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor =  db.rawQuery("SELECT * FROM infant_warmer", null);
+        Cursor cursor =  db.rawQuery("SELECT * FROM infant_warmer ORDER BY id DESC", null);
 
         if(cursor.getCount()>0){
             //use database column names or custom names for the columns
