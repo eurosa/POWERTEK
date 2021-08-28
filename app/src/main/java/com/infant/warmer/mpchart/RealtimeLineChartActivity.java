@@ -527,7 +527,7 @@ public class RealtimeLineChartActivity extends DemoBase implements OnChartValueS
             chart.notifyDataSetChanged();
             chart.invalidate();
             // limit the number of visible entries
-            chart.setVisibleXRangeMaximum(3);
+            chart.setVisibleXRangeMaximum(9);
             //chart.setVisibleYRange(30, AxisDependency.LEFT);
 
             // move to the latest entry

@@ -469,12 +469,15 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
         if(cursor.getCount()>0){
             //use database column names or custom names for the columns
             /* insert your column titles using legacy insertLegacyTitle() function*/
-            LegacyTableView.insertLegacyTitle("Time & Date","Skin Temp", "Air Temp");
+            LegacyTableView.insertLegacyTitle("SL. No","Time & Date","Skin Temp", "Air Temp");
         }
+
+        int serial_no = 1;
         while(cursor.moveToNext()) {
             //simple table content insert method for table contents
-            LegacyTableView.insertLegacyContent(cursor.getString(cursor.getColumnIndex(KEY_DATE_TIME)),cursor.getString(cursor.getColumnIndex(KEY_SKIN_TEMP)),
+            LegacyTableView.insertLegacyContent(String.valueOf(serial_no),cursor.getString(cursor.getColumnIndex(KEY_DATE_TIME)),cursor.getString(cursor.getColumnIndex(KEY_SKIN_TEMP)),
                     cursor.getString(cursor.getColumnIndex(KEY_ARI_TEMP)));
+            serial_no++;
         }
         //  remember to close your database to avoid memory leaks
         cursor.close();
