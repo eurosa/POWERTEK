@@ -41,7 +41,7 @@
             android:textColor="@color/redColor"/>
     </LinearLayout>
 
-    <LinearLayout
+   <!-- <LinearLayout
         android:id="@+id/titletxtdd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             android:textColor="@color/darkRed"
             android:textSize="24sp"
             app:fontFamily="@font/reeniebeanie"/>
-    </LinearLayout>
+    </LinearLayout>-->
 
 
 </LinearLayout>
