@@ -74,12 +74,12 @@ public class TableViewMainActivity  extends AppCompatActivity {
         if(cursor.getCount()>0){
             //use database column names or custom names for the columns
             /* insert your column titles using legacy insertLegacyTitle() function*/
-            LegacyTableView.insertLegacyTitle("Skin Temp", "Air Temp","Time & Date");
+            LegacyTableView.insertLegacyTitle("Time & Date","Skin Temp", "Air Temp");
         }
         while(cursor.moveToNext()) {
             //simple table content insert method for table contents
-            LegacyTableView.insertLegacyContent(cursor.getString(cursor.getColumnIndex(KEY_SKIN_TEMP)),
-                    cursor.getString(cursor.getColumnIndex(KEY_ARI_TEMP)), cursor.getString(cursor.getColumnIndex(KEY_HM)));
+            LegacyTableView.insertLegacyContent(cursor.getString(cursor.getColumnIndex(KEY_HM)),cursor.getString(cursor.getColumnIndex(KEY_SKIN_TEMP)),
+                    cursor.getString(cursor.getColumnIndex(KEY_ARI_TEMP)));
         }
         //remember to close your database to avoid memory leaks
         cursor.close();

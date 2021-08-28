@@ -36,6 +36,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
     private static final String KEY_ARI_TEMP = "air_temp";
     private static final String KEY_HM = "curr_time";
     private static final String KEY_DATE = "date_now";
+    private static final String KEY_DATE_TIME = "date_time_now";
 
 
 
@@ -64,7 +65,8 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
                 KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 KEY_SKIN_TEMP + " TEXT NOT NULL, " +
                 KEY_ARI_TEMP + " TEXT NOT NULL, " +
-                KEY_HM + " TEXT NOT NULL UNIQUE, " +
+                KEY_HM + " TEXT NOT NULL, " +
+                KEY_DATE_TIME + " TEXT NOT NULL UNIQUE, " +
                 KEY_DATE + " TEXT NOT NULL );"
         );
 
@@ -111,7 +113,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
 
 
     // Adding new contact
-    public void AddData(String skintemp , String airTemp, String currentTime,String currentDate) {
+    public void AddData(String skintemp , String airTemp, String currentTime,String currentDate, String currentDateTime) {
         Log.d("database_data inert",""+ skintemp+" "+airTemp+ " " +currentTime );
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -119,6 +121,7 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
         values.put(KEY_SKIN_TEMP, skintemp); // Name
         values.put(KEY_HM, currentTime); // Name
         values.put(KEY_DATE, currentDate); // Name
+        values.put(KEY_DATE_TIME, currentDateTime); // Name
 
 
         // Inserting Row
@@ -466,14 +469,14 @@ public class DatabaseHandler extends SQLiteOpenHelper implements Serializable {
         if(cursor.getCount()>0){
             //use database column names or custom names for the columns
             /* insert your column titles using legacy insertLegacyTitle() function*/
-            LegacyTableView.insertLegacyTitle("Skin Temp", "Air Temp","Time & Date");
+            LegacyTableView.insertLegacyTitle("Time & Date","Skin Temp", "Air Temp");
         }
         while(cursor.moveToNext()) {
             //simple table content insert method for table contents
-            LegacyTableView.insertLegacyContent(cursor.getString(cursor.getColumnIndex(KEY_SKIN_TEMP)),
-                    cursor.getString(cursor.getColumnIndex(KEY_ARI_TEMP)), cursor.getString(cursor.getColumnIndex(KEY_HM)));
+            LegacyTableView.insertLegacyContent(cursor.getString(cursor.getColumnIndex(KEY_DATE_TIME)),cursor.getString(cursor.getColumnIndex(KEY_SKIN_TEMP)),
+                    cursor.getString(cursor.getColumnIndex(KEY_ARI_TEMP)));
         }
-        //remember to close your database to avoid memory leaks
+        //  remember to close your database to avoid memory leaks
         cursor.close();
     }
 

@@ -2452,14 +2452,15 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
 
 
                 try {
-                                String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
+                                String currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
+                                String currentDateTime = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(new Date());
                                 String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
                                 Log.d("date_now","" );
                                 // dataModel.setSkinTempValue(a.getSkinTempData());
                                 //dataModel.setAirTempValue(a.getAirtTempData());
                                 if(a.getAirtTempData()!=null && a.getSkinTempData()!=null){
 
-                                dbHandler.AddData(a.getSkinTempData(),a.getAirtTempData(),currentTime,currentDate);
+                                dbHandler.AddData(a.getSkinTempData(),a.getAirtTempData(),currentTime,currentDate,currentDateTime);
                                 dbHandler.delOlderData();
                                 }
 
