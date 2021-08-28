@@ -35,11 +35,11 @@
     <menu>
         <item
             android:id="@+id/graphView"
-            android:title="Show Realtime Graph"
+            android:title="Show Trending Graph"
             android:icon="@drawable/ic_graph_view"/>
         <item
             android:id="@+id/tableView"
-            android:title="Show Data"
+            android:title="Show Trending Data"
             android:icon="@drawable/ic_skin_air_temp"/>
     </menu>
     </item>

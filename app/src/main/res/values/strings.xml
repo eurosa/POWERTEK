@@ -98,7 +98,7 @@
     <string name="actionClearChart">Clear Chart</string>
     <string name="actionFeedMultiple">Feed Mulitiple</string>
     <string name="actionSave">Save to Gallery</string>
-    <string name="real_time_graph">Realtime Graph</string>
+    <string name="real_time_graph">Realtime Temperature Graph</string>
 
 
 </resources>
