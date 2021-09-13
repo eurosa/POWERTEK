@@ -543,27 +543,30 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                 String data="$C1R;";
                 try {
                     if(btSocket!=null) {
-                        Log.d("checkSendReceive",""+checkSendReceive);
+                        Log.e("checkSendReceive run",""+checkSendReceive);
                         if(checkSendReceive) {
                             btSocket.getOutputStream().write(data.getBytes());
-
+                        }
                             final Thread receive = new Thread(() -> {
                                 try {
-                                    receiveData();
-                                }catch (Exception e){}
+                                    if(checkSendReceive) {
+                                        receiveData();
+                                    }
+                                }catch (Exception e){
+                                    Log.d("timer_thread_stopped",""+e.getMessage());
+                                }
                             });
                             receive.start();
 
-                        }
                     }
                 } catch (IOException e) {
-                    Log.d("timer_thread_stopped",""+e.getMessage());
+
                     e.printStackTrace();
                 }
             }
         };
 
-     repeatTimer.schedule(timerTask, 100, 1000);//wait 0 ms before doing the action and do it evry 1000ms (1second)
+     repeatTimer.schedule(timerTask, 100, 500);//wait 0 ms before doing the action and do it evry 1000ms (1second)
 
      /*   Runnable runnable = new Runnable() {
             @Override
@@ -667,7 +670,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
             {
                 InputStream socketInputStream =  btSocket.getInputStream();
 
-                byte[] buffer = new byte[15];
+                byte[] buffer = new byte[24];
                 int bytes;
 
                 // Keep looping to listen for received messages
@@ -851,8 +854,6 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         }
 
 
-
-
       //   String bin1 = HexToBinary(arrayHex[18]);
       //   CF = getCharFromString(bin1,7);
       //   highTMP = getCharFromString(bin1,6);
@@ -901,60 +902,6 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         currentDisplayValue++;
 
     }
-
-
-    // ON-CLICKS (referred to from XML)
-
-    public void humBtnMinusPressed() {
-        initSetTempCheck = false;
-        checkSendReceive = false;
-        if(currentTempValue>minValue)
-        {
-            currentTempValue--;
-            floatCurrentSetTempValue = (float)(currentTempValue/10);
-
-            final Thread t = new Thread(new Runnable() {
-
-                @Override
-                public void run() {
-                   // decimalToHex((int) (currentTempValue));
-                }
-            });
-            t.start();
-
-        }
-
-    }
-
-    public void humBtnPlusPressed() {
-
-        initSetTempCheck = false;
-        checkSendReceive = false;
-        if (currentTempValue < maxValue)
-        {
-            currentTempValue++;
-            floatCurrentSetTempValue = (float)(currentTempValue/10);
-
-
-            final Thread t = new Thread(new Runnable() {
-
-                @Override
-                public void run() {
-                  //  decimalToHex((int) (currentTempValue));
-                }
-            });
-            t.start();
-        }
-
-    }
-
-    // INTERNAL
-
-
-
-    /*************************************************************************************************
-    *                              End Increment and Decrement
-    *************************************************************************************************/
 
 
 
@@ -1503,7 +1450,12 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         switch (v.getId() /*to get clicked view id**/) {
 
             case R.id.setClock:
+                checkSendReceive = false;
+                repeatTimer.cancel();
+                repeatTimer = new Timer();
                  setClock();
+                checkSendReceive = true;
+                runDataSendThread();
               //  break;
             default:
                 break;
@@ -1588,9 +1540,10 @@ z       time zone               Time Zone     z/zz/zzz:PST zzzz:Pacific Standard
         try {
             if(btSocket!=null) {
                 Log.d("checkSendReceive",""+checkSendReceive);
-                if(checkSendReceive) {
+            //    if(checkSendReceive) {
                     Log.d("data_time"," "+data);//data.replaceAll("\\s+", "")
                     btSocket.getOutputStream().write( data.getBytes());
+                    Thread.sleep(300);
                    // btSocket.getOutputStream().write( data.replaceAll("\\s+", "").getBytes());
                     /*final Thread receive = new Thread(() -> {
                         try {
@@ -1599,9 +1552,9 @@ z       time zone               Time Zone     z/zz/zzz:PST zzzz:Pacific Standard
                     });
                     receive.start();*/
 
-                }
+               // }
             }
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             Log.d("timer_thread_stopped",""+e.getMessage());
             e.printStackTrace();
         }
