@@ -1,0 +1,239 @@
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/draw_layout"
+    android:background="#F8F0E3">
+
+    <!--this the navigation view which draws
+        and shows the navigation drawer-->
+    <!--include the menu created in the menu folder-->
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:id="@+id/clockLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBlack"
+        android:gravity="top">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorAccent"
+            android:gravity="center"
+            android:theme="@style/MyMaterialTheme.Base"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:titleTextColor="#FFFFFF">
+
+
+            <ImageButton
+                android:id="@+id/bltStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="6dp"
+                android:background="@color/colorPrimary"
+                android:src="@drawable/ic_bluetooth"/>
+
+
+           <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/crgb_name"
+                android:textColor="@color/whiteColor"
+                android:textSize="18sp" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:id="@+id/temp"
+            android:layout_width="match_parent"
+            android:layout_height="106dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/my_toolbar"
+            android:orientation="vertical"
+            android:background="@drawable/layout_bg" >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Temperature"
+                android:gravity="top|center"
+                android:textColor="@color/whiteColor"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/temperature"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/whiteColor"
+                    android:text="00.0"
+                    android:textSize="33sp"
+                    android:gravity="center|right"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:id="@+id/tempUnit"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/whiteColor"
+                    android:text="@string/xb0_c"
+                    android:textSize="33sp"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/humidityLayout"
+            android:layout_width="match_parent"
+            android:layout_height="106dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/temp"
+            android:orientation="vertical"
+            android:background="@drawable/layout_bg"
+             >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Humidity"
+                android:gravity="top|center"
+                android:textColor="@color/whiteColor"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/humidity"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/whiteColor"
+                    android:text="00"
+                    android:textSize="33sp"
+                    android:gravity="center|right"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:id="@+id/humUnit"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/whiteColor"
+                    android:text="@string/percent_sign"
+                    android:textSize="33sp"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/dateLayout"
+            android:layout_width="match_parent"
+            android:layout_height="106dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/humidityLayout"
+            android:orientation="vertical"
+            android:background="@drawable/layout_bg"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/dateShow"
+                android:layout_width="match_parent"
+                android:text="Date"
+                android:textColor="@color/whiteColor"
+                android:layout_height="wrap_content"
+                android:gravity="center"/>
+
+            <android.widget.TextClock
+                android:id="@+id/hk_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="33sp"
+                android:layout_gravity="center"
+                android:format12Hour="dd MMM yyyy"
+                android:textColor="@color/whiteColor"
+                >
+
+            </android.widget.TextClock>
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="106dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/dateLayout"
+        android:orientation="vertical"
+        android:background="@drawable/layout_bg"
+        android:weightSum="2">
+        <TextView
+            android:id="@+id/timeShow"
+            android:layout_width="match_parent"
+            android:text="Time"
+            android:textColor="@color/whiteColor"
+            android:layout_height="wrap_content"
+            android:gravity="center"/>
+
+        <android.widget.TextClock
+            android:id="@+id/hk_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:format12Hour="hh:mm:ss"
+            android:textColor="@color/limeGreen"
+            android:textColorHighlight="@color/limeGreen"
+            android:textSize="42sp">
+
+        </android.widget.TextClock>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/setClock"
+        android:text="Set Clock"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/LinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/setClock"
+            android:background="@color/colorBlack"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/digiline">
+        </ImageButton>
+
+    </RelativeLayout>
+</ScrollView>
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:id="@+id/nav_view"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/navigation_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

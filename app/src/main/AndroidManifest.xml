@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.infant.warmer">
+    package="com.crgb.clock">
 
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -24,18 +24,18 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <application
         android:allowBackup="true"
-        android:icon="@drawable/sst_logo_200_100"
+        android:icon="@drawable/digiline_logo"
         android:label=""
         android:requestLegacyExternalStorage="true"
         android:theme="@style/MyMaterialTheme.Base"
         tools:replace="android:label">
 
         <activity
-            android:name="com.infant.warmer.ScanActivity"
+            android:name="com.crgb.clock.ScanActivity"
 
             android:theme="@style/MyMaterialTheme.Base" />
         <activity
-            android:name="com.infant.warmer.SplashScreen"
+            android:name="com.crgb.clock.SplashScreen"
             android:label="@string/app_name"
             android:theme="@style/MyMaterialTheme.Base">
             <intent-filter>
@@ -43,26 +43,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.infant.warmer.mpchart.RealtimeLineChartActivity"
+        <activity android:name="com.crgb.clock.mpchart.RealtimeLineChartActivity"
             android:theme="@style/MyMaterialTheme.Base"/>
 
-        <activity android:name="com.infant.warmer.mpchart.LineChartTime"
+        <activity android:name="com.crgb.clock.mpchart.LineChartTime"
             android:theme="@style/MyMaterialTheme.Base"/>
-        <activity android:name="com.infant.warmer.mpchart.RealtimeCharteMultiLine"
+        <activity android:name="com.crgb.clock.mpchart.RealtimeCharteMultiLine"
             android:theme="@style/MyMaterialTheme.Base"/>
-        <activity android:name="com.infant.warmer.TableViewMainActivity"
+        <activity android:name="com.crgb.clock.TableViewMainActivity"
             android:theme="@style/MyMaterialTheme.Base"/>
 
         <activity
             android:screenOrientation="fullSensor"
-            android:name="com.infant.warmer.DeviceList"
+            android:name="com.crgb.clock.DeviceList"
             android:theme="@style/MyMaterialTheme" />
         <activity
-            android:name="com.infant.warmer.DataControl"
+            android:name="com.crgb.clock.DataControl"
             android:label="Data Control"
             android:theme="@style/MyMaterialTheme.Base" />
         <activity
-            android:name="com.infant.warmer.AboutActivity"
+            android:name="com.crgb.clock.AboutActivity"
             android:label="@string/title_activity_about"
             android:theme="@style/MyMaterialTheme.Base" />
     </application>

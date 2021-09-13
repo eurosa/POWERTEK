@@ -17,7 +17,7 @@
             android:layout_width="186dp"
             android:layout_height="159dp"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/sst_logo_200_100"/>
+            app:srcCompat="@drawable/digiline_logo"/>
 
     </LinearLayout>
 
@@ -34,7 +34,7 @@
             android:id="@+id/splashText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Infant Warmer"
+            android:text="CRGB"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="33sp"
