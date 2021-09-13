@@ -247,11 +247,10 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     private TextView setTempUnit;
     private boolean unitChange =  false;
     private AlertDialog dialog;
-    private TextView tempShow,airTempShow,heaterOutput,timerShow,setSkinTemp,heatModeTextView;
+    private TextView tempShow,airTempShow;
     private int tempValue;
-    private String tempValueString = "00.0";
-    private int skinTemp2,skinTemp1,airTemp6,airTemp7,timer8,heater9,setTemp12,
-            setTemp13,heatMode14,timerON,setSkinTempValue,airTemp,unitValue16,mute15;
+    private String tempValueString = "00";
+    private int Temp2,Temp1,Humid;
     private String skinTemp2String;
     private String heaterOutputString = "00";
     private String timerShowString = "00";
@@ -268,15 +267,12 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     private char[] TxData;
     private Timer repeatTimer;
     private TimerTask timerTask;
-    private String airTempString = "00.0";
-    private TextView tempControl;
+    private String humidityValueString = "00";
     private Singleton a;
-    private char CF,highTMP,lowTMP,tmerON,systemF,probeF,SET,htrON,htrFAIL,serVO,manUAL,CF2,mutE,amtTIME;
-    private TextView probeFailTxv,tempHighTxv,tempLowTxv,heaterFailTxv,powerFailTxv,systemFailTxv,timerOnTxv;
-    private TimerTask timerDBTask;
-    private Timer repeatDbTimer;
     private Button setClockBtn;
     private Map<String, String>  assoc_day;
+    private TextView temperature;
+    private TextView humidity;
 
 
     /***************************************************************************************
@@ -291,7 +287,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         setContentView(R.layout.activity_scp);
 //----------------------------Grant storage permission--------------------------------------------------
         setAnimation();
-
+        repeatTimer = new Timer();
         assoc_day = new HashMap<String, String>();
         assoc_day.put("01", "Monday");
         assoc_day.put("02", "Tuesday");
@@ -331,8 +327,9 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
             myToolbar.setOverflowIcon(drawable);
         }
         // ******************** Changing the color of three dot or overflow button *****************************
-
-
+        temperature = findViewById(R.id.temperature);
+        humidity = findViewById(R.id.humidity);
+        
         /***************************************************************************************
          * Navigation Drawer Layout
          *
@@ -464,25 +461,9 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
 
         String hex = Integer.toHexString(Integer.parseInt(value));
       Integer parsedResult =   Integer.parseInt(hex, 16);
-    //    int firstPart = (byte)(parsedResult >> 8) ;
-     //   int secondPart = (byte)( parsedResult & 0xFF);
 
-      //  char c[]=Character.toChars(firstPart);
-        //for(char ch : Integer.toHexString(secondPart).toCharArray())
-      //  System.out.format("\\u%04x", (int) ch);
         String hex1 =hexToAscii(Integer.toHexString(parsedResult));
-     //   String hex2 = hexToAscii(Integer.toHexString(secondPart));
-       // String hex1 =stringToUnicode((String.format("0x%02X",   firstPart)));
-       // String hex2 = stringToUnicode((String.format("0x%02X",   secondPart)));
 
-      //  asciiToHex(Integer.toHexString(firstPart));
-     //   asciiToHex(Integer.toHexString(secondPart));
-     //   int   joindd = (firstPart <<8 ) | (secondPart);
-
-    // try {
-      //   setTemp(hex1, hex2);
-      //   }catch (Exception e) {
-     //   }
 
         Log.d("string_to_hex","hex:"+hex1+""+" secondPart: "+" "+" "+value+" "+Integer.toHexString(parsedResult)+" " +asciiToHex(hex1));
         return hex1;
@@ -559,21 +540,17 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
             public void run() {
                 //what you want to do
 
-                String data="$I0R;";
+                String data="$C1R;";
                 try {
                     if(btSocket!=null) {
                         Log.d("checkSendReceive",""+checkSendReceive);
                         if(checkSendReceive) {
                             btSocket.getOutputStream().write(data.getBytes());
 
-                            final Thread receive = new Thread(new Runnable() {
-
-                                @Override
-                                public void run() {
-                                    try {
-                                        receiveData();
-                                    }catch (Exception e){}
-                                }
+                            final Thread receive = new Thread(() -> {
+                                try {
+                                    receiveData();
+                                }catch (Exception e){}
                             });
                             receive.start();
 
@@ -586,7 +563,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
             }
         };
 
-     repeatTimer.schedule(timerTask, 100, 500);//wait 0 ms before doing the action and do it evry 1000ms (1second)
+     repeatTimer.schedule(timerTask, 100, 1000);//wait 0 ms before doing the action and do it evry 1000ms (1second)
 
      /*   Runnable runnable = new Runnable() {
             @Override
@@ -684,14 +661,13 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
 
     public void receiveData() {
 
-
         if (btSocket!=null)
         {
             try
             {
                 InputStream socketInputStream =  btSocket.getInputStream();
 
-                byte[] buffer = new byte[40];
+                byte[] buffer = new byte[15];
                 int bytes;
 
                 // Keep looping to listen for received messages
@@ -705,65 +681,21 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                          //   readMessage = readMessage.charAt(readMessage.length() - 1) + readMessage.substring(0, readMessage.length() - 1);
                       //  }
 
-                            Log.i("data_asd readMessage", readMessage + " Bytes: "+bytes+" "+" Index of $: "+findPos(readMessage,'$'));
+                        Log.i("data_asd readMessage", readMessage + " Bytes: "+bytes+" "+" Index of $: "+findPos(readMessage,'$'));
 
                         StringBuilder sb = new StringBuilder(bytes * 2);
                         for(byte b: buffer)
                             sb.append(String.format("%02x ", b));
                         Log.e("data_asd Received Data ", sb.toString());
-                        if(bytes==21) {
+                        if(bytes==7) {
                         convertStringToHex(sb.toString(), readMessage);
                            }
                         // hexStringToByteArray(readMessage);
                         handler.post(() -> runOnUiThread(() -> {
                         DecimalFormat df = new DecimalFormat();
                         df.setMaximumFractionDigits(2);
-                        tempShow.setText(""+tempValueString);
-                        airTempShow.setText(""+airTempString);
-                        heaterOutput.setText(""+heaterOutputString);
-                        timerShow.setText(""+timerShowString);
-                        setSkinTemp.setText(""+floatCurrentSetTempValue);
-                        heatModeTextView.setText(""+heatModeString);
-
-                        a.setSkinTempData(tempValueString);
-                        a.setAirtTempData(airTempString);
-
-                       // dataModel.setSkinTempValue(tempValueString);
-                         // ------------------ -----------------------
-                            // private TextView probeFailTxv,tempHighTxv,tempLowTxv,heaterFailTxv,powerFailTxv,systemFailTxv;
-                        // private char CF,highTMP,lowTMP,tmerON,systemF,probeF,SET,htrON,htrFAIL,serVO,manUAL,CF2,mutE,amtTIME;
-                        // ***********************8********************88**************8
-
-                            if(probeF =='1'){
-                                 probeFailTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview_red));
-                            }else{
-                                probeFailTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview));
-                            }
-                            if(highTMP =='1'){
-                                tempHighTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview_red));
-                            }else{
-                                tempHighTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview));
-                            }
-                            if(lowTMP =='1'){
-                                tempLowTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview_red));
-                            }else{
-                                tempLowTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview));
-                            }
-                            if(systemF =='1'){
-                                systemFailTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview_red));
-                            }else{
-                                systemFailTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview));
-                            }
-                            if(htrFAIL =='1'){
-                                heaterFailTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview_red));
-                            }else{
-                                heaterFailTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview));
-                            }
-                            if(tmerON =='1'){
-                                timerOnTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview_red));
-                            }else{
-                                timerOnTxv.setBackground(ContextCompat.getDrawable(this, R.drawable.rounded_textview));
-                            }
+                        temperature.setText(""+tempValueString);
+                        humidity.setText(""+humidityValueString);
 
                         }));
 
@@ -822,11 +754,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                             DecimalFormat df = new DecimalFormat();
                             df.setMaximumFractionDigits(2);
                             tempShow.setText(""+tempValueString);
-                            airTempShow.setText(""+airTempString);
-                            heaterOutput.setText(""+heaterOutputString);
-                            timerShow.setText(""+timerShowString);
-                            setSkinTemp.setText(""+floatCurrentSetTempValue);
-                            heatModeTextView.setText(""+heatModeString);
+
                         }
                     });
 
@@ -883,8 +811,8 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     {
         Log.d("logging","string length: "+string.length());
         StringBuilder newString = new StringBuilder();
-        arrayHex = new String[21];
-        rawArrayData =new String[21];
+        arrayHex = new String[12];
+        rawArrayData =new String[12];
         arrayHex = string.split("\\s+");
 
         for (int i=0; i<=rawMessage.length(); i++)
@@ -902,95 +830,34 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
 
 
              // Long num1,num2,num3;
-        if(arrayHex[4]!=null && arrayHex[5]!=null) {
-            skinTemp1 = (Integer.parseInt(arrayHex[4], 16));
-            skinTemp2 = (Integer.parseInt(arrayHex[5], 16));
-            tempValue = (skinTemp1 << 8) | (skinTemp2);
-            float tempValueFloat = (float) tempValue / 10;
-            Log.d("data_asd skin temp",""+tempValueFloat +" first:"+skinTemp1+" 2nd:"+skinTemp2+" "+arrayHex[5]);
-            tempValueString = String.valueOf(tempValueFloat);
+      //if(arrayHex[2]!=null && arrayHex[3]!=null) {
+         //  = (Integer.parseInt(arrayHex[2], 16));
+         //  Temp2 = (Integer.parseInt(arrayHex[3], 16));
+         //  tempValue = (Temp1 << 8) | (Temp2);
+         //  float tempValueFloat = (float) tempValue / 10;
+         //  tempValueString = String.valueOf(tempValueFloat);
+         //   }
 
+       if(arrayHex[4]!=null) {
+           Temp1 = (Integer.parseInt(arrayHex[4], 16));
+           // float tempFloat = (float) Temp1;
+           tempValueString = String.valueOf(Temp1);
         }
 
-        if(arrayHex[6]!=null && arrayHex[7]!=null) {
-            airTemp6 = (Integer.parseInt(arrayHex[6], 16));
-            airTemp7 = (Integer.parseInt(arrayHex[7], 16));
-            airTemp = (airTemp6 << 8) | (airTemp7);
-            float airTempFloat = (float) airTemp / 10;
-            airTempString = String.valueOf(airTempFloat);
-        }
-
-        if(arrayHex[8]!=null) {
-            timer8 = (Integer.parseInt(arrayHex[8], 16));
-            float timerFloat = (float) timer8;
-            timerShowString = String.valueOf(timer8);
-        }
-
-        if(arrayHex[9]!=null) {
-            heater9 = (Integer.parseInt(arrayHex[9], 16));
-            float heaterOutputFloat = (float) heater9;
-            heaterOutputString  = String.valueOf(heater9);
-        }
-        if(arrayHex[12]!=null && arrayHex[13]!=null) {
-            setTemp12 = (Integer.parseInt(arrayHex[12], 16));
-            setTemp13 = (Integer.parseInt(arrayHex[13], 16));
-
-            if(initSetTempCheck) {
-                currentTempValue = (setTemp12 << 8) | (setTemp13);
-                floatCurrentSetTempValue = ((float) currentTempValue / 10);
-                // float setSkinTempFloat = (float) setSkinTemp ;
-                // currentTempValue = ((float) currentTempValue / 10);
-                // setSkinTempString = String.valueOf(setSkinTempFloat);
-            }
-
-        }
-
-            if(arrayHex[14]!=null){
-                heatMode14 = (Integer.parseInt(arrayHex[14], 16));
-
-            }
-        if(arrayHex[15]!=null){
-            mute15 = (Integer.parseInt(arrayHex[15], 16));
-
-        }
-        if(arrayHex[16]!=null){
-            unitValue16 = (Integer.parseInt(arrayHex[16], 16));
-        }
-        if(arrayHex[17]!=null){
-            timerON = (Integer.parseInt(arrayHex[17], 16));
+        if(arrayHex[5]!=null) {
+            Humid = (Integer.parseInt(arrayHex[5], 16));
+         //   float humidFloat = (float) Humid;
+            humidityValueString = String.valueOf(Humid);
         }
 
 
 
-            if(heatMode14==0){
-                heatModeString = String.valueOf("SERVO");
-            }else if(heatMode14==1){
-                heatModeString = String.valueOf("MANUAL");
-            }else if(heatMode14==2){
-                heatModeString = String.valueOf("ACCIDENTAL");
-            }else if(heatMode14==3){
-                heatModeString = String.valueOf("PREHEAT");
-            }
 
-         String bin1 =   HexToBinary(arrayHex[18]);
-          CF  = getCharFromString(bin1,7);
-          highTMP  = getCharFromString(bin1,6);
-          lowTMP  = getCharFromString(bin1,5);
-          tmerON  = getCharFromString(bin1,4);
-          systemF  = getCharFromString(bin1,3);
-          probeF  = getCharFromString(bin1,2);
-         String bin2 =   HexToBinary(arrayHex[19]);
-          SET  = getCharFromString(bin2,0);
-          htrON  = getCharFromString(bin2,1);
-          htrFAIL  = getCharFromString(bin2,2);
-          serVO  = getCharFromString(bin2,3);
-          manUAL  = getCharFromString(bin2,4);
-          CF2  = getCharFromString(bin2,5);
-          mutE  = getCharFromString(bin2,6);
-          amtTIME  = getCharFromString(bin2,7);
+      //   String bin1 = HexToBinary(arrayHex[18]);
+      //   CF = getCharFromString(bin1,7);
+      //   highTMP = getCharFromString(bin1,6);
 
-
-            Log.i("logging", Arrays.toString(arrayHex)+"  "+Arrays.toString(rawArrayData)+" Binary1: "+bin1+" Binary2: "+bin2);
+            Log.i("logging", Arrays.toString(arrayHex)+"  "+Arrays.toString(rawArrayData));
 
 
         //hexStringToByteArray(newString.toString());
@@ -1739,7 +1606,7 @@ z       time zone               Time Zone     z/zz/zzz:PST zzzz:Pacific Standard
             e.printStackTrace();
         }
     }
-    
+
 
     public String toHex(String arg) {
         return String.format("%040x", new BigInteger(1, arg.getBytes(/*YOUR_CHARSET?*/)));
@@ -1747,27 +1614,7 @@ z       time zone               Time Zone     z/zz/zzz:PST zzzz:Pacific Standard
 
 
 
-    public String hextounicode(String hex)
-    {
-        /*
-        ByteBuffer buff = ByteBuffer.allocate(hex.length());
-        for(int i = 0; i < hex.length(); i+=1) {
-            buff.put((byte)Integer.parseInt(hex.substring(i), 16));
-        }
-        buff.rewind();
-        Charset cs = Charset.forName("UTF-8");
-        CharBuffer cb = cs.decode(buff);
-        System.out.println(cb.toString());
-       */
-       //System.out.println("set_tmp "+Arrays
-       //         .stream(hex.split(""))
-       //        .map(s -> Character.toString((char)Integer.parseInt(s, 16)))
-       //       .collect(Collectors.joining()));
-       // return Arrays.stream(hex.split(""))
-       //            .map(s -> Character.toString((char)Integer.parseInt(s, 16)))
-       //                .collect(Collectors.joining());
-        return "";
-    }
+
 
 
     /*
@@ -1789,112 +1636,8 @@ z       time zone               Time Zone     z/zz/zzz:PST zzzz:Pacific Standard
     };
     timer2.schedule(testing, 1000);*/
 
-    public void setTemp(String tempFirst, String tempSecond){
-         char[] TxData  = new char[19];;
-
-       // String first = hextounicode(tempFirst);
-       //    String second = hextounicode(tempSecond);
 
 
-        //Log.d("set_tmp"," "+first+" "+second);
-
-        //String data="$I0W"+first+second+rawArrayData[14]+rawArrayData[15]+rawArrayData[16]+rawArrayData[17]+";";
-        /*TxData[0] = '$';TxData[4] = first.charAt(0);TxData[8] = rawArrayData[16].charAt(0);
-        TxData[1] = 'I';TxData[5] = second.charAt(0);TxData[9] = rawArrayData[17].charAt(0);
-        TxData[2] = '0';TxData[6] = rawArrayData[14].charAt(0);TxData[10] = ';';
-        TxData[3] = 'W';TxData[7] = rawArrayData[15].charAt(0);
-        Log.d("data_asd 2",""+" "+TxData);*/
-        //traversing over array using for loop
-        /* ByteBuffer bb = ByteBuffer.allocate(12);
-        bb.put((byte)'$');bb.put( Byte.parseByte(first));
-        bb.put((byte)'I');bb.put(Byte.parseByte(second));
-        bb.put((byte)'0');bb.put(Byte.parseByte(arrayHex[14]));
-        bb.put((byte)'W');bb.put(Byte.parseByte(arrayHex[15]));
-        bb.put(Byte.parseByte(arrayHex[16]));
-        bb.put(Byte.parseByte(arrayHex[17]));
-        bb.put((byte)';');
-        Buffer bb1 = (Buffer)bb;
-        // getting array that backs this buffer
-        // using array() method
-        byte[] arr = (byte[])bb1.array();
-        */
-
-        String data="$"+"I"+
-                "0"+"W"+(tempFirst+tempSecond.charAt(0))+
-                rawArrayData[14]+rawArrayData[15]+
-                rawArrayData[16]+rawArrayData[17]+";";
-
-        // String data="$"+"I"+
-        //       "0"+"W"+(rawArrayData[12]+rawArrayData[13])+
-        //       rawArrayData[14]+rawArrayData[15]+
-        //       rawArrayData[16]+rawArrayData[17]+";";
-        //       decode(data);
-
-      /*  byte[] payload = new byte[] { Byte.parseByte(arrayHex[0]), Byte.parseByte(arrayHex[1]),
-                Byte.parseByte(arrayHex[2]),Byte.parseByte(arrayHex[3]),Byte.parseByte(arrayHex[14]),
-                Byte.parseByte(arrayHex[15]),Byte.parseByte(arrayHex[16]),Byte.parseByte(arrayHex[17]),
-                ';' }; // use whatever you need to get your payload into bytes*/
-
-  /*  byte[] payload = new byte[] { '$', 'I',
-                '0','W', Byte.parseByte(String.valueOf(tempFirst)),
-                Byte.parseByte(String.valueOf(tempSecond.charAt(0))),Byte.parseByte(rawArrayData[14]),
-            Byte.parseByte(rawArrayData[15]),
-            Byte.parseByte(rawArrayData[16]), Byte.parseByte(rawArrayData[17]),
-                ';' }; */// use whatever you need to get your payload into bytes*/
-
-    /* String[] payloade = new String[] {String.valueOf('$'), String.valueOf('I'),
-                  String.valueOf('0'), String.valueOf('W'), String.valueOf(tempFirst),
-             String.valueOf(tempSecond.charAt(0)),rawArrayData[14],rawArrayData[15], rawArrayData[16], rawArrayData[17],
-               String.valueOf(';')}; */// use whatever you need to get your payload into bytes*/
-
-    //    System.out.printf("Unicode: u%0X\n", first);
-        final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        final ObjectOutputStream objectOutputStream;
-        try {
-            objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-          //  objectOutputStream.writeObject(payloade);
-            objectOutputStream.flush();
-            objectOutputStream.close();
-        } catch (IOException e) {
-            Log.d("Error_lis",""+e.getMessage());
-            e.printStackTrace();
-        }
-
-
-        final byte[] byteArray = byteArrayOutputStream.toByteArray();
-
-
-
-        try {
-            if(btSocket!=null) {
-                // receiveData();
-                //receiveDataOnClick();
-            
-              // byte[] arr1 = data.getBytes("UTF-8");data
-               // if(rawArrayData[15]!=null && rawArrayData[14]!=null&& rawArrayData[16]!=null && rawArrayData[17]!=null){
-                  //  if(!arrayHex[17].contains("3b")) {
-                        Log.d("Data_print", "" + data + arrayHex[14] + "" + arrayHex[15] + "" + arrayHex[16] + "" + arrayHex[17]);
-                        btSocket.getOutputStream().write(data.getBytes());
-                  //  }
-              //  }
-                checkSendReceive = true;
-
-            }
-        } catch (IOException  e) {
-            e.printStackTrace();
-            Log.d("logging","Error "+e.getMessage());
-        }
-
-    }
-
-   /* public static byte convertStringToHexf(String str) {
-
-        // display in uppercase
-        // char[] chars = Hex.encodeHex(str.getBytes(StandardCharsets.UTF_8), false);
-        // display in lowercase, default
-           char[] chars = Hex.encodeHex(str.getBytes(StandardCharsets.UTF_8));
-           return Byte.parseByte(String.valueOf(chars));
-    }*/
 
     public static byte[] decode(String hex){
 
@@ -1905,62 +1648,6 @@ z       time zone               Time Zone     z/zz/zzz:PST zzzz:Pacific Standard
             buffer.put(Byte.parseByte(str,16));
 
         return buffer.array();
-
-    }
-
-    public void unitValueChange(){
-        checkSendReceive = false;
-        String unitValue ;
-        if(unitValue16 == 1){
-            //unitValue ="\u0000";
-             unitValue =  hexToAscii("0");
-            // unitCelCius();
-        }else {
-           // unitValue ="\u0001";
-           unitValue =  hexToAscii("1");
-           // unitFarhenheit();
-        }
-
-        String data="$I0W"+rawArrayData[12]+rawArrayData[13]+rawArrayData[14]+rawArrayData[15]+unitValue+rawArrayData[17]+";";
-
-        Log.d("data_asd unit",""+" "+data);
-        //  Integer.toBinaryString(int  r)
-        try {
-            if(btSocket!=null) {
-                // receiveData();
-                btSocket.getOutputStream().write(data.getBytes());
-
-
-            }
-        } catch (IOException  e) {
-            e.printStackTrace();
-            Log.d("logging","Error "+e.getMessage());
-        }
-        checkSendReceive = true;
-
-    }
-
-    public void servoOn(){
-            checkSendReceive = false;
-            heatMode14 = 0;
-           String servo =  hexToAscii("0");
-
-           String data="$I0W"+rawArrayData[12]+rawArrayData[13]+servo+rawArrayData[15]+rawArrayData[16]+rawArrayData[17]+";";
-
-
-           Log.d("data_asd servo",""+" "+data);
-            try {
-                if(btSocket!=null) {
-                  //  receiveData();
-                    btSocket.getOutputStream().write(data.getBytes());
-                    //Thread.sleep(100);
-                }
-            } catch (IOException  e) {
-                e.printStackTrace();
-                Log.d("logging","Error "+e.getMessage());
-            }
-
-        checkSendReceive = true;
 
     }
 
@@ -2049,7 +1736,7 @@ z       time zone               Time Zone     z/zz/zzz:PST zzzz:Pacific Standard
                 // connectionStatus.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.limeGreen));
                 bltStatus.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_bluetooth_green));
 
-                // runDataSendThread();
+                runDataSendThread();
 
 
    /*
