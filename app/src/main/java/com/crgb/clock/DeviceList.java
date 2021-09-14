@@ -269,7 +269,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     private TimerTask timerTask;
     private String humidityValueString = "00";
     private Singleton a;
-    private Button setClockBtn;
+    private ImageButton setClockBtn;
     private Map<String, String>  assoc_day;
     private TextView temperature;
     private TextView humidity;
@@ -371,9 +371,8 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
-
         // To change hamburger icon color
-        actionBarDrawerToggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.whiteColor));
+        actionBarDrawerToggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.sun_color));
 
 
         mNavigationView = findViewById(R.id.nav_view);
@@ -1118,7 +1117,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         builder.setTitle("Select a paired device for connecting");
 
         LinearLayout parent = new LinearLayout(DeviceList.this);
-
+        parent.setBackgroundColor(getResources().getColor(R.color.sun_color));
         parent.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         parent.setOrientation(LinearLayout.VERTICAL);
 
@@ -1247,7 +1246,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
            case R.id.action_pairedList:
                pairedDevicesList();
                break;
-           case R.id.graphView:
+          /* case R.id.graphView:
                Intent i  = new Intent(this, RealtimeLineChartActivity.class);
                i.putExtra("MyModel",   dataModel);
                if (i != null) startActivity(i);
@@ -1257,7 +1256,7 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                Intent intent1  = new Intent(this, TableViewMainActivity.class);
                if (intent1 != null) startActivity(intent1);
 
-               break;
+               break;*/
            case R.id.action_disconnect:
                Disconnect();
                break;

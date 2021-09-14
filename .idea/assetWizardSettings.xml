@@ -303,8 +303,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_skin_air_temp" />
-                            <entry key="sourceFile" value="D:\Ranjan_Digiline\Workink21\SCP PHOTO\skin_air_temp.svg" />
+                            <entry key="outputName" value="ic_setclocktext" />
+                            <entry key="sourceFile" value="D:\Ranjan_Digiline\Workink21\SCP PHOTO\setClockText.svg" />
                           </map>
                         </option>
                       </PersistentState>

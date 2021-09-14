@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/draw_layout"
-    android:background="#F8F0E3">
+    android:background="@color/sun_color">
 
     <!--this the navigation view which draws
         and shows the navigation drawer-->
@@ -14,7 +14,7 @@
         android:id="@+id/clockLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorBlack"
+        android:background="@color/richBlack"
         android:gravity="top">
 
         <androidx.appcompat.widget.Toolbar
@@ -25,7 +25,7 @@
             android:gravity="center"
             android:theme="@style/MyMaterialTheme.Base"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:titleTextColor="#FFFFFF">
+            app:titleTextColor="@color/sun_color">
 
 
             <ImageButton
@@ -44,53 +44,84 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/crgb_name"
-                android:textColor="@color/whiteColor"
+                android:textColor="@color/sun_color"
                 android:textSize="18sp"/>
 
         </androidx.appcompat.widget.Toolbar>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_below="@+id/my_toolbar"
+            android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/clockLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
+        android:background="@color/richBlack"
+        android:gravity="top">
         <LinearLayout
             android:id="@+id/temp"
             android:layout_width="match_parent"
             android:layout_height="106dp"
             android:layout_marginTop="20dp"
-            android:layout_below="@+id/my_toolbar"
+
             android:orientation="vertical"
             android:background="@drawable/layout_bg" >
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Temperature"
+                android:layout_marginTop="6dp"
                 android:gravity="top|center"
-                android:textColor="@color/whiteColor"
+                android:textColor="@color/sun_color"
                 />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:weightSum="2">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginStart="6dp"
+    android:layout_weight="1"
+    >
 
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/solidBlueColor"
+        android:src="@drawable/ic_sun_icon" />
                 <TextView
                     android:id="@+id/temperature"
                     android:layout_width="match_parent"
-                    android:textColor="@color/whiteColor"
+                    android:textColor="@color/sun_color"
                     android:text="00"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:textSize="33sp"
                     android:gravity="right|center"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"/>
+
+        </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:layout_weight="1">
                 <TextView
                     android:id="@+id/tempUnit"
                     android:layout_width="match_parent"
-                    android:textColor="@color/whiteColor"
-                    android:text="@string/xb0_c"
-                    android:layout_marginBottom="10dp"
-                    android:textSize="33sp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:gravity="center|left"
-                    android:layout_height="wrap_content"/>
-
+                    android:text="@string/xb0_c"
+                    android:layout_marginTop="12dp"
+                    android:textColor="@color/sun_color"
+                    android:textSize="33sp" />
+            </LinearLayout>
             </LinearLayout>
 
 
@@ -110,8 +141,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Humidity"
+                android:layout_marginTop="6dp"
                 android:gravity="top|center"
-                android:textColor="@color/whiteColor"
+                android:textColor="@color/sun_color"
                 />
 
             <LinearLayout
@@ -119,29 +151,47 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:weightSum="2">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginStart="6dp"
+    android:layout_weight="1">
+  <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/solidBlueColor"
+        android:src="@drawable/ic_humidity_icon" />
 
                 <TextView
                     android:id="@+id/humidity"
                     android:layout_width="match_parent"
-                    android:textColor="@color/whiteColor"
+                    android:textColor="@color/sun_color"
                     android:text="00"
+                    android:layout_marginTop="6dp"
+                    android:layout_weight="1"
                     android:textSize="33sp"
                     android:gravity="center|right"
-                    android:layout_weight="1"
                     android:layout_marginBottom="10dp"
                     android:layout_height="match_parent"/>
-
+</LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1">
                 <TextView
                     android:id="@+id/humUnit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginTop="6dp"
                     android:gravity="center|left"
                     android:text="@string/percent_sign"
                     android:layout_marginBottom="10dp"
-                    android:textColor="@color/whiteColor"
+                    android:textColor="@color/sun_color"
                     android:textSize="33sp" />
-
+</LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
@@ -161,7 +211,8 @@
                 android:id="@+id/dateShow"
                 android:layout_width="match_parent"
                 android:text="Date"
-                android:textColor="@color/whiteColor"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/sun_color"
                 android:layout_height="wrap_content"
                 android:gravity="center"/>
 
@@ -170,9 +221,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="33sp"
+                android:layout_marginTop="6dp"
                 android:layout_gravity="center"
                 android:format12Hour="dd MMM yyyy"
-                android:textColor="@color/whiteColor"
+                android:textColor="@color/sun_color"
                 >
 
             </android.widget.TextClock>
@@ -192,7 +244,8 @@
             android:id="@+id/timeShow"
             android:layout_width="match_parent"
             android:text="Time"
-            android:textColor="@color/whiteColor"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/sun_color"
             android:layout_height="wrap_content"
             android:gravity="center"/>
 
@@ -202,33 +255,54 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:format12Hour="hh:mm:ss"
-            android:textColor="@color/limeGreen"
-            android:textColorHighlight="@color/limeGreen"
+            android:textColor="@color/sun_color"
+            android:textColorHighlight="@color/sun_color"
             android:textSize="42sp">
 
         </android.widget.TextClock>
 
     </LinearLayout>
-    <Button
+  <!--  <Button
         android:id="@+id/setClock"
         android:text="Set Clock"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:background="@drawable/mybutton"
         android:layout_below="@id/LinearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"/>-->
+<LinearLayout
+    android:id="@+id/setClockLayout"
+    android:layout_width="match_parent"
+    android:layout_below="@id/LinearLayout"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="20dp"
+    android:gravity="center"
+    android:layout_height="wrap_content">
 
+    <ImageButton
+        android:id="@+id/setClock"
+        android:layout_width="203dp"
+        android:layout_height="56dp"
+        android:foregroundGravity="center"
+        android:paddingTop="6sp"
+        android:background="@drawable/mybutton_minus"
+        android:src="@drawable/ic_setclocktext" />
+</LinearLayout>
 
 
         <ImageButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/setClock"
-            android:background="@color/colorBlack"
+            android:layout_below="@+id/setClockLayout"
+            android:background="@color/richBlack"
             android:layout_alignParentBottom="true"
             android:src="@drawable/digiline">
         </ImageButton>
-
+    </RelativeLayout>
+        </ScrollView>
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -237,6 +311,10 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header_main"
+        android:background="@drawable/custom_nav_bar"
+        app:itemTextColor="@color/sun_color"
+        app:itemIconTint="@color/sun_color"
         app:menu="@menu/navigation_menu" />
+    <!-- color change text color of action mene-->
 
 </androidx.drawerlayout.widget.DrawerLayout>

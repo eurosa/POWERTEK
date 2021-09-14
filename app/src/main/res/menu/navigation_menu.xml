@@ -31,7 +31,7 @@
         android:gravity="right"
         android:title="Disconnect Bluetooth Device" />
 
-    <item android:title="Data View">
+  <!--  <item android:title="Data View">
     <menu>
         <item
             android:id="@+id/graphView"
@@ -42,7 +42,7 @@
             android:title="Show Trending Data"
             android:icon="@drawable/ic_skin_air_temp"/>
     </menu>
-    </item>
+    </item>-->
 
     <item android:title="Communicate">
         <menu>

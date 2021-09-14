@@ -56,7 +56,7 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">true</item>
         <item name="colorPrimary">#0000ff</item><!--No Effect-->
-        <item name="colorPrimaryDark">#000c66</item><!--Main back theme color-->
+        <item name="colorPrimaryDark">@color/sun_color</item><!--Main back theme color-->
         <item name="colorAccent">#0000ff</item> <!--Action Bar Color-->
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:windowContentTransitions">true</item>
@@ -107,9 +107,18 @@
     <style name="MyMaterialTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Add attributes here -->
         <item name="colorPrimary">#0000ff</item>
-        <item name="colorPrimaryDark">@color/highGray</item>
+        <item name="colorPrimaryDark">@color/sun_color</item>
         <item name="colorAccent">#0000ff</item>
         <item name="textAppearanceButton">@style/AppTextAppearance.Button</item>
+
+        <item name="android:textColorPrimary">@color/sun_color</item>
+        <item name="android:textColorSecondary">@color/sun_color</item>
+        <!--Titel color change of menu also connection dialog alert color -->
+        <item name="android:textColor">@color/sun_color</item>
+        <!--Titel color change of menu -->
+        <item name="android:itemTextAppearance">@color/sun_color</item>
+        <item name="android:actionMenuTextColor">@color/sun_color</item>
+
     </style>
     <!--To fix rendering in preview -->
     <style name="AppTextAppearance.Button" parent="TextAppearance.MaterialComponents.Button">
