@@ -1315,7 +1315,6 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
 
         switch (id) {
 
-
             case R.id.action_searchList:
                 ScanDevicesList();
                 return true;
