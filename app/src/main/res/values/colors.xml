@@ -34,4 +34,8 @@
     <color name="button_default">#1c76bb</color>
     <color name="richBlack">#003333</color>
     <color name="sun_color">#FDB813</color>
+    <color name="royalBlue">#246EE9</color>
+    <color name="mintGreen">#3EB489</color>
+    <color name="darkGreen">#689a92</color>
+    <color name="lightSeaBlue">#44A7C4</color>
 </resources>

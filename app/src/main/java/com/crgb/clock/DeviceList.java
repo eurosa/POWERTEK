@@ -128,8 +128,8 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     private Button sendBtn;
 
     boolean listViewFlag=true;
-   
-    
+
+
     //==============================To connect Bluetooth devices===============================
     //-----------------------------Camera------------------------------------------------------
     private static final String LOG_TAG = "JBCamera";
@@ -1243,9 +1243,9 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
            case R.id.action_searchList:
                ScanDevicesList();
                break;
-           case R.id.action_pairedList:
-               pairedDevicesList();
-               break;
+           //case R.id.action_pairedList:
+            //   pairedDevicesList();
+             //  break;
           /* case R.id.graphView:
                Intent i  = new Intent(this, RealtimeLineChartActivity.class);
                i.putExtra("MyModel",   dataModel);
@@ -1319,9 +1319,9 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
             case R.id.action_searchList:
                 ScanDevicesList();
                 return true;
-            case R.id.action_pairedList:
-                pairedDevicesList();
-                return true;
+            //case R.id.action_pairedList:
+              //  pairedDevicesList();
+              //  return true;
             /*case R.id.action_about:
                 Intent intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);

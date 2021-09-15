@@ -20,11 +20,11 @@
         android:gravity="right"
         android:icon="@drawable/ic_bluetooth"/>
 
-    <item
+   <!-- <item
         android:id="@+id/action_pairedList"
         android:title="Connect to a Paired Device"
         android:gravity="right"
-        android:icon="@drawable/ic_pair_bluetooth"/>
+        android:icon="@drawable/ic_pair_bluetooth"/>-->
 
     <item android:id="@+id/action_disconnect"
         android:icon="@drawable/ic_disconnect_bluetooth"

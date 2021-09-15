@@ -4,12 +4,14 @@
         <shape xmlns:android="http://schemas.android.com/apk/res/android" >
             <stroke android:width="8dp" android:color="@android:color/transparent" />
             <padding android:left="0dp" android:top="0dp"
-                android:right="0dp" android:bottom="0dp" />
-            <corners android:radius="1dp" />
+                android:right="0dp" android:bottom="0dp"/>
+            <corners android:radius="1dp"/>
             <gradient
                 android:startColor="@android:color/holo_blue_dark"
+                android:centerColor="@color/sun_color"
                 android:endColor="@android:color/background_dark"
-                android:angle="225"/>
+                android:type="linear"
+                android:angle="135"/>
         </shape>
     </item>
     <item android:state_pressed="false">
@@ -22,7 +24,8 @@
                 android:startColor="@android:color/holo_blue_dark"
                 android:centerColor="@color/babyBlue"
                 android:endColor="@color/sun_color"
-                android:angle="225"/>
+                android:type="linear"
+                android:angle="135"/>
         </shape>
     </item>
 </selector>
