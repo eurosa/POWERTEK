@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CRGB.iml" filepath="$PROJECT_DIR$/.idea/modules/CRGB.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/CRGB.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/CRGB.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/POWERTEK.iml" filepath="$PROJECT_DIR$/.idea/modules/POWERTEK.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/POWERTEK.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/POWERTEK.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/POWERTEK.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/POWERTEK.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/POWERTEK.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/POWERTEK.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/POWERTEK.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/POWERTEK.app.unitTest.iml" />
     </modules>
   </component>
 </project>

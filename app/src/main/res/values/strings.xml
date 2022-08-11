@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DIGITAL CLOCK</string>
+    <string name="app_name">POWERTEK SMART BATTERY CHARGER</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -74,7 +74,7 @@
     <string name="o2">O2</string>
     <string name="air_7">Air 7</string>
     <string name="heater_output">Heater <br/> Output</string>
-    <string name="crgb_name">DIGITAL CLOCK</string>
+    <string name="crgb_name">POWERTEK SMART BATTERY CHARGER</string>
     <string name="probe_fail">Probe Fail</string>
     <string name="temp_high">Temp High</string>
     <string name="temp_low">Temp Low</string>
@@ -99,7 +99,7 @@
     <string name="actionFeedMultiple">Feed Mulitiple</string>
     <string name="actionSave">Save to Gallery</string>
     <string name="real_time_graph">Realtime Temperature Graph</string>
-    <string name="digital_clock">DIGITAL CLOCK</string>
+    <string name="powertek_charger">POWERTEK SMART BATTERY CHARGER</string>
 
 
 </resources>

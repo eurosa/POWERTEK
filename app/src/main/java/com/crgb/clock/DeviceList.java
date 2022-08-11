@@ -96,22 +96,22 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
 {
     private static final String MY_PREFS_NAME = "MyTxtFile";
     private Handler handler = new Handler();
-
-    /***************************************************************************************
-    *                           Start Increment and Decrement
-    ****************************************************************************************/
     TextView setTempDisplay;
     TextView setHumDisplay;
     ImageButton tempMinusButton;
     ImageButton tempPlusButton;
     ImageButton[] arrayOfControlButtons;
     /***************************************************************************************
+    *                           Start Increment and Decrement
+    ****************************************************************************************/
+
+    /***************************************************************************************
      *  End Increment and Decrement
      ****************************************************************************************/
 
     /***************************************************************************************
      *  Play and pause in only one button - Android
-    ****************************************************************************************/
+     ****************************************************************************************/
     boolean isPlaying = false;
     /***************************************************************************************
      *  Play and pause in only one button - Android
@@ -269,14 +269,14 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
     private TimerTask timerTask;
     private String humidityValueString = "00";
     private Singleton a;
-    private ImageButton setClockBtn;
+    private Button startBtn;
     private Map<String, String>  assoc_day;
     private TextView temperature;
     private TextView humidity;
 
 
     /***************************************************************************************
-    * End Stop Watch
+    *****************************End Stop Watch*****************************
     ****************************************************************************************/
 
     //screenshot
@@ -297,8 +297,8 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
         assoc_day.put("06", "Saturday");
         assoc_day.put("07", "Sunday");
 
-        setClockBtn = findViewById(R.id.setClock);
-        setClockBtn.setOnClickListener(this);
+        startBtn = findViewById(R.id.startBtn);
+        startBtn.setOnClickListener(this);
         dataModel = new DataModel();
         dbHandler = new DatabaseHandler(this);
         // dbHandler.getQmsUtilityById("1", dataModel);
@@ -1244,8 +1244,9 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
                ScanDevicesList();
                break;
            //case R.id.action_pairedList:
-            //   pairedDevicesList();
-             //  break;
+           //   pairedDevicesList();
+           //   break;
+
           /* case R.id.graphView:
                Intent i  = new Intent(this, RealtimeLineChartActivity.class);
                i.putExtra("MyModel",   dataModel);
@@ -1255,7 +1256,6 @@ public class DeviceList extends AppCompatActivity implements  View.OnClickListen
            case R.id.tableView:
                Intent intent1  = new Intent(this, TableViewMainActivity.class);
                if (intent1 != null) startActivity(intent1);
-
                break;*/
            case R.id.action_disconnect:
                Disconnect();

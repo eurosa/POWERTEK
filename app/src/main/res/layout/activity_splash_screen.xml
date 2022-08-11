@@ -15,12 +15,17 @@
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="186dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+           />
+       <!-- <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="186dp"
             android:layout_height="159dp"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/digiline_logo"/>
-
+            app:srcCompat="@drawable/digiline_logo"/>-->
     </LinearLayout>
-
+<!-- app:srcCompat="@drawable/digiline_logo"-->
 
     <LinearLayout
         android:id="@+id/titletxt"
@@ -34,11 +39,12 @@
             android:id="@+id/splashText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/digital_clock"
+            android:text="@string/powertek_charger"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="33sp"
-            android:textColor="@color/redColor"/>
+            android:textColor="@color/whiteColor"
+            />
     </LinearLayout>
 
    <!-- <LinearLayout

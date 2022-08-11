@@ -22,9 +22,10 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />-->
 
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!--  android:icon="@drawable/digiline_logo"-->
     <application
         android:allowBackup="true"
-        android:icon="@drawable/digiline_logo"
+        android:icon="@mipmap/ic_sst_logo_foreground"
         android:label=""
         android:requestLegacyExternalStorage="true"
         android:theme="@style/MyMaterialTheme.Base"
@@ -56,7 +57,7 @@
         <activity
             android:screenOrientation="fullSensor"
             android:name="com.crgb.clock.DeviceList"
-            android:theme="@style/MyMaterialTheme" />
+            />
         <activity
             android:name="com.crgb.clock.DataControl"
             android:label="Data Control"

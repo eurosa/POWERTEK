@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.blackfizz:eazegraph:1.2.5l@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/25274c17d5a419fdf77febf6131c323c/jetified-eazegraph-1.2.5l/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/25274c17d5a419fdf77febf6131c323c/jetified-eazegraph-1.2.5l/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/25274c17d5a419fdf77febf6131c323c/jetified-eazegraph-1.2.5l/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/f1ad35840d7f787b46f53f27707eb4bf/transformed/jetified-eazegraph-1.2.5l/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f1ad35840d7f787b46f53f27707eb4bf/transformed/jetified-eazegraph-1.2.5l/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f1ad35840d7f787b46f53f27707eb4bf/transformed/jetified-eazegraph-1.2.5l/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

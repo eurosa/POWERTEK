@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.Mika-89:Screenshot:master-SNAPSHOT@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/102228055828dbeb21652deb76976186/jetified-Screenshot-master-SNAPSHOT/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d96b7a92c9ee807810fe45268d6bade1/transformed/jetified-Screenshot-master-SNAPSHOT/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d96b7a92c9ee807810fe45268d6bade1/transformed/jetified-Screenshot-master-SNAPSHOT/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/d96b7a92c9ee807810fe45268d6bade1/transformed/jetified-Screenshot-master-SNAPSHOT/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.Mika-89/Screenshot/master-SNAPSHOT/cec16e24a80babbe597c79b3dc623f78ad7a3c91/Screenshot-master-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
