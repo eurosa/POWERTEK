@@ -976,8 +976,23 @@ public class ChargerActivity extends AppCompatActivity implements View.OnClickLi
                         isPlaying = true;
                         startBtn.setText("Start");
                     }
+                    if(operationValue==0){
+                        operationView.setText("D-CHG");
+                    }
+                    else if(operationValue==1)
+                    {
+                        operationView.setText("C-CHG");
+                    }
+                    else if(operationValue==3)
+                    {
+                        operationView.setText("PC-OF");
+                    }
+                    else{
+
+                        operationView.setText(""+operationValue);
+                    }
                    // systemView.setText("" + systemValue);
-                        operationView.setText("" + operationValue);
+
 
                 } catch (Exception e) {
                     Log.d("Received Exception", e.getMessage());
