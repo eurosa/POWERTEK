@@ -93,13 +93,13 @@
     <string name="manual">Manual</string>
     <string name="servo">Servo</string>
     <string name="mode">MODE</string>
-    <string name="who_we_are">Digiline System is a leading manufacturer of Token Systems.Token Number Display with human voice announcement is latest and built around high effciency micro controller based technology.</string>
+    <string name="who_we_are">We Introduce our self as a technological driven group with objective to provide total power solution to the office automation industry. We are the group of Engineers having a Decade experience in the field of Power Conditioning Equipments.</string>
     <string name="actionAddEntry">Add Entry</string>
     <string name="actionClearChart">Clear Chart</string>
     <string name="actionFeedMultiple">Feed Mulitiple</string>
     <string name="actionSave">Save to Gallery</string>
     <string name="real_time_graph">Realtime Temperature Graph</string>
-    <string name="powertek_charger">POWERTEK SMART BATTERY CHARGER</string>
+    <string name="powertek_charger">POWERTEK SMART  BATTERY CHARGER</string>
 
 
 </resources>

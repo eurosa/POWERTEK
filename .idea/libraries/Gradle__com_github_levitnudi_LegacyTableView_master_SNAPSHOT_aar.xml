@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.levitnudi:LegacyTableView:master-SNAPSHOT@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/dfa85d66b9a7abba61b962a04971e02e/transformed/jetified-LegacyTableView-master-SNAPSHOT/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/dfa85d66b9a7abba61b962a04971e02e/transformed/jetified-LegacyTableView-master-SNAPSHOT/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/dfa85d66b9a7abba61b962a04971e02e/transformed/jetified-LegacyTableView-master-SNAPSHOT/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/7a6d45d15bbeb4a25891be95d08cb3f9/transformed/jetified-LegacyTableView-master-SNAPSHOT/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/7a6d45d15bbeb4a25891be95d08cb3f9/transformed/jetified-LegacyTableView-master-SNAPSHOT/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/7a6d45d15bbeb4a25891be95d08cb3f9/transformed/jetified-LegacyTableView-master-SNAPSHOT/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
