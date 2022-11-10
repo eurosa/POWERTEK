@@ -983,9 +983,13 @@ public class ChargerActivity extends AppCompatActivity implements View.OnClickLi
                     {
                         operationView.setText("C-CHG");
                     }
+                    else if(operationValue==2)
+                    {
+                        operationView.setText("PC-ON");
+                    }
                     else if(operationValue==3)
                     {
-                        operationView.setText("PC-OF");
+                        operationView.setText("PC-OFF");
                     }
                     else{
 
